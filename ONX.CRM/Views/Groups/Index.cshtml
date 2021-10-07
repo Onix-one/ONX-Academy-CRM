@@ -1,0 +1,181 @@
+﻿@using ONX.CRM.ViewModel
+@{
+}
+@model IEnumerable<GroupViewModel>
+
+<div class="page-wrapper">
+    <div class="page-content">
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3">ONX.CRM</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                        <li class="breadcrumb-item">
+                            <a asp-controller="Home" asp-action="Index"><i class="bx bx-home-alt"></i></a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">Groups</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-lg-9 col-xl-9">
+                                <form class="float-lg-start" asp-controller="Groups" asp-action="Edit" method="post">
+                                    <div class="row row-cols-lg-auto g-2">
+                                        <div class="col-12">
+                                            <div class="position-relative">
+                                                <input type="text" class="form-control ps-5" placeholder="Search...">
+                                                <span class="position-absolute top-50 product-show translate-middle-y">
+                                                    <i class="bx bx-search"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                                <button type="button" class="btn btn-white">Sort by status</button>
+                                                <div class="btn-group" role="group">
+                                                    <button id="btnGroupDrop1" type="button" class="btn btn-white dropdown-toggle dropdown-toggle-nocaret px-1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <i class="bx bxs-category"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                        <li><a class="dropdown-item" href="#">Started</a></li>
+                                                        <li><a class="dropdown-item" href="#">Pending</a></li>
+                                                        <li><a class="dropdown-item" href="#">Finished</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-lg-3 col-xl-3">
+                                <div class="float-lg-end">
+                                    <div class="row row-cols-lg-auto g-2">
+                                        <div class="col-12">
+                                            <a asp-controller="Groups" asp-action="Edit" class="btn btn-outline-primary mb-3 mb-lg-0"><i class="bx bxs-plus-square"></i>Add new group</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <div>
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>ID</th>
+                                <th>Number</th>
+                                <th>Course</th>
+                                <th>Teacher</th>
+                                <th>Start date</th>
+                                <th>Status</th>
+                                <th>View Details</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var group in Model)
+                            {
+                                <tr>
+                                    <td>@group.Id</td>
+                                    <td>@group.Number</td>
+                                    @if (group.CourseId != null)
+                                    {
+                                        <td>@group.Course.Title</td>
+                                    }
+                                    else
+                                    {
+                                        <td></td>
+                                    }
+                                    @if (group.TeacherName != null)
+                                    {
+                                        <td>@group.TeacherName</td>
+                                    }
+                                    else
+                                    {
+                                        <td></td>
+                                    }
+                                    <td>@group.StartDate.Day.@group.StartDate.Month.@group.StartDate.Year</td>
+
+                                    @if (group.Status.ToString() == "Pending")
+                                    {
+                                        <td>
+                                            <div class="d-flex align-items-center text-danger">
+                                                <i class="bx bx-radio-circle-marked bx-burst bx-rotate-90 align-middle font-18 me-1"></i>
+                                                <span>@group.Status.ToString()</span>
+                                            </div>
+                                        </td>
+                                    }
+
+                                    @if (group.Status.ToString() == "Started")
+                                    {
+                                        <td>
+                                            <div class="d-flex align-items-center text-success">
+                                                <i class="bx bx-radio-circle-marked bx-burst bx-rotate-90 align-middle font-18 me-1"></i>
+                                                <span>@group.Status.ToString()</span>
+                                            </div>
+                                        </td>
+                                    }
+
+                                    @if (group.Status.ToString() == "Finished")
+                                    {
+                                        <td>
+                                            <div class="d-flex align-items-center text-primary">
+                                                <i class="bx bx-radio-circle-marked bx-burst bx-rotate-90 align-middle font-18 me-1"></i>
+                                                <span>@group.Status.ToString()</span>
+                                            </div>
+                                        </td>
+                                    }
+                                    @if (group.Status.ToString() == string.Empty)
+                                    {
+                                        <td></td>
+                                    }
+
+
+
+                                    <td>
+                                        <a type="button" class="btn btn-outline-primary btn-sm radius-30 px-4"
+                                           asp-controller="Students" asp-action="Index" asp-route-id="@group.Id">View Details</a>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex order-actions">
+                                            <div class="d-flex order-actions">
+                                                <div>
+                                                    <a asp-controller="Groups" asp-action="Edit"
+                                                       asp-route-id="@group.Id"><i class='bx bxs-edit'></i></a>
+                                                </div>
+
+                                                <div class="ps-2">
+                                                    <a asp-controller="Groups" asp-action="Delete"
+                                                       asp-route-id="@group.Id">
+                                                        <i class='bx bxs-trash'></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                            <tr>
+                                <td>
+                                    <div class="text-info">Total: @Model.Count()</div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

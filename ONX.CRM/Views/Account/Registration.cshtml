@@ -1,0 +1,71 @@
+﻿
+@{
+
+}
+@model RegisterViewModel
+<div class="page-wrapper">
+    <div class="page-content">
+        <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-2">
+            <div class="col mx-auto">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="border p-4 rounded">
+                            <div class="text-center">
+                                <h3 class="">Sign Up</h3>
+                                <p>
+                                    Already have an account? <a asp-controller="Account" asp-action="Authorization">Sign in here</a>
+                                </p>
+                            </div>
+                            <div class="form-body">
+                                <form asp-controller="Account" asp-action="Registration" method="post" class="row g-3">
+                                    <div asp-validation-summary="ModelOnly"></div>
+                                    <div class="col-sm-6">
+                                        <label asp-for="FirstName" class="form-label">First Name</label>
+                                        <input type="text" class="form-control" asp-for="FirstName" placeholder="Jhon">
+                                        <span asp-validation-for="FirstName"></span>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label asp-for="LastName" class="form-label">Last Name</label>
+                                        <input type="text" class="form-control" asp-for="LastName" placeholder="Deo">
+                                        <span asp-validation-for="LastName"></span>
+                                    </div>
+                                    <div class="col-12">
+                                        <label asp-for="Email" class="form-label">Email Address</label>
+                                        <input type="email" class="form-control" asp-for="Email" placeholder="example@user.com">
+                                        <span asp-validation-for="Email"></span>
+                                    </div>
+                                    <div class="col-12">
+                                        <label asp-for="Password" class="form-label">Password</label>
+                                        <div class="input-group" id="show_hide_password">
+                                            <input type="password" class="form-control border-end-0" asp-for="Password" value="12345678" placeholder="Enter Password">
+
+                                            <a href="javascript:;" class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
+                                        </div>
+                                        <span asp-validation-for="Password"></span>
+                                    </div>
+                                    <div class="col-12">
+                                        <label asp-for="ConfirmPassword" class="form-label">Confirm password</label>
+                                        <div class="input-group" id="show_hide_confirm_password">
+                                            <input type="password" class="form-control border-end-0" asp-for="ConfirmPassword" value="12345678" placeholder="Enter Password">
+
+                                            <a href="javascript:;" class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
+                                        </div>
+                                        <span asp-validation-for="ConfirmPassword"></span>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="d-grid">
+                                            <button type="submit" class="btn btn-primary"><i class='bx bx-user'></i>Sign up</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

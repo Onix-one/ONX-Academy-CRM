@@ -1,0 +1,129 @@
+﻿@using ONX.CRM.ViewModel;
+@{
+    var statusesList = new Dictionary<int, string>
+    {
+        [0] = "Pending",
+        [1] = "Started",
+        [2] = "Finished"
+    };
+
+}
+@model GroupViewModel
+
+<div class="page-wrapper">
+    <div class="page-content">
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3">ONX.CRM</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                        <li class="breadcrumb-item">
+                            <a asp-controller="Home" asp-action="Index"><i class="bx bx-home-alt"></i></a>
+                        </li>
+                        <li class="breadcrumb-item" aria-current="page">
+                            <a asp-controller="Groups" asp-action="Index">Groups</a>
+                        </li>
+                        @if (Model.Id != 0)
+                        {
+                            <li class="breadcrumb-item active" aria-current="page">Edit</li>
+                        }
+                        else
+                        {
+                            <li class="breadcrumb-item active" aria-current="page">Create</li>
+                        }
+
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="col mx-auto">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 mx-auto">
+                        <div class="card ">
+                            <div class="card-body">
+                                <div class="border p-4 rounded">
+                                    <form asp-controller="Groups" asp-action="Edit" method="post">
+                                        <h2 class="text-center m-0">Group</h2>
+                                        <div class="card-body">
+                                            <div>
+                                                <input type="hidden" asp-for="Id" value="@Model.Id" />
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0">Number</h6>
+                                                </div>
+                                                <div class="col-sm-9 text-secondary">
+                                                    <input type="text" class="form-control" asp-for="Number" />
+                                                    <span class="alert-danger" asp-validation-for="Number"></span>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0">Course</h6>
+                                                </div>
+                                                <div class="col-sm-9 text-secondary">
+                                                    <select asp-for="CourseId" class="form-select" aria-label="Default select example">
+                                                        <option selected value="">Choose...</option>
+                                                        @foreach (CourseViewModel course in ViewBag.Courses)
+                                                        {
+                                                            <option value="@course.Id">@course.Title</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0">Teacher</h6>
+                                                </div>
+                                                <div class="col-sm-9 text-secondary">
+                                                    <select asp-for="TeacherId" class="form-select" aria-label="Default select example">
+                                                        <option selected value="">Choose...</option>
+                                                        @foreach (TeacherViewModel teacher in ViewBag.Teachers)
+                                                        {
+                                                            <option value="@teacher.Id">@teacher.FullName</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0">Start date</h6>
+                                                </div>
+                                                <div class="col-sm-9 text-secondary">
+                                                    <input asp-for="StartDate" id="hire-date" class="form-control" type="date">
+                                                    <span class="alert-danger" asp-validation-for="StartDate"></span>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-sm-3">
+                                                    <h6 class="mb-0">Status</h6>
+                                                </div>
+                                                <div class="col-sm-9 text-secondary">
+                                                    <select asp-for="Status" class="form-select" aria-label="Default select example">
+                                                        <option selected value="">Choose...</option>
+                                                        @foreach (var status in statusesList)
+                                                        {
+                                                            <option value="@status.Key">@status.Value</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-3"></div>
+                                                <div class="col-sm-9 text-secondary">
+                                                    <button type="submit" class="btn btn-outline-primary px-4">Save</button>
+                                                    <a type="button" class="btn btn-outline-danger px-4" asp-action="Index">Close</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

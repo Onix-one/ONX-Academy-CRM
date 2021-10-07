@@ -1,0 +1,63 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Http
+@using System.Net
+@using Microsoft.AspNetCore.Authorization
+
+<div>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="user-box dropdown">
+                <a class="d-flex align-items-center nav-link dropdown-toggle dropdown-toggle-nocaret" href="#"
+                   role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="~/assets/images/avatars/avatar-2.png" class="user-img" alt="user avatar">
+                    <div class="user-info ps-3">
+                        <p class="user-name mb-0">Pauline Seitz</p>
+                        <p class="designattion mb-0">Web Designer</p>
+                    </div>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                        <a class="dropdown-item" href="javascript:;">
+                            <i class="bx bx-user"></i><span>Profile</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="javascript:;">
+                            <i class="bx bx-cog"></i><span>Settings</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="javascript:;">
+                            <i class='bx bx-home-circle'></i><span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="javascript:;">
+                            <i class='bx bx-dollar-circle'></i><span>Earnings</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="javascript:;">
+                            <i class='bx bx-download'></i><span>Downloads</span>
+                        </a>
+                    </li>
+                    <li>
+                        <div class="dropdown-divider mb-0"></div>
+                    </li>
+                    <li>
+                        <form  asp-controller="Account" asp-action="Logout" method="post">
+                            <input type="hidden" name="id" value="" />
+                            <button type="submit" class="dropdown-item"><i class='bx bx-log-out-circle'></i><span>Logout</span></button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+    }
+    else
+    {
+        <div class="user-box ps-4">
+            <a class="btn btn-outline-warning px-3 radius-30" asp-controller="Account" asp-action="Authorization"><i class='bx bx-lock'></i> Login</a>
+        </div>
+    }
+</div>
+

@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ONX.CRM.BLL\ONX.CRM.BLL.csproj" />
+    <ProjectReference Include="..\ONX.CRM.DAL.Dapper\ONX.CRM.DAL.Dapper.csproj" />
+    <ProjectReference Include="..\ONX.CRM.DAL.EF\ONX.CRM.DAL.EF.csproj" />
+    <ProjectReference Include="..\ONX.CRM.DAL\ONX.CRM.DAL.csproj" />
+  </ItemGroup>
+
+</Project>

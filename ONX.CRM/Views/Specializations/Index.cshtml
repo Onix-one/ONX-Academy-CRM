@@ -1,0 +1,52 @@
+﻿@using ONX.CRM.ViewModel
+@{ var counter = 0; const int numberOfColumns = 3; }
+
+@model List<SpecializationViewModel>
+
+<div class="page-wrapper">
+    <div class="page-content">
+        <!--breadcrumb-->
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3">ONX-Academy</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                        <li class="breadcrumb-item">
+                            <a asp-controller="Home" asp-action="Index"><i class="bx bx-home-alt"></i></a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">Specializations</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+       
+            @while (counter < Model.Count())
+            {
+                <div class="row row-cols-1 row-cols-md-1 row-cols-lg-3 row-cols-xl-3">
+                    @while (counter < Model.Count())
+                    {
+                        <div class="col">
+                            <div class="card">
+                                <img class="img-fluid" src="@Url.Content($"~/assets/img/{Model[counter].PNGName}")" />
+                                <div class="card-body">
+                                    <a class="btn btn-outline-primary" role="button"
+                                       asp-area="" asp-controller="Courses"
+                                       asp-action="Index"
+                                       asp-route-id="@Model[counter].Id">
+                                        @Model[counter].Title<br>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        counter++;
+                        if (counter % numberOfColumns == 0)
+                        {
+                            break;
+                        }
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>
+

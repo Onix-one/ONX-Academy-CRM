@@ -1,0 +1,37 @@
+<h1 id="tableLabel">Courses</h1>
+<p>Courses list.</p>
+<p *ngIf="!courses"><em>Loading...</em></p>
+<form>
+  <div class="form-group">
+    <H2><label>Specialization</label></H2>
+    <select type="number" on-change="onSelectSpecialization($event.target.value)" class="form-control col-3">
+      <option selected [ngValue]="0">Choose...</option>
+      <option [ngValue]="1">Frontend Developer</option>
+      <option [ngValue]="2">.NET Developer</option>
+      <option [ngValue]="3">Java Developer</option>
+      <option [ngValue]="4">Unity Developer</option>
+      <option [ngValue]="5">Database Developer</option>
+      <option [ngValue]="6">iOS Developer</option>
+    </select>
+  </div> 
+</form>
+<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="courses">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>NecessaryPreKnowledge</th>
+      <th>Cost</th>
+      <th>Specialization</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let course of courses">
+      <td>{{ course.title }}</td>
+      <td>{{ course.description }}</td>
+      <td>{{ course.necessaryPreKnowledge }}</td>
+      <td>{{ course.cost }}</td>
+      <td>{{ course.specialization }}</td>
+    </tr>
+  </tbody>
+</table>

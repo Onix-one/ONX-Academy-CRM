@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.0.90" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ONX.CRM.BLL\ONX.CRM.BLL.csproj" />
+    <ProjectReference Include="..\ONX.CRM.DAL\ONX.CRM.DAL.csproj" />
+  </ItemGroup>
+
+</Project>
