@@ -10,8 +10,8 @@ using ONX.CRM.DAL.EF.Contexts;
 namespace ONX.CRM.DAL.EF.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20210925002601_init2")]
-    partial class init2
+    [Migration("20211007122554_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

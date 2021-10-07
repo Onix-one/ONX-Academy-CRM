@@ -27,7 +27,7 @@
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col-lg-9 col-xl-9">
-                            <form class="float-lg-start" asp-controller="Teachers" asp-action="Search"  method="post">
+                            <form class="float-lg-start" asp-controller="Teachers" asp-action="Search" method="post">
                                 <div class="row row-cols-lg-auto g-2">
                                     <div class="col-12">
                                         <div class="position-relative">
@@ -45,8 +45,11 @@
                                         </div>
                                     </div>
                                     <div class="col-12">
-                                            <a asp-controller="Teachers" asp-action="Index" class="btn btn-outline-primary mb-3 mb-lg-0">Show all</a>
-                                        </div>
+                                        <button type="submit" class="btn btn-outline-success mb-3 mb-lg-0">Find</button>
+                                    </div>
+                                    <div class="col-12">
+                                        <a asp-controller="Teachers" asp-action="Index" class="btn btn-outline-primary mb-3 mb-lg-0">Show all</a>
+                                    </div>
                                 </div>
                             </form>
                         </div>
