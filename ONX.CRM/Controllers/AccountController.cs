@@ -81,7 +81,7 @@ namespace ONX.CRM.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("RequestsForCourses", "Requests");
+                        return RedirectToAction("Index", "Requests");
                     }
                 }
                 else
