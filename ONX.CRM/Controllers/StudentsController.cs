@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using ONX.CRM.BLL.Interfaces;
 using ONX.CRM.BLL.Models;
 using ONX.CRM.ViewModel;
+using ONX.CRM.ViewModel.Search;
 
 namespace ONX.CRM.Controllers
 {
@@ -28,14 +29,20 @@ namespace ONX.CRM.Controllers
             _groupService = groupService;
         }
 
-        public async Task<IActionResult> Index(int? id)
+        public async Task<IActionResult> Index(string query, int courseId, string type)
         {
             try
             {
-                var students = await _studentService.GetAllAsync();
-                return View(id.HasValue 
-                    ? _mapper.Map<IEnumerable<StudentViewModel>>(students.Where(_ => _.GroupId == id))
-                    : _mapper.Map<IEnumerable<StudentViewModel>>(students));
+                ViewBag.Courses = await _studentService.GetCoursesForDropdown();
+                if (CheckingForSearchOrSorting(query, courseId, type))
+                {
+                    ViewBag.Students = _mapper.Map<IEnumerable<StudentViewModel>>(await _studentService
+                            .SearchStudents(query, courseId, type));
+                    return View(new StudentViewModel { Search = new SearchStudentViewModel { Query = query } });
+                }
+
+                ViewBag.Students = _mapper.Map<IEnumerable<StudentViewModel>>(await _studentService.GetAllAsync());
+                return View(new StudentViewModel { Search = new SearchStudentViewModel() });
             }
             catch (Exception e)
             {
@@ -95,5 +102,37 @@ namespace ONX.CRM.Controllers
                 return RedirectToAction("Error", "Home");
             }
         }
+        public IActionResult SearchStudents(StudentViewModel model)
+        {
+            try
+            {
+                if (CheckingForSearchOrSorting(model.Search.Query, model.Search.CourseId, model.Search.Type))
+                {
+                    return RedirectToAction("Index", "Students", new
+                    {
+                        query = model.Search.Query,
+                        courseId = model.Search.CourseId,
+                        type = model.Search.Type
+                    }, null);
+                }
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Method didn't work({e.Message}), {e.TargetSite}, {DateTime.Now}");
+                return RedirectToAction("Error", "Home");
+            }
+        }
+
+        private bool CheckingForSearchOrSorting(string query, int courseId, string type)
+        {
+            if (!string.IsNullOrEmpty(query) || courseId != 0 || !string.IsNullOrEmpty(type))
+            {
+                return true;
+            }
+            return false;
+        }
+
+
     }
 }

@@ -96,13 +96,13 @@ namespace ONX.CRM.Controllers
         }
 
         [HttpPost]
-        public IActionResult Search(TeacherViewModel teacher)
+        public IActionResult SearchTeachers(TeacherViewModel model)
         {
             try
             {
-                if (!string.IsNullOrEmpty(teacher.Search.Query))
+                if (!string.IsNullOrEmpty(model.Search.Query))
                 {
-                    return RedirectToAction("Index", "Teachers", new { query = teacher.Search.Query }, null);
+                    return RedirectToAction("Index", "Teachers", new { query = model.Search.Query }, null);
                 }
                 return RedirectToAction("Index");
             }

@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Threading.Tasks;
 using ONX.CRM.BLL.Interfaces;
 using ONX.CRM.BLL.Models;
 using ONX.CRM.DAL.Interfaces;
@@ -27,6 +31,25 @@ namespace ONX.CRM.BLL.Services
                 _studentService.Create(student);
                 _repository.Delete(request.Id);
             }
+        }
+
+        public async Task<IEnumerable<StudentRequest>> GetRequestsByCourseId(int courseId)
+        {
+            var requestsList = (await _repository.GetAllAsync())
+                .Where(r => r.CourseId == courseId);
+            return requestsList;
+        }
+
+
+        public async Task<Dictionary<int, string>> GetCoursesForDropdown()
+        {
+            var courses = (await _repository.GetAllAsync()).Select(r => r.Course);
+            var coursesForDropMenu = new Dictionary<int, string>();
+            foreach (var course in courses)
+            {
+                coursesForDropMenu[course.Id] = course.Title;
+            }
+            return coursesForDropMenu;
         }
     }
 }

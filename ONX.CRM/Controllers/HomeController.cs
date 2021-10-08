@@ -8,7 +8,7 @@ namespace ONX.CRM.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("RequestsForCourses", "Requests");
+                return RedirectToAction("Index", "Requests");
 
             }
 

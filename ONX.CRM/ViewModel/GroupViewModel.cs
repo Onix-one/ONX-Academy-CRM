@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using ONX.CRM.BLL.Enums;
+using ONX.CRM.ViewModel.Search;
 
 namespace ONX.CRM.ViewModel
 {
@@ -18,5 +19,6 @@ namespace ONX.CRM.ViewModel
         public GroupStatus? Status { get; set; }
         public List<StudentViewModel> Students { get; set; }
         public string TeacherName { get; set; }
+        public SearchGroupViewModel Search { get; set; }
     }
 }

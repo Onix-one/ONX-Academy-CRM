@@ -2,7 +2,9 @@
 @using System.Linq
 @using System.Runtime.InteropServices.ComTypes
 @{
-    Dictionary<int, string> coursesForDropMenu = ViewBag.Courses;
+
+    Dictionary<int, string> coursesForDropMenu = ViewBag.CoursesList;
+
 }
 @model RequestsListViewModel
 
@@ -18,71 +20,52 @@
                         </li>
                         <li class="breadcrumb-item" aria-current="page">
 
-                            <a asp-controller="Requests" asp-action="RequestsForCourses">Requests Info</a>
+                            <a asp-controller="Requests" asp-action="Index">Requests Info</a>
                         </li>
                         <li class="breadcrumb-item active" aria-current="page">Requests</li>
                     </ol>
                 </nav>
             </div>
         </div>
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row align-items-center">
-                            <div class="col-lg-9 col-xl-9">
-                                <form class="float-lg-start" asp-controller="Requests" asp-action="Edit" method="post">
-                                    <div class="row row-cols-lg-auto g-2">
-                                        <div class="col-12">
-                                            <div class="position-relative">
-                                                <input type="text" class="form-control ps-5" placeholder="Search Reqeust...">
-                                                <span class="position-absolute top-50 product-show translate-middle-y">
-                                                    <i class="bx bx-search"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                                                <button type="button" class="btn btn-white">Sort by course</button>
-                                                <div class="btn-group" role="group">
-                                                    <button id="btnGroupDrop1" type="button" class="btn btn-white dropdown-toggle dropdown-toggle-nocaret px-1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        <i class="bx bx-chevron-down"></i>
-                                                    </button>
-                                                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                        <li> <a class="dropdown-item" role="presentation" asp-controller="Requests" asp-action="Index" asp-route-id="0">Show all</a></li>
-                                                        @foreach (var course in coursesForDropMenu)
-                                                        {
-                                                            <li><a class="dropdown-item" role="presentation" asp-controller="Requests"
-                                                                   asp-action="Index" asp-route-id="@course.Key">@course.Value</a></li>
-                                                        }
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                                                <button type="button" class="btn btn-white">Training type</button>
-                                                <div class="btn-group" role="group">
-                                                    <button id="btnGroupDrop1" type="button" class="btn btn-white dropdown-toggle dropdown-toggle-nocaret px-1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        <i class="bx bxs-category"></i>
-                                                    </button>
-                                                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                        <li><a class="dropdown-item" href="#">Online</a></li>
-                                                        <li><a class="dropdown-item" href="#">Offline</a></li>
-                                                        <li><a class="dropdown-item" href="#">Mix</a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col-lg-9 col-xl-9">
+                            <div class="row row-cols-lg-auto g-2">
+                                <div class="col-12">
+                                    <a asp-controller="Requests" asp-action="Index" class="btn btn-outline-primary mb-3 mb-lg-0">Show all</a>
+                                </div>
+                                <div class="col-12">
+                                    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                        <button type="button" class="btn btn-white">Sort by Course</button>
+                                        <div class="btn-group" role="group">
+                                            <button id="btnGroupDrop1" type="button" class="btn btn-white dropdown-toggle dropdown-toggle-nocaret px-1"
+                                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                                <i class="bx bx-chevron-down"></i>
+                                            </button>
+                                            <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                @foreach (var course in coursesForDropMenu)
+                                                {
+                                                    <li>
+                                                        <form asp-controller="Requests" asp-action="SearchRequests" method="post">
+                                                            <input asp-for="Search.CourseId" type="hidden" value="@course.Key">
+                                                            <button type="submit" class="dropdown-item"><span>@course.Value</span></button>
+                                                        </form>
+                                                    </li>
+                                                }
+                                            </ul>
                                         </div>
                                     </div>
-                                </form>
+                                </div>
                             </div>
-                            <div class="col-lg-3 col-xl-3">
-                                <div class="float-lg-end">
-                                    <div class="row row-cols-lg-auto g-2">
-                                        <div class="col-12">
-                                            <a asp-controller="Requests" asp-action="Edit" class="btn btn-outline-primary mb-3 mb-lg-0"><i class="bx bxs-plus-square"></i>Add new request</a>
-                                        </div>
+                        </div>
+                        <div class="col-lg-3 col-xl-3">
+                            <div class="float-lg-end">
+                                <div class="row row-cols-lg-auto g-2">
+                                    <div class="col-12">
+                                        <a asp-controller="Requests" asp-action="Edit" class="btn btn-outline-primary mb-3 mb-lg-0"><i class="bx bxs-plus-square"></i>Add new request</a>
                                     </div>
                                 </div>
                             </div>
@@ -91,41 +74,46 @@
                 </div>
             </div>
         </div>
-        <div class="card">
+    </div>
+    
+
+    <div class="card">
             <div class="card-body">
                 <form asp-controller="Requests" asp-action="Index" method="post">
-                    @if ((bool)ViewBag.CheckingAllowed && (bool)ViewBag.GroupExists)
+                    @if (!(bool) ViewBag.AllRequestsShow)
                     {
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="row align-items-center">
-                                    <div class="col-lg-9 col-xl-9">
-                                        <div class="row row-cols-lg-auto g-2">
-                                            <div class="col-12">
-                                                <div class="position-relative">
-                                                    <button type="submit" class="btn btn-outline-success mb-3 mb-lg-0" role="button">
-                                                        <i class="bx bxs-plus-square"></i>Add student(s) to group
-                                                    </button>
+
+
+                        @if ((bool)ViewBag.GroupExists)
+                        {
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="row align-items-center">
+                                        <div class="col-lg-9 col-xl-9">
+                                            <div class="row row-cols-lg-auto g-2">
+                                                <div class="col-12">
+                                                    <div class="position-relative">
+                                                        <button type="submit" class="btn btn-outline-success mb-3 mb-lg-0" role="button">
+                                                            <i class="bx bxs-plus-square"></i>Add student(s) to group
+                                                        </button>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-12">
-                                                <select asp-for="GroupId" class="form-select mb-3" aria-label="Default select example">
-                                                    <option value="hide">-- Group number --</option>
-                                                    @foreach (GroupViewModel group in ViewBag.Groups)
-                                                    {
-                                                        <option value="@group.Id">@group.Number</option>
-                                                    }
-                                                </select>
+                                                <div class="col-12">
+                                                    <select asp-for="GroupId" class="form-select mb-3" aria-label="Default select example">
+                                                        <option value="hide">-- Group number --</option>
+                                                        @foreach (GroupViewModel group in ViewBag.Groups)
+                                                        {
+                                                            <option value="@group.Id">@group.Number</option>
+                                                        }
+                                                    </select>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    }
-                    else
-                    {
-                        @if (!(bool)ViewBag.AllRequestsShow)
+                        }
+                        else
                         {
                             <div class="row pb-3">
                                 <div class="col-12">
@@ -146,12 +134,14 @@
                                 </div>
                             </div>
                         }
+
                     }
+                
                     <div>
                         <table class="table table-hover mb-0">
                             <thead class="table-light">
                                 <tr>
-                                    @if ((bool)ViewBag.CheckingAllowed && (bool)ViewBag.GroupExists)
+                                    @if (!(bool)ViewBag.AllRequestsShow && (bool)ViewBag.CheckingAllowed)
                                     {
                                         <th>Check</th>
                                     }
@@ -173,7 +163,7 @@
                                     <tr>
 
                                         @Html.HiddenFor(m => m.RequestsList[i].Id)
-                                        @if ((bool)ViewBag.CheckingAllowed && (bool)ViewBag.GroupExists)
+                                        @if (!(bool)ViewBag.AllRequestsShow && (bool)ViewBag.CheckingAllowed)
                                         {
                                             <td>
                                                 @Html.EditorFor(m => m.RequestsList[i].Selected)
