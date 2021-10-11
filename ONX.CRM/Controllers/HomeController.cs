@@ -9,7 +9,6 @@ namespace ONX.CRM.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 return RedirectToAction("Index", "Requests");
-
             }
 
             return View();

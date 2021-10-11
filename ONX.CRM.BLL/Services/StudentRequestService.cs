@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ONX.CRM.BLL.Interfaces;
@@ -12,12 +10,10 @@ namespace ONX.CRM.BLL.Services
     public class StudentRequestService : EntityService<StudentRequest>, IStudentRequestService
     {
         private readonly IStudentService _studentService;
-
         public StudentRequestService(IRepository<StudentRequest> repository, IStudentService studentService) : base(repository)
         {
             _studentService = studentService;
         }
-
         public void AssignRequestToGroups(IEnumerable<StudentRequest> requests, int groupId)
         {
             foreach (var request in requests)
@@ -32,15 +28,12 @@ namespace ONX.CRM.BLL.Services
                 _repository.Delete(request.Id);
             }
         }
-
         public async Task<IEnumerable<StudentRequest>> GetRequestsByCourseId(int courseId)
         {
             var requestsList = (await _repository.GetAllAsync())
                 .Where(r => r.CourseId == courseId);
             return requestsList;
         }
-
-
         public async Task<Dictionary<int, string>> GetCoursesForDropdown()
         {
             var courses = (await _repository.GetAllAsync()).Select(r => r.Course);

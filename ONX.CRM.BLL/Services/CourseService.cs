@@ -6,9 +6,6 @@ namespace ONX.CRM.BLL.Services
 {
     public class CourseService : EntityService<Course>, ICourseService
     {
-        public CourseService(IRepository<Course> repository) : base(repository)
-        {
-          
-        }
+        public CourseService(IRepository<Course> repository) : base(repository) { }
     }
 }

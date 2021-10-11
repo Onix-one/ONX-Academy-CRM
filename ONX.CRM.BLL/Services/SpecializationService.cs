@@ -6,9 +6,6 @@ namespace ONX.CRM.BLL.Services
 {
     public class SpecializationService : EntityService<Specialization>, ISpecializationService
     {
-        public SpecializationService(IRepository<Specialization> repository) : base(repository)
-        {
-           
-        }
+        public SpecializationService(IRepository<Specialization> repository) : base(repository) { }
     }
 }

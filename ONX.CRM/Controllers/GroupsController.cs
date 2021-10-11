@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ONX.CRM.BLL.Interfaces;
@@ -135,7 +134,6 @@ namespace ONX.CRM.Controllers
                 return RedirectToAction("Error", "Home");
             }
         }
-
         private bool CheckingForSearchOrSorting(string query, string status)
         {
             if (!string.IsNullOrEmpty(query) || !string.IsNullOrEmpty(status))
@@ -144,6 +142,5 @@ namespace ONX.CRM.Controllers
             }
             return false;
         }
-
     }
 }

@@ -8,7 +8,6 @@ namespace ONX.CRM.BLL.Services
     public class EntityService<T> : IEntityService<T> where T: class
     {
         protected readonly IRepository<T> _repository;
-
         public EntityService(IRepository<T> repository)
         {
             _repository = repository;

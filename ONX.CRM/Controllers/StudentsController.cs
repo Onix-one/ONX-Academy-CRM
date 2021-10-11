@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ONX.CRM.BLL.Enums;
@@ -124,7 +122,6 @@ namespace ONX.CRM.Controllers
                 return RedirectToAction("Error", "Home");
             }
         }
-
         private bool CheckingForSearchOrSorting(string query, int courseId, string type)
         {
             if (!string.IsNullOrEmpty(query) || courseId != 0 || !string.IsNullOrEmpty(type))
@@ -133,7 +130,5 @@ namespace ONX.CRM.Controllers
             }
             return false;
         }
-
-
     }
 }

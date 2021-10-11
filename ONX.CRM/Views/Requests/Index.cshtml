@@ -71,15 +71,11 @@
             </div>
         </div>
     </div>
-    
-
     <div class="card">
             <div class="card-body">
                 <form asp-controller="Requests" asp-action="Index" method="post">
                     @if (!(bool) ViewBag.AllRequestsShow)
                     {
-
-
                         @if ((bool)ViewBag.GroupExists)
                         {
                             <div class="row">
@@ -132,7 +128,6 @@
                         }
 
                     }
-                
                     <div>
                         <table class="table table-hover mb-0">
                             <thead class="table-light">

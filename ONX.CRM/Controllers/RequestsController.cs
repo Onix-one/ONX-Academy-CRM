@@ -81,7 +81,6 @@ namespace ONX.CRM.Controllers
                 return RedirectToAction("Error", "Home");
             }
         }
-
         [HttpPost]
         public async Task<IActionResult> Index(RequestsListViewModel model)
         {
@@ -101,7 +100,6 @@ namespace ONX.CRM.Controllers
                 return RedirectToAction("Error", "Home");
             }
         }
-
         [HttpGet]
         //[Authorize(Roles = "manager")]
         public async Task<IActionResult> Edit(int? id)
@@ -162,11 +160,7 @@ namespace ONX.CRM.Controllers
 
                 var course = _courseService.GetEntityById(id);
                 ViewBag.SpecializationId = course.SpecializationId;
-
-
                 ViewBag.SpecializationTitle = _specializationService.GetEntityById(course.SpecializationId).Title;
-
-
                 ViewBag.CourseName = course.Title;
                 ViewBag.Courses = _mapper.Map<IEnumerable<CourseViewModel>>(await _courseService.GetAllAsync());
                 ViewBag.Students = _mapper.Map<IEnumerable<StudentViewModel>>(await _studentService.GetAllAsync());
@@ -213,42 +207,5 @@ namespace ONX.CRM.Controllers
                 return RedirectToAction("Error", "Home");
             }
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }
