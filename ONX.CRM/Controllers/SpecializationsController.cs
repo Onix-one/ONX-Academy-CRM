@@ -21,7 +21,6 @@ namespace ONX.CRM.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            
             return View(_mapper.
                 Map<IEnumerable<SpecializationViewModel>>(await _specializationService.GetAllAsync()).ToList());
         }

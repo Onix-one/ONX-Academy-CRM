@@ -1,5 +1,4 @@
-﻿@using ONX.CRM.ViewModel
-@{
+﻿@{
 
     IEnumerable<TeacherViewModel> teachersList = ViewBag.Teachers;
 }
@@ -16,7 +15,6 @@
                         <li class="breadcrumb-item">
                             <a asp-controller="Home" asp-action="Index"><i class="bx bx-home-alt"></i></a>
                         </li>
-
                         <li class="breadcrumb-item active" aria-current="page">Teachers</li>
                     </ol>
                 </nav>
@@ -27,7 +25,7 @@
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col-lg-9 col-xl-9">
-                            <form class="float-lg-start" asp-controller="Teachers" asp-action="Search" method="post">
+                            <form class="float-lg-start" asp-controller="Teachers" asp-action="SearchTeachers" method="post">
                                 <div class="row row-cols-lg-auto g-2">
                                     <div class="col-12">
                                         <div class="position-relative">

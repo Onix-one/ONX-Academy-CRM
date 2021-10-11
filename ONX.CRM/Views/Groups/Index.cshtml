@@ -1,7 +1,15 @@
 ﻿@using ONX.CRM.ViewModel
 @{
+    var groupStatusList = new Dictionary<int, string>
+    {
+        [1] = "Pending",
+        [2] = "Started",
+        [3] = "Finished"
+    };
+
+    IEnumerable<GroupViewModel> groupsList = ViewBag.Groups;
 }
-@model IEnumerable<GroupViewModel>
+@model GroupViewModel
 
 <div class="page-wrapper">
     <div class="page-content">
@@ -18,40 +26,62 @@
                 </nav>
             </div>
         </div>
-
         <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
                         <div class="row align-items-center">
                             <div class="col-lg-9 col-xl-9">
-                                <form class="float-lg-start" asp-controller="Groups" asp-action="Edit" method="post">
-                                    <div class="row row-cols-lg-auto g-2">
-                                        <div class="col-12">
-                                            <div class="position-relative">
-                                                <input type="text" class="form-control ps-5" placeholder="Search...">
-                                                <span class="position-absolute top-50 product-show translate-middle-y">
-                                                    <i class="bx bx-search"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                                                <button type="button" class="btn btn-white">Sort by status</button>
-                                                <div class="btn-group" role="group">
-                                                    <button id="btnGroupDrop1" type="button" class="btn btn-white dropdown-toggle dropdown-toggle-nocaret px-1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        <i class="bx bxs-category"></i>
-                                                    </button>
-                                                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                        <li><a class="dropdown-item" href="#">Started</a></li>
-                                                        <li><a class="dropdown-item" href="#">Pending</a></li>
-                                                        <li><a class="dropdown-item" href="#">Finished</a></li>
-                                                    </ul>
+                                <div class="row row-cols-lg-auto g-2">
+                                    <div class="col-12">
+                                        <form asp-controller="Groups" asp-action="SearchGroups" method="post">
+                                            <div class="row row-cols-lg-auto">
+                                                <div class="col-8 pe-1">
+                                                    <div class="position-relative">
+                                                        @if (Model != null)
+                                                        {
+                                                            <input asp-for="Search.Query" type="text" class="form-control ps-5" placeholder="@Model.Search.Query">
+                                                        }
+                                                        else
+                                                        {
+                                                            <input asp-for="Search.Query" type="text" class="form-control ps-5" placeholder="Search...">
+                                                        }
+                                                        <span class="position-absolute top-50 product-show translate-middle-y">
+                                                            <i class="bx bx-search"></i>
+                                                        </span>
+                                                    </div>
                                                 </div>
+                                                <div class="col-2 ps-1">
+                                                    <button type="submit" class="btn btn-outline-success mb-3 mb-lg-0">Find</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-12">
+                                        <a asp-controller="Groups" asp-action="Index" class="btn btn-outline-primary mb-3 mb-lg-0">Show all</a>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                            <button type="button" class="btn btn-white">Sort by Status</button>
+                                            <div class="btn-group" role="group">
+                                                <button id="btnGroupDrop1" type="button" class="btn btn-white dropdown-toggle dropdown-toggle-nocaret px-1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="bx bx-calendar-week"></i>
+                                                </button>
+                                                <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                    @foreach (var status in groupStatusList)
+                                                    {
+                                                        <li>
+                                                            <form asp-controller="Groups" asp-action="SearchGroups" method="post">
+                                                                <input asp-for="Search.Status" type="hidden" value="@status.Value">
+                                                                <button type="submit" class="dropdown-item"><span>@status.Value</span></button>
+                                                            </form>
+                                                        </li>
+                                                    }
+                                                </ul>
                                             </div>
                                         </div>
                                     </div>
-                                </form>
+                                </div>
                             </div>
                             <div class="col-lg-3 col-xl-3">
                                 <div class="float-lg-end">
@@ -84,7 +114,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var group in Model)
+                            @foreach (var group in groupsList)
                             {
                                 <tr>
                                     <td>@group.Id</td>
@@ -105,8 +135,7 @@
                                     {
                                         <td></td>
                                     }
-                                    <td>@group.StartDate.Day.@group.StartDate.Month.@group.StartDate.Year</td>
-
+                                    <td>@group.StartDate.Month/@group.StartDate.Day/@group.StartDate.Year</td>
                                     @if (group.Status.ToString() == "Pending")
                                     {
                                         <td>
@@ -116,7 +145,6 @@
                                             </div>
                                         </td>
                                     }
-
                                     @if (group.Status.ToString() == "Started")
                                     {
                                         <td>
@@ -126,7 +154,6 @@
                                             </div>
                                         </td>
                                     }
-
                                     @if (group.Status.ToString() == "Finished")
                                     {
                                         <td>
@@ -140,12 +167,9 @@
                                     {
                                         <td></td>
                                     }
-
-
-
                                     <td>
                                         <a type="button" class="btn btn-outline-primary btn-sm radius-30 px-4"
-                                           asp-controller="Students" asp-action="Index" asp-route-id="@group.Id">View Details</a>
+                                           @*asp-controller="Students" asp-action="Index" asp-route-id="@group.Id"*@>View Details</a>
                                     </td>
                                     <td>
                                         <div class="d-flex order-actions">
@@ -154,7 +178,6 @@
                                                     <a asp-controller="Groups" asp-action="Edit"
                                                        asp-route-id="@group.Id"><i class='bx bxs-edit'></i></a>
                                                 </div>
-
                                                 <div class="ps-2">
                                                     <a asp-controller="Groups" asp-action="Delete"
                                                        asp-route-id="@group.Id">
@@ -168,7 +191,7 @@
                             }
                             <tr>
                                 <td>
-                                    <div class="text-info">Total: @Model.Count()</div>
+                                    <div class="text-info">Total: @groupsList.Count()</div>
                                 </td>
                             </tr>
                         </tbody>

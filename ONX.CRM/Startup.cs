@@ -5,7 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Data;
-using System.Net;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -88,8 +87,6 @@ namespace ONX.CRM
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
-
-
 
             RoleInitializer.InitializeAsync(serviceProvider, securityOptions).Wait(); ;
         }

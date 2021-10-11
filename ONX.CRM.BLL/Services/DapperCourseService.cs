@@ -9,12 +9,10 @@ namespace ONX.CRM.BLL.Services
     public class DapperCourseService : IDapperCourseService
     {
         private readonly IRepository<Course> _repository;
-
         public DapperCourseService(IRepository<Course> repository)
         {
             _repository = repository;
         }
-
         public IEnumerable<Course> GetAll()
         {
             return _repository.GetAll();

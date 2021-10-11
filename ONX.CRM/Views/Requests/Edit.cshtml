@@ -1,4 +1,4 @@
-﻿@using ONX.CRM.ViewModel;
+﻿
 @{
     var specializationTitle = ViewBag.SpecializationTitle;
     var courseName = ViewBag.CourseName;
@@ -28,8 +28,6 @@
 
 }
 @model StudentRequestViewModel
-
-
 
 <div class="page-wrapper">
     <div class="page-content">
@@ -64,10 +62,6 @@
                         }
                         @if (User.Identity.IsAuthenticated && User.IsInRole("manager"))
                         {
-                            <li class="breadcrumb-item" aria-current="page">
-
-                                <a asp-controller="Requests" asp-action="RequestsForCourses">Requests Info</a>
-                            </li>
                             @if (Model.Id == 0)
                             {
                                 <li class="breadcrumb-item active" aria-current="page">Create</li>

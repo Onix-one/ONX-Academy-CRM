@@ -2,7 +2,5 @@
 
 namespace ONX.CRM.BLL.Interfaces
 {
-    public interface ISpecializationService : IEntityService<Specialization>
-    {
-    }
+    public interface ISpecializationService : IEntityService<Specialization> { }
 }

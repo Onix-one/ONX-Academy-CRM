@@ -5947,6 +5947,9 @@ textarea.form-control-lg {
 .pe-2 {
 	padding-right: .5rem!important
 }
+.pe-2-5 {
+    padding-right: .75rem !important
+}
 .pe-3 {
 	padding-right: 1rem!important
 }
@@ -5982,6 +5985,9 @@ textarea.form-control-lg {
 }
 .ps-2 {
 	padding-left: .5rem!important
+}
+.ps-2-5 {
+    padding-left: .75rem !important
 }
 .ps-3 {
 	padding-left: 1rem!important

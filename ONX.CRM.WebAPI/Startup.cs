@@ -22,12 +22,10 @@ namespace ONX.CRM.WebAPI
     public class Startup
     {
         private IConfiguration Configuration { get; }
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
-
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<Context>(options =>
@@ -54,7 +52,6 @@ namespace ONX.CRM.WebAPI
             IMapper mapper = mapperConfig.CreateMapper();
             services.AddSingleton(mapper);
         }
-
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())

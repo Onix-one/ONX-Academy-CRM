@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ONX.CRM.BLL.Interfaces;
 using ONX.CRM.BLL.Models;
 using ONX.CRM.ViewModel;
+using ONX.CRM.ViewModel.Search;
 
 namespace ONX.CRM.Controllers
 {
@@ -19,19 +19,16 @@ namespace ONX.CRM.Controllers
         private readonly IStudentService _studentService;
         private readonly IEntityService<Course> _courseService;
         private readonly IStudentRequestService _studentRequestService;
-        private readonly RequestsListViewModel _requests;
         private readonly IGroupService _groupService;
         private readonly IEntityService<Specialization> _specializationService;
 
         public RequestsController(IStudentRequestService studentRequestsService,
             IStudentService studentService, IEntityService<Course> courseService,
-            IMapper mapper, ILogger<RequestsController> logger, RequestsListViewModel requests, 
-            IGroupService groupService, IEntityService<Specialization> specializationService)
+            IMapper mapper, ILogger<RequestsController> logger, IGroupService groupService, 
+            IEntityService<Specialization> specializationService)
         {
             _specializationService = specializationService;
             _groupService = groupService;
-            _requests = requests;
-            _requests.RequestsList = new List<StudentRequestViewModel>();
             _mapper = mapper;
             _logger = logger;
             _courseService = courseService;
@@ -40,51 +37,43 @@ namespace ONX.CRM.Controllers
         }
         [HttpGet]
         //[Authorize(Roles = "manager")]
-        public async Task<IActionResult> Index(int? id)
+        public async Task<IActionResult> Index(int courseId)
         {
             try
             {
-                var requests = await _studentRequestService.GetAllAsync();
-                var coursesForDropMenu = new Dictionary<int, string>();
-                var studentRequests = requests.ToList();
-                foreach (var course in studentRequests.Select(_ => _.Course))
+                ViewBag.CoursesList = await _studentRequestService.GetCoursesForDropdown();
+                if (courseId != 0)
                 {
-                    coursesForDropMenu[course.Id] = course.Title;
-                }
-                ViewBag.Courses = coursesForDropMenu;
-                if (id.HasValue && id != 0)
-                {
-                    foreach (var request in _mapper.Map<IEnumerable<StudentRequestViewModel>>(studentRequests.Where(_ => _.CourseId == id)))
-                    {
-                        _requests.RequestsList.Add(request);
-                    }
-
-                    var groups = _mapper.Map<IEnumerable<GroupViewModel>>(await _groupService.GetAllAsync()).Where(g => g.CourseId == id);
-
+                    ViewBag.AllRequestsShow = false;
+                    var requestsList = _mapper.Map<IEnumerable<StudentRequestViewModel>>(await _studentRequestService
+                        .GetRequestsByCourseId(courseId));
+                    var groups = _mapper.Map<IEnumerable<GroupViewModel>>(await _groupService.GetAllAsync())
+                        .Where(g => g.CourseId == courseId);
                     if (groups.Count() != 0)
                     {
-                        ViewBag.AllRequestsShow = false;
-                        ViewBag.Groups = groups;
                         ViewBag.GroupExists = true;
                         ViewBag.CheckingAllowed = true;
-                        return View(_requests);
+                        ViewBag.Groups = groups;
+                        return View(new RequestsListViewModel
+                        {
+                            RequestsList = requestsList.ToList()
+                        });
                     }
-                    else
+                    ViewBag.GroupExists = false;
+                    ViewBag.CheckingAllowed = false;
+                       
+                    return View(new RequestsListViewModel
                     {
-                        ViewBag.AllRequestsShow = false;
-                        ViewBag.CheckingAllowed = true;
-                        ViewBag.GroupExists = false;
-                        return View(_requests);
-                    }
-                }
-                foreach (var request in _mapper.Map<IEnumerable<StudentRequestViewModel>>(studentRequests))
-                {
-                    _requests.RequestsList.Add(request);
+                        RequestsList = requestsList.ToList()
+                    });
                 }
 
                 ViewBag.AllRequestsShow = true;
                 ViewBag.CheckingAllowed = false;
-                return View(_requests);
+                var requests = _mapper.Map<IEnumerable<StudentRequestViewModel>>(await _studentRequestService.GetAllAsync());
+                return View(new RequestsListViewModel() { Search = new SearchRequestViewModel(), 
+                    RequestsList = requests.ToList() });
+
             }
             catch (Exception e)
             {
@@ -102,18 +91,14 @@ namespace ONX.CRM.Controllers
                 {
                     return RedirectToAction("Index", "Requests", new { id = model.RequestsList.FirstOrDefault().CourseId});
                 }
-
-
                 _studentRequestService.AssignRequestToGroups(requests, model.GroupId);
-
-                return RedirectToAction("RequestsForCourses", "Requests");
+                return RedirectToAction("Index", "Requests");
             }
             catch (Exception e)
             {
                 _logger.LogError($"Method didn't work({e.Message}), {e.TargetSite}, {DateTime.Now}");
                 return RedirectToAction("Error", "Home");
             }
-
         }
         [HttpGet]
         //[Authorize(Roles = "manager")]
@@ -157,7 +142,7 @@ namespace ONX.CRM.Controllers
 
                 if (User.IsInRole("manager"))
                 {
-                    return RedirectToAction("RequestsForCourses");
+                    return RedirectToAction("Index");
                 }
                 return RedirectToAction("Index", "Specializations");
             }
@@ -167,20 +152,15 @@ namespace ONX.CRM.Controllers
                 return RedirectToAction("Error", "Home");
             }
         }
-
         [HttpGet]
         public async Task<IActionResult> EditFromQuery(int id)
         {
             try
             {
-                
+
                 var course = _courseService.GetEntityById(id);
                 ViewBag.SpecializationId = course.SpecializationId;
-
-
                 ViewBag.SpecializationTitle = _specializationService.GetEntityById(course.SpecializationId).Title;
-
-
                 ViewBag.CourseName = course.Title;
                 ViewBag.Courses = _mapper.Map<IEnumerable<CourseViewModel>>(await _courseService.GetAllAsync());
                 ViewBag.Students = _mapper.Map<IEnumerable<StudentViewModel>>(await _studentService.GetAllAsync());
@@ -192,7 +172,6 @@ namespace ONX.CRM.Controllers
                 return RedirectToAction("Error", "Home");
             }
         }
-
         [HttpPost]
         //[Authorize(Roles = "manager")]
         public IActionResult Delete(int id)
@@ -208,24 +187,19 @@ namespace ONX.CRM.Controllers
                 return RedirectToAction("Error", "Home");
             }
         }
-
-
-        [HttpGet]
-        public async Task<IActionResult> RequestsForCourses(int? id)
+        public IActionResult SearchRequests(RequestsListViewModel model)
         {
             try
             {
-                var requests = _mapper.Map<IEnumerable<StudentRequestViewModel>>(await _studentRequestService.GetAllAsync()).ToList();
-                var courses = _mapper.Map<IEnumerable<CourseViewModel>>(await _courseService.GetAllAsync()).ToList();
-                var allRequestsCount = 0;
-                foreach (var course in courses)
+                if (model.Search.CourseId != 0)
                 {
-                    var count = requests.Count(r => r.CourseId == course.Id);
-                    allRequestsCount += count;
-                    course.RequestsCount = count;
+                    return RedirectToAction("Index", "Requests", new
+                    {
+                        courseId = model.Search.CourseId
+                    }, null);
                 }
-                ViewBag.RequestsCount = allRequestsCount;
-                return View(courses.Where(c => c.RequestsCount != 0));
+
+                return RedirectToAction("Index");
             }
             catch (Exception e)
             {

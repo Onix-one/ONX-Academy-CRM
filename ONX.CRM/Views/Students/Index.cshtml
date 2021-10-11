@@ -1,12 +1,15 @@
 ﻿@using ONX.CRM.ViewModel
 
-@{
+@{ var studentTypeList = new Dictionary<int, string>
+    {
+        [1] = "Online",
+        [2] = "Offline",
+        [3] = "Mix"
+    };
     Dictionary<int, string> coursesForDropMenu = ViewBag.Courses;
+    IEnumerable<StudentViewModel> studentsList = ViewBag.Students;
 }
-
-
-@model IEnumerable<StudentViewModel>
-
+@model StudentViewModel
 
 <div class="page-wrapper">
     <div class="page-content">
@@ -23,59 +26,84 @@
                 </nav>
             </div>
         </div>
-
         <div class="row">
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
                         <div class="row align-items-center">
                             <div class="col-lg-9 col-xl-9">
-                                <form class="float-lg-start" asp-controller="Groups" asp-action="Edit" method="post">
-                                    <div class="row row-cols-lg-auto g-2">
-                                        <div class="col-12">
-                                            <div class="position-relative">
-                                                <input type="text" class="form-control ps-5" placeholder="Search...">
-                                                <span class="position-absolute top-50 product-show translate-middle-y">
-                                                    <i class="bx bx-search"></i>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                                                <button type="button" class="btn btn-white">Sort by Course</button>
-                                                <div class="btn-group" role="group">
-                                                    <button id="btnGroupDrop1" type="button" class="btn btn-white dropdown-toggle dropdown-toggle-nocaret px-1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        <i class="bx bx-chevron-down"></i>
-                                                    </button>
-                                                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                        <li><a class="dropdown-item" href="#">Course 001</a></li>
-                                                        <li><a class="dropdown-item" href="#">Course 002</a></li>
-                                                        <li><a class="dropdown-item" href="#">Course 003</a></li>
-                                                        @*@foreach (var course in coursesForDropMenu)
+                                <div class="row row-cols-lg-auto g-2">
+                                    <div class="col-12">
+                                        <form asp-controller="Students" asp-action="SearchStudents" method="post">
+                                            <div class="row row-cols-lg-auto">
+                                                <div class="col-8 pe-1">
+                                                    <div class="position-relative">
+                                                        @if (Model != null)
                                                         {
-                                                            <a class="dropdown-item" role="presentation" asp-controller="Requests" asp-action="Index" asp-route-id="@course.Key">@course.Value</a>
-                                                        }*@
-                                                    </ul>
+                                                            <input asp-for="Search.Query" type="text" class="form-control ps-5" placeholder="@Model.Search.Query">
+                                                        }
+                                                        else
+                                                        {
+                                                            <input asp-for="Search.Query" type="text" class="form-control ps-5" placeholder="Search...">
+                                                        }
+                                                        <span class="position-absolute top-50 product-show translate-middle-y">
+                                                            <i class="bx bx-search"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-2 ps-1">
+                                                    <button type="submit" class="btn btn-outline-success mb-3 mb-lg-0">Find</button>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                                                <button type="button" class="btn btn-white">Sort by Training type</button>
-                                                <div class="btn-group" role="group">
-                                                    <button id="btnGroupDrop1" type="button" class="btn btn-white dropdown-toggle dropdown-toggle-nocaret px-1" data-bs-toggle="dropdown" aria-expanded="false">
-                                                        <i class="bx bxs-category"></i>
-                                                    </button>
-                                                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                        <li><a class="dropdown-item" href="#">Online</a></li>
-                                                        <li><a class="dropdown-item" href="#">Offline</a></li>
-                                                        <li><a class="dropdown-item" href="#">Mix</a></li>
-                                                    </ul>
-                                                </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-12">
+                                        <a asp-controller="Students" asp-action="Index" class="btn btn-outline-primary mb-3 mb-lg-0">Show all</a>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                            <button type="button" class="btn btn-white">Sort by Course</button>
+                                            <div class="btn-group" role="group">
+                                                <button id="btnGroupDrop1" type="button" class="btn btn-white dropdown-toggle dropdown-toggle-nocaret px-1"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="bx bx-chevron-down"></i>
+                                                </button>
+                                                <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                    @foreach (var course in coursesForDropMenu)
+                                                    {
+                                                        <li>
+                                                            <form asp-controller="Students" asp-action="SearchStudents" method="post">
+                                                                <input asp-for="Search.CourseId" type="hidden" value="@course.Key">
+                                                                <button type="submit" class="dropdown-item"><span>@course.Value</span></button>
+                                                            </form>
+                                                        </li>
+                                                    }
+                                                </ul>
                                             </div>
                                         </div>
                                     </div>
-                                </form>
+                                    <div class="col-12">
+                                        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                            <button type="button" class="btn btn-white">Sort by Training type</button>
+                                            <div class="btn-group" role="group">
+                                                <button id="btnGroupDrop1" type="button" class="btn btn-white dropdown-toggle dropdown-toggle-nocaret px-1" data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="bx bxs-category"></i>
+                                                </button>
+                                                <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                    @foreach (var type in studentTypeList)
+                                                    {
+                                                        <li>
+                                                            <form asp-controller="Students" asp-action="SearchStudents" method="post">
+                                                                <input asp-for="Search.Type" type="hidden" value="@type.Value">
+                                                                <button type="submit" class="dropdown-item"><span>@type.Value</span></button>
+                                                            </form>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-lg-3 col-xl-3">
                                 <div class="float-lg-end">
@@ -93,8 +121,8 @@
         </div>
 
         <div class="card">
-            <div class="card-body">
-                <div>
+            <div class="card-body ">
+                <div class="table-responsive-sm">
                     <table class="table table-hover mb-0">
                         <thead class="table-light">
                             <tr>
@@ -111,57 +139,74 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var student in Model)
+                            @foreach (var student in studentsList)
                             {
-                                <tr>
-                                    <td>@student.Id</td>
-                                    <td>@student.LastName</td>
-                                    <td>@student.FirstName</td>
-                                    <td>@student.Email</td>
-                                    <td>@student.Phone</td>
+                            <tr>
+                                <td>@student.Id</td>
+                                <td>@student.LastName</td>
+                                <td>@student.FirstName</td>
+                                <td>@student.Email</td>
+                                <td>@student.Phone</td>
 
-                                    @if (student.GroupId != null)
-                                    {
-                                        <td>@student.Group.Number</td>
-                                    }
-                                    else
-                                    {
-                                        <td></td>
-                                    }
-                                    @if (student.GroupId != null)
-                                    {
-                                        <td>@student.Group.Course.Title</td>
-                                    }
-                                    else
-                                    {
-                                        <td></td>
-                                    }
-                                    <td>@student.Type.ToString()</td>
+                                @if (student.GroupId != null)
+                                {
+                                    <td>@student.Group.Number</td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                                @if (student.GroupId != null)
+                                {
+                                    <td>@student.Group.Course.Title</td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                                @if (student.Type.ToString() == "Online")
+                                {
                                     <td>
-                                        <button type="button" class="btn btn-outline-primary btn-sm radius-30 px-4">View</button>
+                                        <div class="badge rounded-pill bg-light-success text-success w-100">@student.Type.ToString()</div>
                                     </td>
+                                }
+                                @if (student.Type.ToString() == "Offline")
+                                {
                                     <td>
+                                        <div class="badge rounded-pill bg-light-danger text-danger w-100">@student.Type.ToString()</div>
+                                    </td>
+                                }
+                                @if (student.Type.ToString() == "Mix")
+                                {
+                                    <td>
+                                        <div class="badge rounded-pill bg-light-info text-info w-100">@student.Type.ToString()</div>
+                                    </td>
+                                }
+                                <td>
+                                    <button type="button" class="btn btn-outline-primary btn-sm radius-30 px-4">View</button>
+                                </td>
+                                <td>
+                                    <div class="d-flex order-actions">
                                         <div class="d-flex order-actions">
-                                            <div class="d-flex order-actions">
-                                                <div>
-                                                    <a asp-controller="Students" asp-action="Edit"
-                                                       asp-route-id="@student.Id"><i class='bx bxs-edit'></i></a>
-                                                </div>
+                                            <div>
+                                                <a asp-controller="Students" asp-action="Edit"
+                                                   asp-route-id="@student.Id"><i class='bx bxs-edit'></i></a>
+                                            </div>
 
-                                                <div class="ps-2">
-                                                    <a asp-controller="Students" asp-action="Delete"
-                                                       asp-route-id="@student.Id">
-                                                        <i class='bx bxs-trash'></i>
-                                                    </a>
-                                                </div>
+                                            <div class="ps-2">
+                                                <a asp-controller="Students" asp-action="Delete"
+                                                   asp-route-id="@student.Id">
+                                                    <i class='bx bxs-trash'></i>
+                                                </a>
                                             </div>
                                         </div>
-                                    </td>
-                                </tr>
+                                    </div>
+                                </td>
+                            </tr>
                             }
                             <tr>
                                 <td>
-                                    <div class="text-info">Total: @Model.Count()</div>
+                                    <div class="text-info">Total: @studentsList.Count()</div>
                                 </td>
                             </tr>
                         </tbody>
