@@ -17,28 +17,13 @@ namespace ONX.CRM.BLL.Services
             
         }
 
-        public async Task<IEnumerable<Group>> SearchGroups(string query, string status)
-        {
-            if (!string.IsNullOrEmpty(query))
-            {
-                return await GetGroupsByQuery(query);
-            }
-
-            if (!string.IsNullOrEmpty(status))
-            {
-                return await GetGroupsByStatus(status);
-            }
-
-            return null;
-        }
-
-        private async Task<IEnumerable<Group>> GetGroupsByStatus(string status)
+        public async Task<IEnumerable<Group>> GetGroupsByStatus(string status)
         {
             var groupsList = (await _repository.GetAllAsync()).Where(s => s.Status.ToString() == status);
             return groupsList;
         }
 
-        private async Task<IEnumerable<Group>> GetGroupsByQuery(string query)
+        public async Task<IEnumerable<Group>> GetGroupsByQuery(string query)
         {
             var groupsList = await _repository.GetAllAsync();
             var groups = new List<Group>();

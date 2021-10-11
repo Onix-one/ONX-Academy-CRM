@@ -35,9 +35,19 @@ namespace ONX.CRM.Controllers
             {
                 if (CheckingForSearchOrSorting(query, status))
                 {
-                    ViewBag.Groups = _mapper.Map<IEnumerable<GroupViewModel>>(await _groupService
-                        .SearchGroups(query, status));
-                    return View(new GroupViewModel() { Search = new SearchGroupViewModel() { Query = query } });
+                    if (!string.IsNullOrEmpty(query))
+                    {
+                        ViewBag.Groups = _mapper.Map<IEnumerable<GroupViewModel>>(await _groupService
+                            .GetGroupsByQuery(query));
+                        return View(new GroupViewModel() { Search = new SearchGroupViewModel() { Query = query } });
+                    }
+
+                    if (!string.IsNullOrEmpty(status))
+                    {
+                        ViewBag.Groups = _mapper.Map<IEnumerable<GroupViewModel>>(await _groupService
+                            .GetGroupsByStatus(status));
+                        return View(new GroupViewModel { Search = new SearchGroupViewModel() });
+                    }
                 }
 
                 ViewBag.Groups = _mapper.Map<IEnumerable<GroupViewModel>>(await _groupService.GetAllAsync());

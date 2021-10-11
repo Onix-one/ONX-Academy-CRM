@@ -1,7 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using ONX.CRM.BLL.Models;
@@ -53,11 +50,6 @@ namespace ONX.CRM.Controllers
             return View(model);
         }
 
-
-
-
-
-
         [HttpGet]
         public IActionResult Authorization(string returnUrl = null)
         {
@@ -91,7 +83,6 @@ namespace ONX.CRM.Controllers
             }
             return View(model);
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
@@ -100,41 +91,5 @@ namespace ONX.CRM.Controllers
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-       
     }
 }

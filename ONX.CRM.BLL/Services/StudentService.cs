@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ONX.CRM.BLL.Enums;
 using ONX.CRM.BLL.Interfaces;
 using ONX.CRM.BLL.Models;
 using ONX.CRM.DAL.Interfaces;
@@ -12,7 +13,7 @@ namespace ONX.CRM.BLL.Services
     {
         public StudentService(IRepository<Student> repository) : base(repository) { }
        
-        public async Task<IEnumerable<Student>> SearchStudents(string query, int courseId, string type)
+        public async Task<IEnumerable<Student>> SearchStudents(string query, int courseId, StudentType type)
         {
             if (!string.IsNullOrEmpty(query))
             {
@@ -24,7 +25,7 @@ namespace ONX.CRM.BLL.Services
                 return await GetStudentsByCourseId(courseId);
             }
 
-            if (!string.IsNullOrEmpty(type))
+            if (!string.IsNullOrEmpty(type.ToString()))
             {
                 return await GetStudentsByType(type);
             }
@@ -32,9 +33,9 @@ namespace ONX.CRM.BLL.Services
             return null;
         }
 
-        private async Task<IEnumerable<Student>> GetStudentsByType(string type)
+        private async Task<IEnumerable<Student>> GetStudentsByType(StudentType type)
         {
-            var studentsList = (await _repository.GetAllAsync()).Where(s => s.Type.ToString() == type);
+            var studentsList = (await _repository.GetAllAsync()).Where(s => s.Type.ToString() == type.ToString());
             return studentsList;
         }
 

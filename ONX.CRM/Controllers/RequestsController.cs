@@ -42,7 +42,7 @@ namespace ONX.CRM.Controllers
             try
             {
                 ViewBag.CoursesList = await _studentRequestService.GetCoursesForDropdown();
-                if (CheckingForSortingByCourse(courseId))
+                if (courseId != 0)
                 {
                     ViewBag.AllRequestsShow = false;
                     var requestsList = _mapper.Map<IEnumerable<StudentRequestViewModel>>(await _studentRequestService
@@ -197,7 +197,7 @@ namespace ONX.CRM.Controllers
         {
             try
             {
-                if (CheckingForSortingByCourse(model.Search.CourseId))
+                if (model.Search.CourseId != 0)
                 {
                     return RedirectToAction("Index", "Requests", new
                     {
@@ -213,14 +213,6 @@ namespace ONX.CRM.Controllers
                 return RedirectToAction("Error", "Home");
             }
         }
-        private bool CheckingForSortingByCourse(int courseId)
-        {
-            if (courseId != 0)
-            {
-                return true;
-            }
-            return false;
-        }
 
 
 
@@ -250,13 +242,13 @@ namespace ONX.CRM.Controllers
 
 
 
-       
 
 
 
-      
 
-       
+
+
+
 
     }
 }

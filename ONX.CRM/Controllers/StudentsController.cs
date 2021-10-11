@@ -6,6 +6,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using ONX.CRM.BLL.Enums;
 using ONX.CRM.BLL.Interfaces;
 using ONX.CRM.BLL.Models;
 using ONX.CRM.ViewModel;
@@ -29,12 +30,12 @@ namespace ONX.CRM.Controllers
             _groupService = groupService;
         }
 
-        public async Task<IActionResult> Index(string query, int courseId, string type)
+        public async Task<IActionResult> Index(string query, int courseId, StudentType type)
         {
             try
             {
                 ViewBag.Courses = await _studentService.GetCoursesForDropdown();
-                if (CheckingForSearchOrSorting(query, courseId, type))
+                if (CheckingForSearchOrSorting(query, courseId, type.ToString()))
                 {
                     ViewBag.Students = _mapper.Map<IEnumerable<StudentViewModel>>(await _studentService
                             .SearchStudents(query, courseId, type));
