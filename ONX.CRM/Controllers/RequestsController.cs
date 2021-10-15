@@ -41,7 +41,7 @@ namespace ONX.CRM.Controllers
         {
             try
             {
-                ViewBag.CoursesList = await _studentRequestService.GetCoursesForDropdown();
+                ViewBag.CoursesList = await _studentRequestService.GetActiveCoursesIdTitle();
                 if (courseId != 0)
                 {
                     ViewBag.AllRequestsShow = false;

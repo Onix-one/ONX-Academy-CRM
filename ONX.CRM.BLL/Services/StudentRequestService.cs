@@ -18,7 +18,6 @@ namespace ONX.CRM.BLL.Services
         {
             foreach (var request in requests)
             {
-                //create Student
                 var student = new Student()
                 {
                     FirstName = request.FirstName, LastName = request.LastName,
@@ -34,15 +33,15 @@ namespace ONX.CRM.BLL.Services
                 .Where(r => r.CourseId == courseId);
             return requestsList;
         }
-        public async Task<Dictionary<int, string>> GetCoursesForDropdown()
+        public async Task<Dictionary<int, string>> GetActiveCoursesIdTitle()
         {
             var courses = (await _repository.GetAllAsync()).Select(r => r.Course);
-            var coursesForDropMenu = new Dictionary<int, string>();
+            var activeCoursesIdTitle = new Dictionary<int, string>();
             foreach (var course in courses)
             {
-                coursesForDropMenu[course.Id] = course.Title;
+                activeCoursesIdTitle[course.Id] = course.Title;
             }
-            return coursesForDropMenu;
+            return activeCoursesIdTitle;
         }
     }
 }
