@@ -32,7 +32,7 @@ namespace ONX.CRM.Controllers
         {
             try
             {
-                ViewBag.Courses = await _studentService.GetCoursesForDropdown();
+                ViewBag.Courses = await _studentService.GetActiveCoursesIdTitle();
                 if (CheckingForSearchOrSorting(query, courseId, type.ToString()))
                 {
                     ViewBag.Students = _mapper.Map<IEnumerable<StudentViewModel>>(await _studentService

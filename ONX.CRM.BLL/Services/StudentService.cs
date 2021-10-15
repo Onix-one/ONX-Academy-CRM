@@ -49,50 +49,25 @@ namespace ONX.CRM.BLL.Services
 
         private async Task<IEnumerable<Student>> GetStudentsByQuery(string query)
         {
-            var studentsList = await _repository.GetAllAsync();
-            var students = new List<Student>();
-            foreach (var student in studentsList)
-            {
-                if (student.FirstName.Contains(query, StringComparison.OrdinalIgnoreCase))
-                {
-                    students.Add(student);
-                    continue;
-                }
-                if (student.LastName.Contains(query, StringComparison.OrdinalIgnoreCase))
-                {
-                    students.Add(student);
-                    continue;
-                }
-                if (student.Email.Contains(query, StringComparison.OrdinalIgnoreCase))
-                {
-                    students.Add(student);
-                    continue;
-                }
-                if (student.Phone.Contains(query, StringComparison.OrdinalIgnoreCase))
-                {
-                    students.Add(student);
-                    continue;
-                }
-                if (student.Group.Number.Contains(query, StringComparison.OrdinalIgnoreCase))
-                {
-                    students.Add(student);
-                }
-            }
-            return students;
+            var allStudents = await _repository.GetAllAsync();
+
+            return allStudents.Where(s => s.FirstName.Contains(query, StringComparison.OrdinalIgnoreCase)
+                                             || s.LastName.Contains(query, StringComparison.OrdinalIgnoreCase)
+                                             || s.Email.Contains(query, StringComparison.OrdinalIgnoreCase)
+                                             || s.Phone.Contains(query, StringComparison.OrdinalIgnoreCase)
+                                             || s.Group.Number.Contains(query, StringComparison.OrdinalIgnoreCase));
         }
 
-
-        public async Task<Dictionary<int, string>> GetCoursesForDropdown()
+        public async Task<Dictionary<int, string>> GetActiveCoursesIdTitle()
         {
             var courses = (await _repository.GetAllAsync()).Select(r => r.Group.Course);
-            var coursesForDropMenu = new Dictionary<int, string>();
+            var activeCoursesIdTitle = new Dictionary<int, string>();
            
             foreach (var course in courses)
             {
-                coursesForDropMenu[course.Id] = course.Title;
+                activeCoursesIdTitle[course.Id] = course.Title;
             }
-            return coursesForDropMenu;
+            return activeCoursesIdTitle;
         }
-
     }
 }
