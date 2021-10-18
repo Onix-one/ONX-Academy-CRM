@@ -5,10 +5,12 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ONX.CRM.BLL.Interfaces;
 using ONX.CRM.BLL.Models;
+using ONX.CRM.Filters;
 using ONX.CRM.ViewModel;
 
 namespace ONX.CRM.Controllers
 {
+    [TypeFilter(typeof(LocalExceptionFilter))]
     public class SpecializationsController : Controller
     {
         private readonly IEntityService<Specialization> _specializationService;

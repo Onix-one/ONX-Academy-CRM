@@ -1,16 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ONX.CRM.BLL.Interfaces;
 using ONX.CRM.BLL.Models;
+using ONX.CRM.Filters;
 using ONX.CRM.ViewModel;
 using ONX.CRM.ViewModel.Search;
 
 namespace ONX.CRM.Controllers
 {
+    [TypeFilter(typeof(LocalExceptionFilter))]
     //[Authorize(Roles = "manager")]
     public class GroupsController : Controller
     {
@@ -30,109 +31,68 @@ namespace ONX.CRM.Controllers
         }
         public async Task<IActionResult> Index(string query, string status)
         {
-            try
+            if (CheckingForSearchOrSorting(query, status))
             {
-                if (CheckingForSearchOrSorting(query, status))
+                    
+                if (!string.IsNullOrEmpty(query))
                 {
-                    if (!string.IsNullOrEmpty(query))
-                    {
-                        ViewBag.Groups = _mapper.Map<IEnumerable<GroupViewModel>>(await _groupService
-                            .GetGroupsByQuery(query));
-                        return View(new GroupViewModel() { Search = new SearchGroupViewModel() { Query = query } });
-                    }
-
-                    if (!string.IsNullOrEmpty(status))
-                    {
-                        ViewBag.Groups = _mapper.Map<IEnumerable<GroupViewModel>>(await _groupService
-                            .GetGroupsByStatus(status));
-                        return View(new GroupViewModel { Search = new SearchGroupViewModel() });
-                    }
+                    ViewBag.Groups = _mapper.Map<IEnumerable<GroupViewModel>>(await _groupService
+                        .GetGroupsByQuery(query));
+                    return View(new GroupViewModel() { Search = new SearchGroupViewModel() { Query = query } });
                 }
 
-                ViewBag.Groups = _mapper.Map<IEnumerable<GroupViewModel>>(await _groupService.GetAllAsync());
-                return View(new GroupViewModel { Search = new SearchGroupViewModel() });
-
+                if (!string.IsNullOrEmpty(status))
+                {
+                    ViewBag.Groups = _mapper.Map<IEnumerable<GroupViewModel>>(await _groupService
+                        .GetGroupsByStatus(status));
+                    return View(new GroupViewModel { Search = new SearchGroupViewModel() });
+                }
             }
-            catch (Exception e)
-            {
-                _logger.LogError($"Method didn't work({e.Message}), {e.TargetSite}, {DateTime.Now}");
-                return RedirectToAction("Error", "Home");
-            }
+            ViewBag.Groups = _mapper.Map<IEnumerable<GroupViewModel>>(await _groupService.GetAllAsync());
+            return View(new GroupViewModel { Search = new SearchGroupViewModel() });
         }
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
-            try
-            {
-                ViewBag.Teachers = _mapper.Map<IEnumerable<TeacherViewModel>>(await _teacherService.GetAllAsync());
-                ViewBag.Courses = _mapper.Map<IEnumerable<CourseViewModel>>(await _courseService.GetAllAsync());
-                return View(id.HasValue
-                    ? _mapper.Map<GroupViewModel>(_groupService.GetEntityById(id.Value))
-                    : new GroupViewModel());
-            }
-            catch (Exception e)
-            {
-                _logger.LogError($"Method didn't work({e.Message}), {e.TargetSite}, {DateTime.Now}");
-                return RedirectToAction("Error", "Home");
-            }
+            ViewBag.Teachers = _mapper.Map<IEnumerable<TeacherViewModel>>(await _teacherService.GetAllAsync());
+            ViewBag.Courses = _mapper.Map<IEnumerable<CourseViewModel>>(await _courseService.GetAllAsync());
+            return View(id.HasValue
+                ? _mapper.Map<GroupViewModel>(_groupService.GetEntityById(id.Value))
+                : new GroupViewModel());
         }
         [HttpPost]
         public async Task<IActionResult> Edit(GroupViewModel group)
         {
-            try
-            {
-                ViewBag.Teachers = _mapper.Map<IEnumerable<TeacherViewModel>>(await _teacherService.GetAllAsync());
-                ViewBag.Courses = _mapper.Map<IEnumerable<CourseViewModel>>(await _courseService.GetAllAsync());
-                if (!ModelState.IsValid)
-                    return View(group);
+            ViewBag.Teachers = _mapper.Map<IEnumerable<TeacherViewModel>>(await _teacherService.GetAllAsync());
+            ViewBag.Courses = _mapper.Map<IEnumerable<CourseViewModel>>(await _courseService.GetAllAsync());
+            if (!ModelState.IsValid)
+                return View(@group);
 
-                if (group.Id != 0)
-                    _groupService.Update(_mapper.Map<Group>(group));
-                else
-                    _groupService.Create(_mapper.Map<Group>(group));
+            if (@group.Id != 0)
+                _groupService.Update(_mapper.Map<Group>(@group));
+            else
+                _groupService.Create(_mapper.Map<Group>(@group));
 
-                return RedirectToAction("Index");
-            }
-            catch (Exception e)
-            {
-                _logger.LogError($"Method didn't work({e.Message}), {e.TargetSite}, {DateTime.Now}");
-                return RedirectToAction("Error", "Home");
-            }
+            return RedirectToAction("Index");
         }
         [HttpPost]
         public IActionResult Delete(int id)
         {
-            try
-            {
-                _groupService.Delete(id);
-                return RedirectToAction("Index");
-            }
-            catch (Exception e)
-            {
-                _logger.LogError($"Method didn't work({e.Message}), {e.TargetSite}, {DateTime.Now}");
-                return RedirectToAction("Error", "Home");
-            }
+            _groupService.Delete(id);
+            return RedirectToAction("Index");
         }
 
         public IActionResult SearchGroups(GroupViewModel model)
         {
-            try
+            if (CheckingForSearchOrSorting(model.Search.Query, model.Search.Status))
             {
-                if (CheckingForSearchOrSorting(model.Search.Query, model.Search.Status))
+                return RedirectToAction("Index", "Groups", new
                 {
-                    return RedirectToAction("Index", "Groups", new
-                    {
-                        query = model.Search.Query,
-                        status = model.Search.Status
-                    }, null);
-                }
-                return RedirectToAction("Index");
+                    query = model.Search.Query,
+                    status = model.Search.Status
+                }, null);
             }
-            catch (Exception e)
-            {
-                _logger.LogError($"Method didn't work({e.Message}), {e.TargetSite}, {DateTime.Now}");
-                return RedirectToAction("Error", "Home");
-            }
+            return RedirectToAction("Index");
         }
         private bool CheckingForSearchOrSorting(string query, string status)
         {
