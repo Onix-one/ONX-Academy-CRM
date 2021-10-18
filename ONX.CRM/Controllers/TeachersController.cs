@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -28,91 +27,49 @@ namespace ONX.CRM.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(string query)
         {
-            try
+            if (!string.IsNullOrEmpty(query))
             {
-                if (!string.IsNullOrEmpty(query))
-                {
-                    ViewBag.Teachers = _mapper.Map<IEnumerable<TeacherViewModel>>(await _teacherService
-                        .SearchTeachers(query));
-                    return View(new TeacherViewModel { Search = new SearchTeacherViewModel { Query = query } });
-                }
-                ViewBag.Teachers = _mapper.Map<IEnumerable<TeacherViewModel>>(await _teacherService.GetAllAsync());
-                return View();
+                ViewBag.Teachers = _mapper.Map<IEnumerable<TeacherViewModel>>(await _teacherService
+                    .SearchTeachers(query));
+                return View(new TeacherViewModel { Search = new SearchTeacherViewModel { Query = query } });
             }
-            catch (Exception exception)
-            {
-                _logger.LogError($"Method didn't work({exception.Message}), {exception.TargetSite}, {DateTime.Now}");
-                throw;
-            }
+            ViewBag.Teachers = _mapper.Map<IEnumerable<TeacherViewModel>>(await _teacherService.GetAllAsync());
+            return View();
         }
         [HttpGet]
         public IActionResult Edit(int? id)
         {
-            try
-            {
-                return View(id.HasValue
-                    ? _mapper.Map<TeacherViewModel>(_teacherService.GetEntityById(id.Value))
-                    : new TeacherViewModel());
-            }
-            catch (Exception exception)
-            {
-                _logger.LogError($"Method didn't work({exception.Message}), {exception.TargetSite}, {DateTime.Now}");
-                throw;
-            }
+            return View(id.HasValue
+                ? _mapper.Map<TeacherViewModel>(_teacherService.GetEntityById(id.Value))
+                : new TeacherViewModel());
         }
         [HttpPost]
         public IActionResult Edit(TeacherViewModel teacher)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                if (!ModelState.IsValid)
-                {
-                    return View(teacher);
-                }
-                if (teacher.Id != 0)
-                    _teacherService.Update(_mapper.Map<Teacher>(teacher));
-                else
-                    _teacherService.Create(_mapper.Map<Teacher>(teacher));
-
-
-                return RedirectToAction("Index");
+                return View(teacher);
             }
-            catch (Exception exception)
-            {
-                _logger.LogError($"Method didn't work({exception.Message}), {exception.TargetSite}, {DateTime.Now}");
-                throw;
-            }
+            if (teacher.Id != 0)
+                _teacherService.Update(_mapper.Map<Teacher>(teacher));
+            else
+                _teacherService.Create(_mapper.Map<Teacher>(teacher));
+            return RedirectToAction("Index");
         }
         public IActionResult Delete(int id)
         {
-            try
-            {
-                _teacherService.Delete(id);
-                return RedirectToAction("Index");
-            }
-            catch (Exception exception)
-            {
-                _logger.LogError($"Method didn't work({exception.Message}), {exception.TargetSite}, {DateTime.Now}");
-                throw;
-            }
+            _teacherService.Delete(id);
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
         public IActionResult SearchTeachers(TeacherViewModel model)
         {
-            try
+            if (!string.IsNullOrEmpty(model.Search.Query))
             {
-                if (!string.IsNullOrEmpty(model.Search.Query))
-                {
-                    return RedirectToAction("Index", "Teachers", new { query = model.Search.Query }, null);
-                }
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Teachers", new { query = model.Search.Query }, null);
             }
-            catch (Exception exception)
-            {
-                _logger.LogError($"Method didn't work({exception.Message}), {exception.TargetSite}, {DateTime.Now}");
-                throw;
-            }
+            return RedirectToAction("Index");
         }
     }
 }

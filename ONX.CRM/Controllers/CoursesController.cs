@@ -30,19 +30,10 @@ namespace ONX.CRM.Controllers
         }
         public async Task<IActionResult> Index(int id)
         {
-            try
-            {
-                ViewBag.SpecializationTitle = _specializationService.GetEntityById(id).Title;
-                var courses = await _courseService.GetAllAsync();
-                return View(_mapper
-                    .Map<IEnumerable<CourseViewModel>>(courses.Where(_ => _.SpecializationId == id)).ToList());
-            }
-            catch (Exception exception)
-            {
-                _logger.LogError($"Method didn't work({exception.Message}), " +
-                                 $"{exception.TargetSite}, {DateTime.Now}");
-                throw;
-            }
+            ViewBag.SpecializationTitle = _specializationService.GetEntityById(id).Title;
+            var courses = await _courseService.GetAllAsync();
+            return View(_mapper
+                .Map<IEnumerable<CourseViewModel>>(courses.Where(_ => _.SpecializationId == id)).ToList());
         }
     }
 }
