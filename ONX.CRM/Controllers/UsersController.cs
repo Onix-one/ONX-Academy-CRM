@@ -3,10 +3,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ONX.CRM.BLL.Models;
+using ONX.CRM.Filters;
 using ONX.CRM.ViewModel;
 
 namespace ONX.CRM.Controllers
 {
+    [TypeFilter(typeof(LocalExceptionFilter))]
     public class UsersController : Controller
     {
         private readonly UserManager<User> _userManager;

@@ -12,6 +12,7 @@ using Microsoft.Extensions.Options;
 using ONX.CRM.BLL.Models;
 using ONX.CRM.Configuration;
 using ONX.CRM.DAL.EF.Contexts;
+using ONX.CRM.Filters;
 using ONX.CRM.ServiceExtensions;
 using ONX.CRM.ViewModel;
 
@@ -53,6 +54,10 @@ namespace ONX.CRM
             services.AddEntitiesServices();
             services.AddControllersWithViews();
 
+            services.AddMvc(options =>
+                options.Filters.Add<GlobalExceptionFilter>()
+            );
+
             services.AddControllersWithViews()
                 .AddViewOptions(options => options.HtmlHelperOptions.ClientValidationEnabled = true);
 
@@ -65,6 +70,7 @@ namespace ONX.CRM
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env,
             IServiceProvider serviceProvider, IOptions<SecurityOptions> securityOptions)
         {
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

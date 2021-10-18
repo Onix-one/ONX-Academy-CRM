@@ -7,11 +7,13 @@ using Microsoft.Extensions.Logging;
 using ONX.CRM.BLL.Enums;
 using ONX.CRM.BLL.Interfaces;
 using ONX.CRM.BLL.Models;
+using ONX.CRM.Filters;
 using ONX.CRM.ViewModel;
 using ONX.CRM.ViewModel.Search;
 
 namespace ONX.CRM.Controllers
 {
+    [TypeFilter(typeof(LocalExceptionFilter))]
     //[Authorize(Roles = "manager")]
     public class StudentsController : Controller
     {
@@ -43,10 +45,11 @@ namespace ONX.CRM.Controllers
                 ViewBag.Students = _mapper.Map<IEnumerable<StudentViewModel>>(await _studentService.GetAllAsync());
                 return View(new StudentViewModel { Search = new SearchStudentViewModel() });
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                _logger.LogError($"Method didn't work({e.Message}), {e.TargetSite}, {DateTime.Now}");
-                return RedirectToAction("Error", "Home");
+                _logger.LogError($"Method didn't work({exception.Message}), " +
+                                 $"{exception.TargetSite}, {DateTime.Now}");
+                throw;
             }
         }
         [HttpGet]
@@ -59,10 +62,10 @@ namespace ONX.CRM.Controllers
                     ? _mapper.Map<StudentViewModel>(_studentService.GetEntityById(id.Value))
                     : new StudentViewModel());
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                _logger.LogError($"Method didn't work({e.Message}), {e.TargetSite}, {DateTime.Now}");
-                return RedirectToAction("Error", "Home");
+                _logger.LogError($"Method didn't work({exception.Message}), {exception.TargetSite}, {DateTime.Now}");
+                throw;
             }
         }
         [HttpPost]
@@ -81,10 +84,10 @@ namespace ONX.CRM.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                _logger.LogError($"Method didn't work({e.Message}), {e.TargetSite}, {DateTime.Now}");
-                return RedirectToAction("Error", "Home");
+                _logger.LogError($"Method didn't work({exception.Message}), {exception.TargetSite}, {DateTime.Now}");
+                throw;
             }
         }
         [HttpPost]
@@ -95,10 +98,10 @@ namespace ONX.CRM.Controllers
                 _studentService.Delete(id);
                 return RedirectToAction("Index");
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                _logger.LogError($"Method didn't work({e.Message}), {e.TargetSite}, {DateTime.Now}");
-                return RedirectToAction("Error", "Home");
+                _logger.LogError($"Method didn't work({exception.Message}), {exception.TargetSite}, {DateTime.Now}");
+                throw;
             }
         }
         public IActionResult SearchStudents(StudentViewModel model)
@@ -116,10 +119,10 @@ namespace ONX.CRM.Controllers
                 }
                 return RedirectToAction("Index");
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                _logger.LogError($"Method didn't work({e.Message}), {e.TargetSite}, {DateTime.Now}");
-                return RedirectToAction("Error", "Home");
+                _logger.LogError($"Method didn't work({exception.Message}), {exception.TargetSite}, {DateTime.Now}");
+                throw;
             }
         }
         private bool CheckingForSearchOrSorting(string query, int courseId, string type)

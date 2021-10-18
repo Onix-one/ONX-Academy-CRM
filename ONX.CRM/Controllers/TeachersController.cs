@@ -6,11 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ONX.CRM.BLL.Interfaces;
 using ONX.CRM.BLL.Models;
+using ONX.CRM.Filters;
 using ONX.CRM.ViewModel;
 using ONX.CRM.ViewModel.Search;
 
 namespace ONX.CRM.Controllers
 {
+    [TypeFilter(typeof(LocalExceptionFilter))]
     public class TeachersController : Controller
     {
         private readonly ITeacherService _teacherService;
@@ -37,10 +39,10 @@ namespace ONX.CRM.Controllers
                 ViewBag.Teachers = _mapper.Map<IEnumerable<TeacherViewModel>>(await _teacherService.GetAllAsync());
                 return View();
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                _logger.LogError($"Method didn't work({e.Message}), {e.TargetSite}, {DateTime.Now}");
-                return RedirectToAction("Error", "Home");
+                _logger.LogError($"Method didn't work({exception.Message}), {exception.TargetSite}, {DateTime.Now}");
+                throw;
             }
         }
         [HttpGet]
@@ -52,10 +54,10 @@ namespace ONX.CRM.Controllers
                     ? _mapper.Map<TeacherViewModel>(_teacherService.GetEntityById(id.Value))
                     : new TeacherViewModel());
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                _logger.LogError($"Method didn't work({e.Message}), {e.TargetSite}, {DateTime.Now}");
-                return RedirectToAction("Error", "Home");
+                _logger.LogError($"Method didn't work({exception.Message}), {exception.TargetSite}, {DateTime.Now}");
+                throw;
             }
         }
         [HttpPost]
@@ -75,10 +77,10 @@ namespace ONX.CRM.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                _logger.LogError($"Method didn't work({e.Message}), {e.TargetSite}, {DateTime.Now}");
-                return RedirectToAction("Error", "Home");
+                _logger.LogError($"Method didn't work({exception.Message}), {exception.TargetSite}, {DateTime.Now}");
+                throw;
             }
         }
         public IActionResult Delete(int id)
@@ -88,10 +90,10 @@ namespace ONX.CRM.Controllers
                 _teacherService.Delete(id);
                 return RedirectToAction("Index");
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                _logger.LogError($"Method didn't work({e.Message}), {e.TargetSite}, {DateTime.Now}");
-                return RedirectToAction("Error", "Home");
+                _logger.LogError($"Method didn't work({exception.Message}), {exception.TargetSite}, {DateTime.Now}");
+                throw;
             }
         }
 
@@ -106,10 +108,10 @@ namespace ONX.CRM.Controllers
                 }
                 return RedirectToAction("Index");
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                _logger.LogError($"Method didn't work({e.Message}), {e.TargetSite}, {DateTime.Now}");
-                return RedirectToAction("Error", "Home");
+                _logger.LogError($"Method didn't work({exception.Message}), {exception.TargetSite}, {DateTime.Now}");
+                throw;
             }
         }
     }

@@ -6,11 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ONX.CRM.BLL.Interfaces;
 using ONX.CRM.BLL.Models;
+using ONX.CRM.Filters;
 using ONX.CRM.ViewModel;
 using ONX.CRM.ViewModel.Search;
 
 namespace ONX.CRM.Controllers
 {
+    [TypeFilter(typeof(LocalExceptionFilter))]
     //[Authorize(Roles = "manager")]
     public class GroupsController : Controller
     {
@@ -34,6 +36,7 @@ namespace ONX.CRM.Controllers
             {
                 if (CheckingForSearchOrSorting(query, status))
                 {
+                    
                     if (!string.IsNullOrEmpty(query))
                     {
                         ViewBag.Groups = _mapper.Map<IEnumerable<GroupViewModel>>(await _groupService
@@ -52,11 +55,12 @@ namespace ONX.CRM.Controllers
                 ViewBag.Groups = _mapper.Map<IEnumerable<GroupViewModel>>(await _groupService.GetAllAsync());
                 return View(new GroupViewModel { Search = new SearchGroupViewModel() });
 
+
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                _logger.LogError($"Method didn't work({e.Message}), {e.TargetSite}, {DateTime.Now}");
-                return RedirectToAction("Error", "Home");
+                _logger.LogError($"Method didn't work({exception.Message}), {exception.TargetSite}, {DateTime.Now}");
+                throw;
             }
         }
         [HttpGet]
@@ -70,10 +74,10 @@ namespace ONX.CRM.Controllers
                     ? _mapper.Map<GroupViewModel>(_groupService.GetEntityById(id.Value))
                     : new GroupViewModel());
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                _logger.LogError($"Method didn't work({e.Message}), {e.TargetSite}, {DateTime.Now}");
-                return RedirectToAction("Error", "Home");
+                _logger.LogError($"Method didn't work({exception.Message}), {exception.TargetSite}, {DateTime.Now}");
+                throw;
             }
         }
         [HttpPost]
@@ -93,10 +97,10 @@ namespace ONX.CRM.Controllers
 
                 return RedirectToAction("Index");
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                _logger.LogError($"Method didn't work({e.Message}), {e.TargetSite}, {DateTime.Now}");
-                return RedirectToAction("Error", "Home");
+                _logger.LogError($"Method didn't work({exception.Message}), {exception.TargetSite}, {DateTime.Now}");
+                throw;
             }
         }
         [HttpPost]
@@ -107,10 +111,10 @@ namespace ONX.CRM.Controllers
                 _groupService.Delete(id);
                 return RedirectToAction("Index");
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                _logger.LogError($"Method didn't work({e.Message}), {e.TargetSite}, {DateTime.Now}");
-                return RedirectToAction("Error", "Home");
+                _logger.LogError($"Method didn't work({exception.Message}), {exception.TargetSite}, {DateTime.Now}");
+                throw;
             }
         }
 
@@ -128,10 +132,10 @@ namespace ONX.CRM.Controllers
                 }
                 return RedirectToAction("Index");
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                _logger.LogError($"Method didn't work({e.Message}), {e.TargetSite}, {DateTime.Now}");
-                return RedirectToAction("Error", "Home");
+                _logger.LogError($"Method didn't work({exception.Message}), {exception.TargetSite}, {DateTime.Now}");
+                throw;
             }
         }
         private bool CheckingForSearchOrSorting(string query, string status)

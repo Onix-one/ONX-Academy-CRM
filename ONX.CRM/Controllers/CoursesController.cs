@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ONX.CRM.BLL.Interfaces;
 using ONX.CRM.BLL.Models;
+using ONX.CRM.Filters;
 using ONX.CRM.ViewModel;
 
 namespace ONX.CRM.Controllers
 {
+    [TypeFilter(typeof(LocalExceptionFilter))]
     public class CoursesController : Controller
     {
         private readonly IEntityService<Specialization> _specializationService;
@@ -35,10 +37,11 @@ namespace ONX.CRM.Controllers
                 return View(_mapper
                     .Map<IEnumerable<CourseViewModel>>(courses.Where(_ => _.SpecializationId == id)).ToList());
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                _logger.LogError($"Method didn't work({e.Message}), {e.TargetSite}, {DateTime.Now}");
-                return RedirectToAction("Error", "Home");
+                _logger.LogError($"Method didn't work({exception.Message}), " +
+                                 $"{exception.TargetSite}, {DateTime.Now}");
+                throw;
             }
         }
     }
