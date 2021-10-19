@@ -122,95 +122,145 @@
 
         <div class="card">
             <div class="card-body ">
-                <div class="table-responsive-sm">
-                    <table class="table table-hover mb-0">
-                        <thead class="table-light">
-                            <tr>
-                                <th>ID</th>
-                                <th>Last Name</th>
-                                <th>First Name</th>
-                                <th>Email</th>
-                                <th>Phone</th>
-                                <th>Group Number</th>
-                                <th>Course</th>
-                                <th>Type of Training</th>
-                                <th>View Details</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var student in studentsList)
-                            {
-                            <tr>
-                                <td>@student.Id</td>
-                                <td>@student.LastName</td>
-                                <td>@student.FirstName</td>
-                                <td>@student.Email</td>
-                                <td>@student.Phone</td>
+                
 
-                                @if (student.GroupId != null)
-                                {
-                                    <td>@student.Group.Number</td>
-                                }
-                                else
-                                {
-                                    <td></td>
-                                }
-                                @if (student.GroupId != null)
-                                {
-                                    <td>@student.Group.Course.Title</td>
-                                }
-                                else
-                                {
-                                    <td></td>
-                                }
-                                @if (student.Type.ToString() == "Online")
-                                {
-                                    <td>
-                                        <div class="badge rounded-pill bg-light-success text-success w-100">@student.Type.ToString()</div>
-                                    </td>
-                                }
-                                @if (student.Type.ToString() == "Offline")
-                                {
-                                    <td>
-                                        <div class="badge rounded-pill bg-light-danger text-danger w-100">@student.Type.ToString()</div>
-                                    </td>
-                                }
-                                @if (student.Type.ToString() == "Mix")
-                                {
-                                    <td>
-                                        <div class="badge rounded-pill bg-light-info text-info w-100">@student.Type.ToString()</div>
-                                    </td>
-                                }
-                                <td>
-                                    <button type="button" class="btn btn-outline-primary btn-sm radius-30 px-4">View</button>
-                                </td>
-                                <td>
-                                    <div class="d-flex order-actions">
-                                        <div class="d-flex order-actions">
-                                            <div>
-                                                <a asp-controller="Students" asp-action="Edit"
-                                                   asp-route-id="@student.Id"><i class='bx bxs-edit'></i></a>
-                                            </div>
-
-                                            <div class="ps-2">
-                                                <a asp-controller="Students" asp-action="Delete"
-                                                   asp-route-id="@student.Id">
-                                                    <i class='bx bxs-trash'></i>
-                                                </a>
-                                            </div>
-                                        </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="row align-items-center">
+                            <div class="col-lg-9 col-xl-9">
+                                <div class="row row-cols-lg-auto g-2 pb-2">
+                                    <div class="col-12">
+                                        Show
                                     </div>
-                                </td>
-                            </tr>
-                            }
-                            <tr>
-                                <td>
-                                    <div class="text-info">Total: @studentsList.Count()</div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                    <div class="col-12 mt-1">
+                                        <select name="example_length" aria-controls="example" class="form-select form-select-sm">
+                                            <option value="10">10</option>
+                                            <option value="25">25</option>
+                                            <option value="50">50</option>
+                                            <option value="100">100</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12">
+                                        entries
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive-sm">
+                        <table class="table table-hover mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Last Name</th>
+                                    <th>First Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Group Number</th>
+                                    <th>Course</th>
+                                    <th>Type of Training</th>
+                                    <th>View Details</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var student in studentsList)
+                                {
+                                    <tr>
+                                        <td>@student.Id</td>
+                                        <td>@student.LastName</td>
+                                        <td>@student.FirstName</td>
+                                        <td>@student.Email</td>
+                                        <td>@student.Phone</td>
+
+                                        @if (student.GroupId != null)
+                                        {
+                                            <td>@student.Group.Number</td>
+                                        }
+                                        else
+                                        {
+                                            <td></td>
+                                        }
+                                        @if (student.GroupId != null)
+                                        {
+                                            <td>@student.Group.Course.Title</td>
+                                        }
+                                        else
+                                        {
+                                            <td></td>
+                                        }
+                                        @if (student.Type.ToString() == "Online")
+                                        {
+                                            <td>
+                                                <div class="badge rounded-pill bg-light-success text-success w-100">@student.Type.ToString()</div>
+                                            </td>
+                                        }
+                                        @if (student.Type.ToString() == "Offline")
+                                        {
+                                            <td>
+                                                <div class="badge rounded-pill bg-light-danger text-danger w-100">@student.Type.ToString()</div>
+                                            </td>
+                                        }
+                                        @if (student.Type.ToString() == "Mix")
+                                        {
+                                            <td>
+                                                <div class="badge rounded-pill bg-light-info text-info w-100">@student.Type.ToString()</div>
+                                            </td>
+                                        }
+                                        <td>
+                                            <button type="button" class="btn btn-outline-primary btn-sm radius-30 px-4">View</button>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex order-actions">
+                                                <div class="d-flex order-actions">
+                                                    <div>
+                                                        <a asp-controller="Students" asp-action="Edit"
+                                                           asp-route-id="@student.Id"><i class='bx bxs-edit'></i></a>
+                                                    </div>
+
+                                                    <div class="ps-2">
+                                                        <a asp-controller="Students" asp-action="Delete"
+                                                           asp-route-id="@student.Id">
+                                                            <i class='bx bxs-trash'></i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+               
+                    <div class="row mt-3 pe-0">
+                        <div class="col-sm-12 col-md-5">
+                            <div>Showing 1 to 10 of  @studentsList.Count() entries</div>
+                        </div>
+                        <div class="col-sm-12 col-md-7 pe-0">
+                            <div class="dataTables_paginate">
+                                <ul class="pagination justify-content-end mb-0">
+                                    <li class="page-item">
+                                        <a href="#" class="page-link">Prev</a>
+                                    </li>
+                                    <li class="page-item active">
+                                        <a href="#" class="page-link">1</a>
+                                    </li>
+                                    <li class="page-item ">
+                                        <a href="#" class="page-link">2</a>
+                                    </li>
+                                    <li class=" page-item ">
+                                        <a href="#" class="page-link">3</a>
+                                    </li>
+                                    <li class="page-item" id="example_next">
+                                        <a href="#" class="page-link">Next</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
