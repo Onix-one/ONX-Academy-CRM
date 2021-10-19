@@ -24,9 +24,9 @@ namespace ONX.CRM.DAL.EF.Repositories
         {
             return await _entities.ToListAsync();
         }
-        public TEntity GetEntity(int id)
+        public async Task<TEntity> GetEntityByIdAsync(int id)
         {
-            return _entities.Find(id);
+            return await _entities.FindAsync(id);
         }
         public void Create(TEntity entity)
         {

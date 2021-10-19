@@ -29,7 +29,8 @@ namespace ONX.CRM.Controllers
         }
         public async Task<IActionResult> Index(int id)
         {
-            ViewBag.SpecializationTitle = _specializationService.GetEntityById(id).Title;
+            var specializationTitle = await _specializationService.GetEntityByIdAsync(id);
+            ViewBag.SpecializationTitle = specializationTitle.Title;
             var courses = await _courseService.GetAllAsync();
             return View(_mapper
                 .Map<IEnumerable<CourseViewModel>>(courses.Where(_ => _.SpecializationId == id)).ToList());

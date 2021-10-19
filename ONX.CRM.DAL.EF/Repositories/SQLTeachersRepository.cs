@@ -25,9 +25,9 @@ namespace ONX.CRM.DAL.EF.Repositories
         {
             return await _context.Teachers.AsNoTracking().ToListAsync();
         }
-        public Teacher GetEntity(int id)
+        public async Task<Teacher> GetEntityByIdAsync(int id)
         {
-            return _context.Teachers.Find(id);
+            return await _context.Teachers.FindAsync(id);
         }
         public void Create(Teacher teacher)
         {

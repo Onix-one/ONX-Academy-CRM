@@ -31,7 +31,7 @@ namespace ONX.CRM.Controllers
         }
         public async Task<IActionResult> Index(string query, int status)
         {
-            if (CheckingForSearchOrSorting(query, status))
+            if (await CheckingForSearchOrSorting(query, status))
             {
 
                 if (!string.IsNullOrEmpty(query))
@@ -57,7 +57,7 @@ namespace ONX.CRM.Controllers
             ViewBag.Teachers = _mapper.Map<IEnumerable<TeacherViewModel>>(await _teacherService.GetAllAsync());
             ViewBag.Courses = _mapper.Map<IEnumerable<CourseViewModel>>(await _courseService.GetAllAsync());
             return View(id.HasValue
-                ? _mapper.Map<GroupViewModel>(_groupService.GetEntityById(id.Value))
+                ? _mapper.Map<GroupViewModel>(await _groupService.GetEntityByIdAsync(id.Value))
                 : new GroupViewModel());
         }
         [HttpPost]
@@ -82,9 +82,9 @@ namespace ONX.CRM.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult SearchGroups(GroupViewModel model)
+        public async Task<IActionResult> SearchGroups(GroupViewModel model)
         {
-            if (CheckingForSearchOrSorting(model.Search.Query, model.Search.Status))
+            if (await CheckingForSearchOrSorting(model.Search.Query, model.Search.Status))
             {
                 return RedirectToAction("Index", "Groups", new
                 {
@@ -94,7 +94,7 @@ namespace ONX.CRM.Controllers
             }
             return RedirectToAction("Index");
         }
-        private bool CheckingForSearchOrSorting(string query, int status)
+        private async Task<bool> CheckingForSearchOrSorting(string query, int status)
         {
             if (!string.IsNullOrEmpty(query) || status != 0)
             {

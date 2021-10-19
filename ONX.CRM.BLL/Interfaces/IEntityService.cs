@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ONX.CRM.BLL.Interfaces
@@ -7,7 +8,7 @@ namespace ONX.CRM.BLL.Interfaces
     {
         IEnumerable<T> GetAll();
         Task<IEnumerable<T>> GetAllAsync();
-        T GetEntityById(int id);
+        Task<T> GetEntityByIdAsync(int id);
         void Create(T entity);
         void Update(T entity);
         void Delete(int id);

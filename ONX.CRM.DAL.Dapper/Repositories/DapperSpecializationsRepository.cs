@@ -23,10 +23,11 @@ namespace ONX.CRM.DAL.Dapper.Repositories
         {
             return _db.QueryAsync<Specialization>("SELECT * FROM Specializations");
         }
-        public Specialization GetEntity(int id)
+        public async Task<Specialization> GetEntityByIdAsync(int id)
         {
-            return _db.Query<Specialization>("SELECT * FROM Specializations WHERE Id = @id", 
-                new { id }).FirstOrDefault();
+            var specializations = await _db.QueryAsync<Specialization>("SELECT * FROM Specializations WHERE Id = @id",
+                new {id});
+            return specializations.FirstOrDefault();
         }
         public void Create(Specialization item)
         {

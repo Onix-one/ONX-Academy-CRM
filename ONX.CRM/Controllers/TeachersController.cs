@@ -37,10 +37,10 @@ namespace ONX.CRM.Controllers
             return View();
         }
         [HttpGet]
-        public IActionResult Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             return View(id.HasValue
-                ? _mapper.Map<TeacherViewModel>(_teacherService.GetEntityById(id.Value))
+                ? _mapper.Map<TeacherViewModel>(await _teacherService.GetEntityByIdAsync(id.Value))
                 : new TeacherViewModel());
         }
         [HttpPost]

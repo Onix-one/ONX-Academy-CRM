@@ -92,7 +92,7 @@ namespace ONX.CRM.Controllers
             ViewBag.Courses = _mapper.Map<IEnumerable<CourseViewModel>>(await _courseService.GetAllAsync());
             ViewBag.Students = _mapper.Map<IEnumerable<StudentViewModel>>(await _studentService.GetAllAsync());
             return View(id.HasValue
-                ? _mapper.Map<StudentRequestViewModel>(_studentRequestService.GetEntityById(id.Value))
+                ? _mapper.Map<StudentRequestViewModel>(await _studentRequestService.GetEntityByIdAsync(id.Value))
                 : new StudentRequestViewModel() { Created = null });
         }
         [HttpPost]
@@ -124,9 +124,10 @@ namespace ONX.CRM.Controllers
         [HttpGet]
         public async Task<IActionResult> EditFromQuery(int id)
         {
-            var course = _courseService.GetEntityById(id);
+            var course = await _courseService.GetEntityByIdAsync(id);
             ViewBag.SpecializationId = course.SpecializationId;
-            ViewBag.SpecializationTitle = _specializationService.GetEntityById(course.SpecializationId).Title;
+            var specialization = await _specializationService.GetEntityByIdAsync(course.SpecializationId);
+            ViewBag.SpecializationTitle = specialization.Title;
             ViewBag.CourseName = course.Title;
             ViewBag.Courses = _mapper.Map<IEnumerable<CourseViewModel>>(await _courseService.GetAllAsync());
             ViewBag.Students = _mapper.Map<IEnumerable<StudentViewModel>>(await _studentService.GetAllAsync());

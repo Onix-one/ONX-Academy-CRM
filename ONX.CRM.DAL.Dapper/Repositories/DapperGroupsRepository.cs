@@ -23,9 +23,10 @@ namespace ONX.CRM.DAL.Dapper.Repositories
         {
             return _db.QueryAsync<Group>("SELECT * FROM Groups");
         }
-        public Group GetEntity(int id)
+        public async Task<Group> GetEntityByIdAsync(int id)
         {
-            return _db.Query<Group>("SELECT * FROM Groups WHERE Id = @id", new { id }).FirstOrDefault();
+            var groups = await _db.QueryAsync<Group>("SELECT * FROM Groups WHERE Id = @id", new {id});
+            return groups.FirstOrDefault();
         }
         public void Create(Group item)
         {

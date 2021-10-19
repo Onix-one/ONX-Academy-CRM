@@ -46,7 +46,7 @@ namespace ONX.CRM.Controllers
         {
             ViewBag.Groups = _mapper.Map<IEnumerable<GroupViewModel>>(await _groupService.GetAllAsync());
             return View(id.HasValue
-                ? _mapper.Map<StudentViewModel>(_studentService.GetEntityById(id.Value))
+                ? _mapper.Map<StudentViewModel>(await _studentService.GetEntityByIdAsync(id.Value))
                 : new StudentViewModel());
         }
         [HttpPost]
