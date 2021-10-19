@@ -293,7 +293,18 @@ namespace ONX.CRM.DAL.EF.Contexts
                 StartDate = dateTimeForGroup03,
                 Status = GroupStatus.Started
             };
-            modelBuilder.Entity<Group>().HasData(group01, group02, group03);
+            DateTime dateTimeForGroup04 = new DateTime(2021, 09, 30, 19, 30, 00);
+            var group04 = new Group()
+            {
+                Id = 4,
+                Number = "MR00-2671-FG10",
+                TeacherId = 1,
+                CourseId = 12,
+                StartDate = dateTimeForGroup04,
+                Status = GroupStatus.Finished
+            };
+
+            modelBuilder.Entity<Group>().HasData(group01, group02, group03, group04);
 
             var teacher01 = new Teacher()
             {

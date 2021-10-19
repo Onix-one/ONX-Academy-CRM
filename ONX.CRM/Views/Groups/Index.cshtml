@@ -68,11 +68,12 @@
                                                     <i class="bx bx-calendar-week"></i>
                                                 </button>
                                                 <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                    <input asp-for="Search.Status" type="hidden" value="">
                                                     @foreach (var status in groupStatusList)
                                                     {
                                                         <li>
                                                             <form asp-controller="Groups" asp-action="SearchGroups" method="post">
-                                                                <input asp-for="Search.Status" type="hidden" value="@status.Value">
+                                                                <input asp-for="Search.Status" type="hidden" value="@status.Key">
                                                                 <button type="submit" class="dropdown-item"><span>@status.Value</span></button>
                                                             </form>
                                                         </li>

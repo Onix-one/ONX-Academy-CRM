@@ -8,7 +8,7 @@ using ONX.CRM.DAL.Interfaces;
 
 namespace ONX.CRM.DAL.EF.Repositories
 {
-    public class SqlStudentRequestsRepository : IRepository<StudentRequest>
+    public class SqlStudentRequestsRepository : ISqlStudentRequestsRepository<StudentRequest>
     {
         private readonly Context _context;
         public SqlStudentRequestsRepository(Context context)
@@ -47,6 +47,13 @@ namespace ONX.CRM.DAL.EF.Repositories
                 _context.StudentRequests.Remove(request);
                 _context.SaveChanges();
             }
+        }
+        public async Task<IEnumerable<StudentRequest>> GetRequestsByCourseId(int courseId)
+        {
+            var requestsList = await _context.StudentRequests
+                .Where(r => r.CourseId == courseId)
+                .Include(_ => _.Course).AsNoTracking().ToListAsync(); ;
+            return requestsList;
         }
     }
 }

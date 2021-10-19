@@ -1,14 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using ONX.CRM.BLL.Enums;
 using ONX.CRM.BLL.Models;
 using ONX.CRM.DAL.EF.Contexts;
 using ONX.CRM.DAL.Interfaces;
 
 namespace ONX.CRM.DAL.EF.Repositories
 {
-    public class SqlGroupsRepository : IRepository<Group>
+    public class SqlGroupsRepository : ISqlGroupsRepository<Group>
     {
         private readonly Context _context;
         public SqlGroupsRepository(Context context)
@@ -61,6 +63,27 @@ namespace ONX.CRM.DAL.EF.Repositories
                 _context.Groups.Remove(group);
                 _context.SaveChanges();
             }
+        }
+        public async Task<IEnumerable<Group>> GetGroupsByStatus(int status)
+        {
+            var groups = await _context.Groups
+                .Where(s => s.Status == (GroupStatus)Enum.ToObject(typeof(GroupStatus), status))
+                .Include(g=>g.Course).AsNoTracking()
+                .Include(g => g.Teacher).AsNoTracking().ToListAsync();
+            return groups;
+        }
+        public async Task<IEnumerable<Group>> GetGroupsByQuery(string query)
+        {
+            var groups = await _context.Groups
+                .Include(g => g.Students).AsNoTracking()
+                .Include(g => g.Course).AsNoTracking()
+                .Include(g => g.Teacher).AsNoTracking().ToListAsync();
+
+            return groups.Where(g => g.Number.Contains(query, StringComparison.OrdinalIgnoreCase)
+                                     || g.Course.Title.Contains(query, StringComparison.OrdinalIgnoreCase)
+                                     || g.Teacher.FirstName.Contains(query, StringComparison.OrdinalIgnoreCase)
+                                     || g.Teacher.LastName.Contains(query, StringComparison.OrdinalIgnoreCase)
+                                     || g.StartDate.ToString().Contains(query, StringComparison.OrdinalIgnoreCase));
         }
     }
 }

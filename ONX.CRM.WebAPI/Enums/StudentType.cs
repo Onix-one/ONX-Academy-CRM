@@ -2,7 +2,7 @@
 {
     public enum StudentType
     {
-        Online,
+        Online = 1,
         Offline,
         Mix
     }

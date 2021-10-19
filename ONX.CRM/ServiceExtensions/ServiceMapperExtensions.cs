@@ -12,7 +12,7 @@ namespace ONX.CRM.ServiceExtensions
             {
                 mc.AddProfile(new MappingProfile());
             });
-            IMapper mapper = mapperConfig.CreateMapper();
+            var mapper = mapperConfig.CreateMapper();
             services.AddSingleton(mapper);
             return services;
         }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using ONX.CRM.BLL.Interfaces;
 using ONX.CRM.BLL.Models;
@@ -7,42 +6,42 @@ using ONX.CRM.DAL.Interfaces;
 
 namespace ONX.CRM.BLL.Services
 {
-    public class TeacherService : EntityService<Teacher>, ITeacherService
+    public class TeacherService :  ITeacherService
     {
-        public TeacherService(IRepository<Teacher> repository) : base(repository) { }
+        private readonly ISqlTeachersRepository<Teacher> _teachersRepository;
 
-        public async Task<IEnumerable<Teacher>> SearchTeachers(string query)
+        public TeacherService(ISqlTeachersRepository<Teacher> teachersRepository)
         {
-            var teachersList = await _repository.GetAllAsync();
-            var teachers = new List<Teacher>();
-            foreach (var teacher in teachersList)
-            {
-                if (teacher.FirstName.Contains(query, StringComparison.OrdinalIgnoreCase))
-                {
-                    teachers.Add(teacher);
-                    continue;
-                }
-                if (teacher.LastName.Contains(query, StringComparison.OrdinalIgnoreCase))
-                {
-                    teachers.Add(teacher);
-                    continue;
-                }
-                if (teacher.Email.Contains(query, StringComparison.OrdinalIgnoreCase))
-                {
-                    teachers.Add(teacher);
-                    continue;
-                }
-                if (teacher.Phone.Contains(query, StringComparison.OrdinalIgnoreCase))
-                {
-                    teachers.Add(teacher);
-                    continue;
-                }
-                if (teacher.WorkExperience.Contains(query, StringComparison.OrdinalIgnoreCase))
-                {
-                    teachers.Add(teacher);
-                }
-            }
-            return teachers;
+            _teachersRepository = teachersRepository;
+        }
+
+        public IEnumerable<Teacher> GetAll()
+        {
+            return _teachersRepository.GetAll();
+        }
+        public Task<IEnumerable<Teacher>> GetAllAsync()
+        {
+            return _teachersRepository.GetAllAsync();
+        }
+        public Teacher GetEntityById(int id)
+        {
+            return _teachersRepository.GetEntity(id);
+        }
+        public void Create(Teacher item)
+        {
+            _teachersRepository.Create(item);
+        }
+        public void Update(Teacher item)
+        {
+            _teachersRepository.Update(item);
+        }
+        public void Delete(int id)
+        {
+            _teachersRepository.Delete(id);
+        }
+        public async Task<IEnumerable<Teacher>> GetTeachersByQuery(string query)
+        {
+            return await _teachersRepository.GetTeachersByQuery(query);
         }
     }
 }

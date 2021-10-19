@@ -19,15 +19,15 @@ namespace ONX.CRM.Controllers
         private readonly IMapper _mapper;
         private readonly ILogger<RequestsController> _logger;
         private readonly IStudentService _studentService;
-        private readonly IEntityService<Course> _courseService;
+        private readonly ICourseService _courseService;
         private readonly IStudentRequestService _studentRequestService;
         private readonly IGroupService _groupService;
-        private readonly IEntityService<Specialization> _specializationService;
+        private readonly ISpecializationService _specializationService;
 
         public RequestsController(IStudentRequestService studentRequestsService,
-            IStudentService studentService, IEntityService<Course> courseService,
-            IMapper mapper, ILogger<RequestsController> logger, IGroupService groupService, 
-            IEntityService<Specialization> specializationService)
+            IStudentService studentService, ICourseService courseService,
+            IMapper mapper, ILogger<RequestsController> logger, IGroupService groupService,
+            ISpecializationService specializationService)
         {
             _specializationService = specializationService;
             _groupService = groupService;

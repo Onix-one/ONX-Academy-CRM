@@ -94,7 +94,7 @@
                                                     {
                                                         <li>
                                                             <form asp-controller="Students" asp-action="SearchStudents" method="post">
-                                                                <input asp-for="Search.Type" type="hidden" value="@type.Value">
+                                                                <input asp-for="Search.Type" type="hidden" value="@type.Key">
                                                                 <button type="submit" class="dropdown-item"><span>@type.Value</span></button>
                                                             </form>
                                                         </li>

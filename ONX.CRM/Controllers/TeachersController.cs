@@ -30,7 +30,7 @@ namespace ONX.CRM.Controllers
             if (!string.IsNullOrEmpty(query))
             {
                 ViewBag.Teachers = _mapper.Map<IEnumerable<TeacherViewModel>>(await _teacherService
-                    .SearchTeachers(query));
+                    .GetTeachersByQuery(query));
                 return View(new TeacherViewModel { Search = new SearchTeacherViewModel { Query = query } });
             }
             ViewBag.Teachers = _mapper.Map<IEnumerable<TeacherViewModel>>(await _teacherService.GetAllAsync());

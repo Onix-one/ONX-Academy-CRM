@@ -19,9 +19,9 @@ namespace ONX.CRM.Controllers
         private readonly IMapper _mapper;
         private readonly ILogger<GroupsController> _logger;
         private readonly ITeacherService _teacherService;
-        private readonly IEntityService<Course> _courseService;
+        private readonly ICourseService _courseService;
         public GroupsController(IGroupService groupService, ITeacherService teacherService,
-            IEntityService<Course> courseService, IMapper mapper, ILogger<GroupsController> logger)
+            ICourseService courseService, IMapper mapper, ILogger<GroupsController> logger)
         {
             _mapper = mapper;
             _logger = logger;
@@ -29,11 +29,11 @@ namespace ONX.CRM.Controllers
             _teacherService = teacherService;
             _courseService = courseService;
         }
-        public async Task<IActionResult> Index(string query, string status)
+        public async Task<IActionResult> Index(string query, int status)
         {
             if (CheckingForSearchOrSorting(query, status))
             {
-                    
+
                 if (!string.IsNullOrEmpty(query))
                 {
                     ViewBag.Groups = _mapper.Map<IEnumerable<GroupViewModel>>(await _groupService
@@ -41,7 +41,7 @@ namespace ONX.CRM.Controllers
                     return View(new GroupViewModel() { Search = new SearchGroupViewModel() { Query = query } });
                 }
 
-                if (!string.IsNullOrEmpty(status))
+                if (status != 0)
                 {
                     ViewBag.Groups = _mapper.Map<IEnumerable<GroupViewModel>>(await _groupService
                         .GetGroupsByStatus(status));
@@ -94,9 +94,9 @@ namespace ONX.CRM.Controllers
             }
             return RedirectToAction("Index");
         }
-        private bool CheckingForSearchOrSorting(string query, string status)
+        private bool CheckingForSearchOrSorting(string query, int status)
         {
-            if (!string.IsNullOrEmpty(query) || !string.IsNullOrEmpty(status))
+            if (!string.IsNullOrEmpty(query) || status != 0)
             {
                 return true;
             }

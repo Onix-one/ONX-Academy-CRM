@@ -6,6 +6,6 @@ namespace ONX.CRM.BLL.Interfaces
 {
     public interface ITeacherService : IEntityService<Teacher>
     {
-        Task<IEnumerable<Teacher>> SearchTeachers(string query);
+        Task<IEnumerable<Teacher>> GetTeachersByQuery(string query);
     }
 }

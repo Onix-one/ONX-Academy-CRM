@@ -17,17 +17,14 @@ namespace ONX.CRM.Controllers
         {
             _userManager = userManager;
         }
-
         public IActionResult Index()
         {
             return View(_userManager.Users.ToList());
         }
-
         public IActionResult Create()
         {
             return View();
         }
-
         [HttpPost]
         public async Task<IActionResult> Create(CreateUserViewModel model)
         {
@@ -55,7 +52,6 @@ namespace ONX.CRM.Controllers
             }
             return View(model);
         }
-
         public async Task<IActionResult> Edit(string id)
         {
             User user = await _userManager.FindByIdAsync(id);
@@ -72,7 +68,6 @@ namespace ONX.CRM.Controllers
             };
             return View(model);
         }
-
         [HttpPost]
         public async Task<IActionResult> Edit(EditUserViewModel model)
         {
@@ -103,7 +98,6 @@ namespace ONX.CRM.Controllers
             }
             return View(model);
         }
-
         [HttpPost]
         public async Task<ActionResult> Delete(string id)
         {
@@ -114,7 +108,6 @@ namespace ONX.CRM.Controllers
             }
             return RedirectToAction("Index");
         }
-
         public async Task<IActionResult> ChangePassword(string id)
         {
             User user = await _userManager.FindByIdAsync(id);
@@ -125,7 +118,6 @@ namespace ONX.CRM.Controllers
             ChangePasswordViewModel model = new ChangePasswordViewModel { Id = user.Id, Email = user.Email };
             return View(model);
         }
-
         [HttpPost]
         public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
         {

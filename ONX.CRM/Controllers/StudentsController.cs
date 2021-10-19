@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using ONX.CRM.BLL.Enums;
 using ONX.CRM.BLL.Interfaces;
 using ONX.CRM.BLL.Models;
 using ONX.CRM.Filters;
@@ -29,10 +28,10 @@ namespace ONX.CRM.Controllers
             _groupService = groupService;
         }
 
-        public async Task<IActionResult> Index(string query, int courseId, StudentType type)
+        public async Task<IActionResult> Index(string query, int courseId, int type)
         {
             ViewBag.Courses = await _studentService.GetActiveCoursesIdTitle();
-            if (CheckingForSearchOrSorting(query, courseId, type.ToString()))
+            if (CheckingForSearchOrSorting(query, courseId, type))
             {
                 ViewBag.Students = _mapper.Map<IEnumerable<StudentViewModel>>(await _studentService
                     .SearchStudents(query, courseId, type));
@@ -83,9 +82,9 @@ namespace ONX.CRM.Controllers
             }
             return RedirectToAction("Index");
         }
-        private bool CheckingForSearchOrSorting(string query, int courseId, string type)
+        private bool CheckingForSearchOrSorting(string query, int courseId, int type)
         {
-            if (!string.IsNullOrEmpty(query) || courseId != 0 || !string.IsNullOrEmpty(type))
+            if (!string.IsNullOrEmpty(query) || courseId != 0 || type != 0)
             {
                 return true;
             }

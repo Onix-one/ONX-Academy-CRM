@@ -6,7 +6,6 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ONX.CRM.BLL.Interfaces;
-using ONX.CRM.BLL.Models;
 using ONX.CRM.Filters;
 using ONX.CRM.ViewModel;
 
@@ -15,12 +14,12 @@ namespace ONX.CRM.Controllers
     [TypeFilter(typeof(LocalExceptionFilter))]
     public class CoursesController : Controller
     {
-        private readonly IEntityService<Specialization> _specializationService;
-        private readonly IEntityService<Course> _courseService;
+        private readonly ISpecializationService _specializationService;
+        private readonly ICourseService _courseService;
         private readonly IMapper _mapper;
         private readonly ILogger<CoursesController> _logger;
-        public CoursesController(IEntityService<Course> courseService, 
-            IEntityService<Specialization> specializationService, 
+        public CoursesController(ICourseService courseService,
+            ISpecializationService specializationService, 
             IMapper mapper, ILogger<CoursesController> logger)
         {
             _specializationService = specializationService;

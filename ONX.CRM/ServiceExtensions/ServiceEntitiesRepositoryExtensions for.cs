@@ -10,12 +10,12 @@ namespace ONX.CRM.ServiceExtensions
     {
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
-            services.AddScoped<IRepository<Student>, SqlStudentsRepository>();
-            services.AddScoped<IRepository<Group>, SqlGroupsRepository>();
-            services.AddScoped<IRepository<Teacher>, SqlTeachersRepository>();
+            services.AddScoped<ISqlStudentsRepository<Student>, SqlStudentsRepository>();
+            services.AddScoped<ISqlGroupsRepository<Group>, SqlGroupsRepository>();
+            services.AddScoped<ISqlTeachersRepository<Teacher>, SqlTeachersRepository>();
             services.AddScoped<IRepository<Course>, SqlCoursesRepository>();
             services.AddScoped<IRepository<Specialization>, SqlSpecializationsRepository>();
-            services.AddScoped<IRepository<StudentRequest>, SqlStudentRequestsRepository>();
+            services.AddScoped<ISqlStudentRequestsRepository<StudentRequest>, SqlStudentRequestsRepository>();
             services.AddDapperRepositories();
             return services;
         }

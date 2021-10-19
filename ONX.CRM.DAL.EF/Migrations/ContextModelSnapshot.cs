@@ -311,7 +311,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                             CourseId = 15,
                             Number = "MR00-0012-FT04",
                             StartDate = new DateTime(2021, 11, 1, 19, 30, 0, 0, DateTimeKind.Unspecified),
-                            Status = 0,
+                            Status = 1,
                             TeacherId = 3
                         },
                         new
@@ -320,7 +320,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                             CourseId = 11,
                             Number = "MR00-5512-DT12",
                             StartDate = new DateTime(2021, 12, 9, 18, 30, 0, 0, DateTimeKind.Unspecified),
-                            Status = 0,
+                            Status = 1,
                             TeacherId = 2
                         },
                         new
@@ -329,7 +329,16 @@ namespace ONX.CRM.DAL.EF.Migrations
                             CourseId = 10,
                             Number = "MR00-2671-FG10",
                             StartDate = new DateTime(2021, 9, 30, 19, 30, 0, 0, DateTimeKind.Unspecified),
-                            Status = 1,
+                            Status = 2,
+                            TeacherId = 1
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CourseId = 12,
+                            Number = "MR00-2671-FG10",
+                            StartDate = new DateTime(2021, 9, 30, 19, 30, 0, 0, DateTimeKind.Unspecified),
+                            Status = 3,
                             TeacherId = 1
                         });
                 });
@@ -433,7 +442,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                             GroupId = 3,
                             LastName = "Лазарев",
                             Phone = "+375441188801",
-                            Type = 0
+                            Type = 1
                         },
                         new
                         {
@@ -443,7 +452,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                             GroupId = 3,
                             LastName = "Медведев",
                             Phone = "+375441188802",
-                            Type = 0
+                            Type = 1
                         },
                         new
                         {
@@ -453,7 +462,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                             GroupId = 3,
                             LastName = "Ершов",
                             Phone = "+375441188803",
-                            Type = 0
+                            Type = 1
                         },
                         new
                         {
@@ -463,7 +472,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                             GroupId = 3,
                             LastName = "Никитин",
                             Phone = "+375441188804",
-                            Type = 0
+                            Type = 1
                         },
                         new
                         {
@@ -473,7 +482,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                             GroupId = 3,
                             LastName = "Соболев",
                             Phone = "+375441188805",
-                            Type = 0
+                            Type = 1
                         },
                         new
                         {
@@ -483,7 +492,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                             GroupId = 3,
                             LastName = "Рябова",
                             Phone = "+375441188806",
-                            Type = 0
+                            Type = 1
                         },
                         new
                         {
@@ -493,7 +502,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                             GroupId = 3,
                             LastName = "Поляков",
                             Phone = "+375441188807",
-                            Type = 0
+                            Type = 1
                         },
                         new
                         {
@@ -503,7 +512,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                             GroupId = 3,
                             LastName = "Цветкова",
                             Phone = "+375441188808",
-                            Type = 0
+                            Type = 1
                         },
                         new
                         {
@@ -513,7 +522,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                             GroupId = 3,
                             LastName = "Данилова",
                             Phone = "+375441188809",
-                            Type = 0
+                            Type = 1
                         },
                         new
                         {
@@ -523,7 +532,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                             GroupId = 3,
                             LastName = "Жуков",
                             Phone = "+375441188810",
-                            Type = 0
+                            Type = 1
                         },
                         new
                         {
@@ -533,7 +542,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                             GroupId = 3,
                             LastName = "Фролов",
                             Phone = "+375441188811",
-                            Type = 0
+                            Type = 1
                         },
                         new
                         {
@@ -543,7 +552,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                             GroupId = 3,
                             LastName = "Лапин",
                             Phone = "+375441188812",
-                            Type = 0
+                            Type = 1
                         },
                         new
                         {
@@ -553,7 +562,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                             GroupId = 3,
                             LastName = "Журавлёва",
                             Phone = "+375441188813",
-                            Type = 0
+                            Type = 1
                         },
                         new
                         {
@@ -563,7 +572,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                             GroupId = 3,
                             LastName = "Николаев",
                             Phone = "+375441188814",
-                            Type = 0
+                            Type = 1
                         },
                         new
                         {
@@ -573,7 +582,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                             GroupId = 3,
                             LastName = "Крылов",
                             Phone = "+375441188815",
-                            Type = 0
+                            Type = 1
                         },
                         new
                         {
@@ -583,7 +592,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                             GroupId = 3,
                             LastName = "Максимов",
                             Phone = "+375441188816",
-                            Type = 0
+                            Type = 1
                         },
                         new
                         {
@@ -593,7 +602,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                             GroupId = 3,
                             LastName = "Сидоров",
                             Phone = "+375441188817",
-                            Type = 0
+                            Type = 1
                         },
                         new
                         {
@@ -603,7 +612,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                             GroupId = 3,
                             LastName = "Осипов",
                             Phone = "+375441188818",
-                            Type = 0
+                            Type = 1
                         },
                         new
                         {
@@ -613,7 +622,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                             GroupId = 3,
                             LastName = "Белоусов",
                             Phone = "+375441188819",
-                            Type = 0
+                            Type = 1
                         },
                         new
                         {
@@ -623,7 +632,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                             GroupId = 3,
                             LastName = "Федотов",
                             Phone = "+375441188820",
-                            Type = 0
+                            Type = 1
                         },
                         new
                         {
@@ -633,7 +642,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                             GroupId = 1,
                             LastName = "Дорофеев",
                             Phone = "+375441188821",
-                            Type = 1
+                            Type = 2
                         },
                         new
                         {
@@ -643,7 +652,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                             GroupId = 1,
                             LastName = "Егоров",
                             Phone = "+375441188822",
-                            Type = 1
+                            Type = 2
                         },
                         new
                         {
@@ -653,7 +662,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                             GroupId = 1,
                             LastName = "Матвеев",
                             Phone = "+375441188823",
-                            Type = 1
+                            Type = 2
                         },
                         new
                         {
@@ -663,7 +672,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                             GroupId = 1,
                             LastName = "Боброва",
                             Phone = "+375441188824",
-                            Type = 1
+                            Type = 2
                         },
                         new
                         {
@@ -673,7 +682,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                             GroupId = 1,
                             LastName = "Дмитриева",
                             Phone = "+375441188825",
-                            Type = 1
+                            Type = 2
                         },
                         new
                         {
@@ -683,7 +692,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                             GroupId = 2,
                             LastName = "Калинин",
                             Phone = "+375441188826",
-                            Type = 2
+                            Type = 3
                         },
                         new
                         {
@@ -693,7 +702,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                             GroupId = 2,
                             LastName = "Анисимов",
                             Phone = "+375441188827",
-                            Type = 2
+                            Type = 3
                         },
                         new
                         {
@@ -703,7 +712,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                             GroupId = 2,
                             LastName = "Антонов",
                             Phone = "+375441188828",
-                            Type = 2
+                            Type = 3
                         },
                         new
                         {
@@ -713,7 +722,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                             GroupId = 2,
                             LastName = "Соколова",
                             Phone = "+375441188829",
-                            Type = 2
+                            Type = 3
                         },
                         new
                         {
@@ -723,7 +732,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                             GroupId = 2,
                             LastName = "Тимофеев",
                             Phone = "+375441188830",
-                            Type = 2
+                            Type = 3
                         });
                 });
 
@@ -775,7 +784,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                             FirstName = "Андрей",
                             LastName = "Нестеров",
                             Phone = "+375441188132",
-                            Type = 0
+                            Type = 1
                         },
                         new
                         {
@@ -787,7 +796,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                             FirstName = "Роман",
                             LastName = "Харитонов",
                             Phone = "+375441188365",
-                            Type = 0
+                            Type = 1
                         },
                         new
                         {
@@ -799,7 +808,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                             FirstName = "Аркадий",
                             LastName = "Агафонов",
                             Phone = "+375441145830",
-                            Type = 0
+                            Type = 1
                         },
                         new
                         {
@@ -811,7 +820,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                             FirstName = "Алексей",
                             LastName = "Муравьёв",
                             Phone = "+375441185430",
-                            Type = 0
+                            Type = 1
                         },
                         new
                         {
@@ -823,7 +832,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                             FirstName = "Ангелина",
                             LastName = "Ларионова",
                             Phone = "+375441348830",
-                            Type = 0
+                            Type = 1
                         },
                         new
                         {
@@ -835,7 +844,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                             FirstName = "Денис",
                             LastName = "Федосеев",
                             Phone = "+375441675830",
-                            Type = 0
+                            Type = 1
                         },
                         new
                         {
@@ -847,7 +856,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                             FirstName = "Николай",
                             LastName = "Зимин",
                             Phone = "+375441186730",
-                            Type = 0
+                            Type = 1
                         },
                         new
                         {
@@ -859,7 +868,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                             FirstName = "Максим",
                             LastName = "Пахомов",
                             Phone = "+375441188554",
-                            Type = 0
+                            Type = 1
                         },
                         new
                         {
@@ -871,7 +880,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                             FirstName = "Геннадий",
                             LastName = "Шубин",
                             Phone = "+375441188896",
-                            Type = 0
+                            Type = 1
                         },
                         new
                         {
@@ -883,7 +892,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                             FirstName = "Екатерина",
                             LastName = "Игнатова",
                             Phone = "+375441183830",
-                            Type = 0
+                            Type = 1
                         });
                 });
 

@@ -21,7 +21,6 @@ namespace ONX.CRM.BLL.Services
         {
             return _repository.GetAllAsync();
         }
-
         public Course GetCourse(int id)
         {
             return _repository.GetEntity(id);

@@ -2,8 +2,8 @@
 {
     public enum GroupStatus
     {
-        Pending,
+        Pending = 1,
         Started,
-        Finished,
+        Finished
     }
 }

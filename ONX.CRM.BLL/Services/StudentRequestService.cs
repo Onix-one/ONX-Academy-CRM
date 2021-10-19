@@ -7,12 +7,43 @@ using ONX.CRM.DAL.Interfaces;
 
 namespace ONX.CRM.BLL.Services
 {
-    public class StudentRequestService : EntityService<StudentRequest>, IStudentRequestService
+    public class StudentRequestService : IStudentRequestService
     {
-        private readonly IStudentService _studentService;
-        public StudentRequestService(IRepository<StudentRequest> repository, IStudentService studentService) : base(repository)
+        private readonly ISqlStudentRequestsRepository<StudentRequest> _requestsRepository;
+        private readonly ISqlStudentsRepository<Student> _studentsService;
+        public StudentRequestService(ISqlStudentRequestsRepository<StudentRequest> requestsRepository, 
+            ISqlStudentsRepository<Student> studentsService)
         {
-            _studentService = studentService;
+            _requestsRepository = requestsRepository;
+            _studentsService = studentsService;
+        }
+        public IEnumerable<StudentRequest> GetAll()
+        {
+            return _requestsRepository.GetAll();
+        }
+        public Task<IEnumerable<StudentRequest>> GetAllAsync()
+        {
+            return _requestsRepository.GetAllAsync();
+        }
+        public StudentRequest GetEntityById(int id)
+        {
+            return _requestsRepository.GetEntity(id);
+        }
+        public void Create(StudentRequest item)
+        {
+            _requestsRepository.Create(item);
+        }
+        public void Update(StudentRequest item)
+        {
+            _requestsRepository.Update(item);
+        }
+        public void Delete(int id)
+        {
+            _requestsRepository.Delete(id);
+        }
+        public async Task<IEnumerable<StudentRequest>> GetRequestsByCourseId(int courseId)
+        {
+            return await _requestsRepository.GetRequestsByCourseId(courseId);
         }
         public void AssignRequestToGroups(IEnumerable<StudentRequest> requests, int groupId)
         {
@@ -23,19 +54,13 @@ namespace ONX.CRM.BLL.Services
                     FirstName = request.FirstName, LastName = request.LastName,
                     Email = request.Email, Phone = request.Phone, Type = request.Type, GroupId = groupId
                 };
-                _studentService.Create(student);
-                _repository.Delete(request.Id);
+                _studentsService.Create(student);
+                _requestsRepository.Delete(request.Id);
             }
-        }
-        public async Task<IEnumerable<StudentRequest>> GetRequestsByCourseId(int courseId)
-        {
-            var requestsList = (await _repository.GetAllAsync())
-                .Where(r => r.CourseId == courseId);
-            return requestsList;
         }
         public async Task<Dictionary<int, string>> GetActiveCoursesIdTitle()
         {
-            var courses = (await _repository.GetAllAsync()).Select(r => r.Course);
+            var courses = (await _requestsRepository.GetAllAsync()).Select(r => r.Course);
             var activeCoursesIdTitle = new Dictionary<int, string>();
             foreach (var course in courses)
             {

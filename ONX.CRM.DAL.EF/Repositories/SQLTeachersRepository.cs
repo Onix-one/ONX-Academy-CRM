@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -6,9 +7,10 @@ using ONX.CRM.BLL.Models;
 using ONX.CRM.DAL.EF.Contexts;
 using ONX.CRM.DAL.Interfaces;
 
+
 namespace ONX.CRM.DAL.EF.Repositories
 {
-    public class SqlTeachersRepository : IRepository<Teacher>
+    public class SqlTeachersRepository : ISqlTeachersRepository<Teacher>
     {
         private readonly Context _context;
         public SqlTeachersRepository(Context context)
@@ -55,6 +57,16 @@ namespace ONX.CRM.DAL.EF.Repositories
                 _context.Teachers.Remove(teacher);
                 _context.SaveChanges();
             }
+        }
+        public async Task<IEnumerable<Teacher>> GetTeachersByQuery(string query)
+        {
+            var allTeachers = await _context.Teachers.AsNoTracking().ToListAsync();
+            return allTeachers.Where(s => s.FirstName.Contains(query, StringComparison.OrdinalIgnoreCase)
+                                          || s.LastName.Contains(query, StringComparison.OrdinalIgnoreCase)
+                                          || s.Email.Contains(query, StringComparison.OrdinalIgnoreCase)
+                                          || s.Phone.Contains(query, StringComparison.OrdinalIgnoreCase)
+                                          || s.WorkExperience.Contains(query, StringComparison.OrdinalIgnoreCase));
+
         }
     }
 }
