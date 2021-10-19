@@ -31,9 +31,9 @@ namespace ONX.CRM.DAL.EF.Repositories
                 .Include(_ => _.Course).AsNoTracking()
                 .Include(_ => _.Teacher).AsNoTracking().ToListAsync();
         }
-        public Group GetEntity(int id)
+        public async Task<Group> GetEntityByIdAsync(int id)
         {
-            return _context.Groups.Find(id);
+            return await _context.Groups.FindAsync(id);
         }
         public void Create(Group group)
         {

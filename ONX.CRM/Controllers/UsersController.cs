@@ -121,7 +121,6 @@ namespace ONX.CRM.Controllers
         [HttpPost]
         public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
         {
-
             if (ModelState.IsValid)
             {
                 User user = await _userManager.FindByIdAsync(model.Id);

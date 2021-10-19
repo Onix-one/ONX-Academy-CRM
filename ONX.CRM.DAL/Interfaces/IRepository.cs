@@ -7,7 +7,7 @@ namespace ONX.CRM.DAL.Interfaces
     {
         IEnumerable<T> GetAll();
         Task<IEnumerable<T>> GetAllAsync();
-        T GetEntity(int id);
+        Task<T> GetEntityByIdAsync(int id);
         void Create(T item);
         void Update(T item);
         void Delete(int id);

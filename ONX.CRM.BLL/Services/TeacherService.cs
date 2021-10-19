@@ -23,9 +23,9 @@ namespace ONX.CRM.BLL.Services
         {
             return _teachersRepository.GetAllAsync();
         }
-        public Teacher GetEntityById(int id)
+        public Task<Teacher> GetEntityByIdAsync(int id)
         {
-            return _teachersRepository.GetEntity(id);
+            return _teachersRepository.GetEntityByIdAsync(id);
         }
         public void Create(Teacher item)
         {

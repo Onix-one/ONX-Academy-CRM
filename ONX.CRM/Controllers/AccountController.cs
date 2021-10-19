@@ -21,7 +21,7 @@ namespace ONX.CRM.Controllers
         [HttpGet]
         public IActionResult Registration()
         {
-            return View();
+            return  View();
         }
 
         [HttpPost]

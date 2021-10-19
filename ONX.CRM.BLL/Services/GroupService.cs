@@ -21,9 +21,9 @@ namespace ONX.CRM.BLL.Services
         {
             return _repository.GetAllAsync();
         }
-        public Group GetEntityById(int id)
+        public Task<Group> GetEntityByIdAsync(int id)
         {
-            return _repository.GetEntity(id);
+            return _repository.GetEntityByIdAsync(id);
         }
         public void Create(Group item)
         {
@@ -39,7 +39,7 @@ namespace ONX.CRM.BLL.Services
         }
         public async Task<IEnumerable<Group>> GetGroupsByStatus(int status)
         {
-           return await _repository.GetGroupsByStatus(status);
+            return await _repository.GetGroupsByStatus(status);
         }
         public async Task<IEnumerable<Group>> GetGroupsByQuery(string query)
         {

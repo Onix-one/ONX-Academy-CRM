@@ -23,9 +23,10 @@ namespace ONX.CRM.DAL.Dapper.Repositories
         {
             return _db.QueryAsync<Course>("SELECT * FROM Courses");
         }
-        public Course GetEntity(int id)
+        public async Task<Course> GetEntityByIdAsync(int id)
         {
-            return _db.Query<Course>("SELECT * FROM Courses WHERE Id = @id", new { id }).FirstOrDefault();
+            var courses = await _db.QueryAsync<Course>("SELECT * FROM Courses WHERE Id = @id", new {id});
+            return courses.FirstOrDefault();
         }
         public void Create(Course item)
         {

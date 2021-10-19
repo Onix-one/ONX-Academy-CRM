@@ -8,7 +8,7 @@ namespace ONX.CRM.BLL.Interfaces
     {
         IEnumerable<Course> GetAll();
         Task<IEnumerable<Course>> GetAllAsync();
-        Course GetCourse(int id);
+        Task<Course> GetEntityByIdAsync(int id);
         void Create(Course item);
         void Update(Course item);
         void Delete(int id);

@@ -23,9 +23,9 @@ namespace ONX.CRM.DAL.EF.Repositories
         {
             return await _context.Specializations.AsNoTracking().ToListAsync();
         }
-        public Specialization GetEntity(int id)
+        public async Task<Specialization> GetEntityByIdAsync(int id)
         {
-            return _context.Specializations.Find(id);
+            return await _context.Specializations.FindAsync(id);
         }
         public void Create(Specialization specialization)
         {
