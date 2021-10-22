@@ -37,13 +37,21 @@ namespace ONX.CRM.BLL.Services
         {
             _repository.Delete(id);
         }
-        public async Task<IEnumerable<Group>> GetGroupsByStatus(int status)
+        public Task<IEnumerable<Group>> GetListOfGroupsByParameters(string query, int status, int skip, int take)
         {
-            return await _repository.GetGroupsByStatus(status);
+            return _repository.GetListOfGroupsByParameters(query, status, skip, take);
         }
-        public async Task<IEnumerable<Group>> GetGroupsByQuery(string query)
+        public Task<int> GetNumberOfGroupsByParameters(string query, int status)
         {
-            return await _repository.GetGroupsByQuery(query);
+            return _repository.GetNumberOfGroupsByParameters(query, status);
+        }
+        public Task<IEnumerable<Group>> GetGroupsWithSkipAndTakeAsync(int skip, int take)
+        {
+            return _repository.GetGroupsWithSkipAndTakeAsync(skip, take);
+        }
+        public Task<int> GetNumberOfGroups()
+        {
+            return _repository.GetNumberOfGroups();
         }
     }
 }

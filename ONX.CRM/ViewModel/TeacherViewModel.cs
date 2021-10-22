@@ -1,4 +1,5 @@
-﻿using ONX.CRM.ViewModel.Search;
+﻿using ONX.CRM.ViewModel.PageInfo;
+using ONX.CRM.ViewModel.Search;
 
 namespace ONX.CRM.ViewModel
 {
@@ -8,5 +9,6 @@ namespace ONX.CRM.ViewModel
         public string WorkExperience { get; set; }
         public string Bio { get; set; }
         public SearchTeacherViewModel Search { get; set; }
+        public PageInfoViewModel PageInfo { get; set; }
     }
 }

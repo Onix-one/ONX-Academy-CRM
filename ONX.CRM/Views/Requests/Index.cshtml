@@ -1,9 +1,34 @@
-﻿@using ONX.CRM.ViewModel
-@using System.Linq
-@using System.Runtime.InteropServices.ComTypes
+﻿@using System.Linq
 @{
 
     Dictionary<int, string> activeCoursesIdTitle = ViewBag.CoursesList;
+
+    string paginationInfo = null;
+    if (Model.PageInfo.PageNumber == 1)
+    {
+        int showingFrom = 1;
+        int showingTo = Model.PageInfo.PageSize;
+        if (showingTo >= Model.PageInfo.TotalItems)
+        {
+            showingTo = Model.PageInfo.TotalItems;
+        }
+        paginationInfo = $"Showing {showingFrom} to {showingTo} of  {Model.PageInfo.TotalItems} entries";
+    }
+    else
+    {
+        int showingFrom = ((Model.PageInfo.PageNumber - 1) * Model.PageInfo.PageSize) + 1;
+        int showingTo = Model.PageInfo.PageNumber * Model.PageInfo.PageSize;
+        if (showingTo >= Model.PageInfo.TotalItems)
+        {
+            showingTo = Model.PageInfo.TotalItems;
+        }
+        paginationInfo = $"Showing {showingFrom} to {showingTo} of  {Model.PageInfo.TotalItems} entries";
+    }
+
+    int nextPageNumber = Model.PageInfo.PageNumber + 1;
+    int previousPageNumber = Model.PageInfo.PageNumber - 1;
+
+    var pageSizes = new List<int> { 5, 10, 25, 50 };
 
 }
 @model RequestsListViewModel
@@ -23,45 +48,46 @@
                 </nav>
             </div>
         </div>
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <div class="row align-items-center">
-                        <div class="col-lg-9 col-xl-9">
-                            <div class="row row-cols-lg-auto g-2">
-                                <div class="col-12">
-                                    <a asp-controller="Requests" asp-action="Index" class="btn btn-outline-primary mb-3 mb-lg-0">Show all</a>
-                                </div>
-                                <div class="col-12">
-                                    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                                        <button type="button" class="btn btn-white">Filter by Course</button>
-                                        <div class="btn-group" role="group">
-                                            <button id="btnGroupDrop1" type="button" class="btn btn-white dropdown-toggle dropdown-toggle-nocaret px-1"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class="bx bx-chevron-down"></i>
-                                            </button>
-                                            <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                @foreach (var course in activeCoursesIdTitle)
-                                                {
-                                                    <li>
-                                                        <form asp-controller="Requests" asp-action="SearchRequests" method="post">
-                                                            <input asp-for="Search.CourseId" type="hidden" value="@course.Key">
-                                                            <button type="submit" class="dropdown-item"><span>@course.Value</span></button>
-                                                        </form>
-                                                    </li>
-                                                }
-                                            </ul>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-lg-9 col-xl-9">
+                                <div class="row row-cols-lg-auto g-2">
+                                    <div class="col-12">
+                                        <a asp-controller="Requests" asp-action="Index" class="btn btn-outline-primary mb-3 mb-lg-0">Show all</a>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                            <button type="button" class="btn btn-white">Filter by Course</button>
+                                            <div class="btn-group" role="group">
+                                                <button id="btnGroupDrop1" type="button" class="btn btn-white dropdown-toggle dropdown-toggle-nocaret px-1"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="bx bx-chevron-down"></i>
+                                                </button>
+                                                <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                    @foreach (var course in activeCoursesIdTitle)
+                                                    {
+                                                        <li>
+                                                            <form asp-controller="Requests" asp-action="Index" method="post">
+                                                                <input asp-for="Search.CourseId" type="hidden" value="@course.Key">
+                                                                <button type="submit" class="dropdown-item"><span>@course.Value</span></button>
+                                                            </form>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-lg-3 col-xl-3">
-                            <div class="float-lg-end">
-                                <div class="row row-cols-lg-auto g-2">
-                                    <div class="col-12">
-                                        <a asp-controller="Requests" asp-action="Edit" class="btn btn-outline-primary mb-3 mb-lg-0"><i class="bx bxs-plus-square"></i>Add new request</a>
+                            <div class="col-lg-3 col-xl-3">
+                                <div class="float-lg-end">
+                                    <div class="row row-cols-lg-auto g-2">
+                                        <div class="col-12">
+                                            <a asp-controller="Requests" asp-action="Edit" class="btn btn-outline-primary mb-3 mb-lg-0"><i class="bx bxs-plus-square"></i>Add new request</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -70,11 +96,91 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="card">
+        <div class="card">
             <div class="card-body">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="row row-cols-lg-auto g-2 pb-2 justify-content-start">
+                            <div class="col-12">
+                                Show
+                            </div>
+                            <div class="col-12 mt-1">
+                                <div class="dropdown">
+                                    <button class="form-select form-select-sm"
+                                            role="button" data-bs-toggle="dropdown">
+                                        <div class="px-1">@Model.PageInfo.PageSize</div>
+                                    </button>
+                                    <ul class="dropdown-menu" style="min-width: 3.5rem !important">
+                                        @foreach (var pageSize in pageSizes)
+                                        {
+                                            <li>
+                                                <form asp-controller="Requests" asp-action="Index" method="post">
+                                                    <input asp-for="Search.CourseId" type="hidden" value="@Model.Search.CourseId">
+                                                    <input asp-for="PageInfo.PageSize" type="hidden" value="@pageSize">
+                                                    <button type="submit" class="dropdown-item" type="submit"><span>@pageSize.ToString()</span></button>
+                                                </form>
+                                            </li>
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                entries
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="row row-cols-lg-auto g-2 pb-2 justify-content-end">
+                            <div class="col-12  mt-2">
+                                @paginationInfo
+                            </div>
+                            @if (Model.PageInfo.PageNumber == 1)
+                            {
+                                <div class="col-12 mt-0">
+                                    <button class="btn btn-white px-2 ms-2 disabled">
+                                        <i class="bx bx-chevron-left me-0"></i>
+                                    </button>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-12 mt-0">
+                                    <form asp-controller="Requests" asp-action="Index" method="post">
+                                        <input asp-for="Search.CourseId" type="hidden" value="@Model.Search.CourseId">
+                                        <input asp-for="PageInfo.PageSize" type="hidden" value="@Model.PageInfo.PageSize">
+                                        <input asp-for="PageInfo.PageNumber" type="hidden" value="@previousPageNumber">
+                                        <button type="submit" class="btn btn-white px-2 ms-2">
+                                            <i class="bx bx-chevron-left me-0"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            }
+                            @if (Model.PageInfo.PageNumber == Model.PageInfo.TotalPages)
+                            {
+                                <div class="col-12 mt-0">
+                                    <button class="btn btn-white px-2 ms-0 disabled">
+                                        <i class="bx bx-chevron-right me-0"></i>
+                                    </button>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-12 mt-0">
+                                    <form asp-controller="Requests" asp-action="Index" method="post">
+                                        <input asp-for="Search.CourseId" type="hidden" value="@Model.Search.CourseId">
+                                        <input asp-for="PageInfo.PageSize" type="hidden" value="@Model.PageInfo.PageSize">
+                                        <input asp-for="PageInfo.PageNumber" type="hidden" value="@nextPageNumber">
+                                        <button type="submit" class="btn btn-white px-2 ms-0">
+                                            <i class="bx bx-chevron-right me-0"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
                 <form asp-controller="Requests" asp-action="Index" method="post">
-                    @if (!(bool) ViewBag.AllRequestsShow)
+                    @if (!(bool)ViewBag.AllRequestsShow)
                     {
                         @if ((bool)ViewBag.GroupExists)
                         {
@@ -85,6 +191,9 @@
                                             <div class="row row-cols-lg-auto g-2">
                                                 <div class="col-12">
                                                     <div class="position-relative">
+                                                        @Html.HiddenFor(m => m.Search.CourseId)
+                                                        @Html.HiddenFor(m => m.PageInfo.PageSize)
+                                                        @Html.HiddenFor(m => m.PageInfo.PageNumber)
                                                         <button type="submit" class="btn btn-outline-success mb-3 mb-lg-0" role="button">
                                                             <i class="bx bxs-plus-square"></i>Add student(s) to group
                                                         </button>
@@ -126,7 +235,6 @@
                                 </div>
                             </div>
                         }
-
                     }
                     <div>
                         <table class="table table-hover mb-0">

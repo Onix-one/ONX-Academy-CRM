@@ -14,7 +14,6 @@ namespace ONX.CRM.BLL.Services
         {
             _teachersRepository = teachersRepository;
         }
-
         public IEnumerable<Teacher> GetAll()
         {
             return _teachersRepository.GetAll();
@@ -39,9 +38,21 @@ namespace ONX.CRM.BLL.Services
         {
             _teachersRepository.Delete(id);
         }
-        public async Task<IEnumerable<Teacher>> GetTeachersByQuery(string query)
+        public async Task<IEnumerable<Teacher>> GetTeachersByQuery(string query, int skip, int take)
         {
-            return await _teachersRepository.GetTeachersByQuery(query);
+            return await _teachersRepository.GetTeachersByQuery(query, skip, take);
+        }
+        public Task<int> GetNumberOfTeachersByQuery(string query)
+        {
+            return _teachersRepository.GetNumberOfTeachersByQuery(query);
+        }
+        public Task<IEnumerable<Teacher>> GetTeachersWithSkipAndTakeAsync(int skip, int take)
+        {
+            return _teachersRepository.GetTeachersWithSkipAndTakeAsync(skip, take);
+        }
+        public Task<int> GetNumberOfTeachers()
+        {
+            return _teachersRepository.GetNumberOfTeachers();
         }
     }
 }

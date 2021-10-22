@@ -7,8 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ONX.CRM.BLL.Interfaces;
 using ONX.CRM.BLL.Models;
+using ONX.CRM.Extensions;
 using ONX.CRM.Filters;
 using ONX.CRM.ViewModel;
+using ONX.CRM.ViewModel.PageInfo;
 using ONX.CRM.ViewModel.Search;
 
 namespace ONX.CRM.Controllers
@@ -23,12 +25,14 @@ namespace ONX.CRM.Controllers
         private readonly IStudentRequestService _studentRequestService;
         private readonly IGroupService _groupService;
         private readonly ISpecializationService _specializationService;
+        private readonly PageInfoViewModel _pageInfo;
 
         public RequestsController(IStudentRequestService studentRequestsService,
             IStudentService studentService, ICourseService courseService,
             IMapper mapper, ILogger<RequestsController> logger, IGroupService groupService,
-            ISpecializationService specializationService)
+            ISpecializationService specializationService, PageInfoViewModel pageInfo)
         {
+            _pageInfo = pageInfo;
             _specializationService = specializationService;
             _groupService = groupService;
             _mapper = mapper;
@@ -39,14 +43,27 @@ namespace ONX.CRM.Controllers
         }
         [HttpGet]
         //[Authorize(Roles = "manager")]
-        public async Task<IActionResult> Index(int courseId)
+        public async Task<IActionResult> Index(int courseId, int pageSize, int pageNumber)
         {
+
+            PageInfoViewModel pageInfo;
+            int skip;
+            int take;
+            //Получаем список курсов по которым есть заявки
             ViewBag.CoursesList = await _studentRequestService.GetActiveCoursesIdTitle();
+
             if (courseId != 0)
             {
                 ViewBag.AllRequestsShow = false;
+
+                pageInfo = _pageInfo.CheckingPageInfo(pageSize, pageNumber,
+                    await _studentRequestService.GetNumberOfRequestsByCourseId(courseId));
+                skip = (pageInfo.PageNumber - 1) * pageInfo.PageSize;
+                take = pageInfo.PageSize;
                 var requestsList = _mapper.Map<IEnumerable<StudentRequestViewModel>>(await _studentRequestService
-                    .GetRequestsByCourseId(courseId));
+                    .GetRequestsByCourseId(courseId, skip, take));
+
+                //Если у заявок отфильтрованых по фильтру есть группа то разрешаем добавить студента в эту группу 
                 var groups = _mapper.Map<IEnumerable<GroupViewModel>>(await _groupService.GetAllAsync())
                     .Where(g => g.CourseId == courseId);
                 if (groups.Count() != 0)
@@ -56,34 +73,63 @@ namespace ONX.CRM.Controllers
                     ViewBag.Groups = groups;
                     return View(new RequestsListViewModel
                     {
+                        Search = new SearchRequestViewModel { CourseId = courseId },
+                        PageInfo = pageInfo,
                         RequestsList = requestsList.ToList()
                     });
                 }
+                //Иначе предложим создать новую группу
                 ViewBag.GroupExists = false;
                 ViewBag.CheckingAllowed = false;
-                       
                 return View(new RequestsListViewModel
                 {
+                    Search = new SearchRequestViewModel { CourseId = courseId },
+                    PageInfo = pageInfo,
                     RequestsList = requestsList.ToList()
                 });
             }
+            //Запуск Index без фильтрации по курсам
+            pageInfo = _pageInfo.CheckingPageInfo(pageSize, pageNumber, await _studentRequestService.GetNumberOfRequests());
+            skip = (pageInfo.PageNumber - 1) * pageInfo.PageSize;
+            take = pageInfo.PageSize;
+            var requests = _mapper.Map<IEnumerable<StudentRequestViewModel>>(await _studentRequestService.GetRequestsWithSkipAndTakeAsync(skip, take));
 
             ViewBag.AllRequestsShow = true;
             ViewBag.CheckingAllowed = false;
-            var requests = _mapper.Map<IEnumerable<StudentRequestViewModel>>(await _studentRequestService.GetAllAsync());
-            return View(new RequestsListViewModel() { Search = new SearchRequestViewModel(), 
-                RequestsList = requests.ToList() });
+
+            return View(new RequestsListViewModel()
+            {
+                Search = new SearchRequestViewModel(),
+                PageInfo = pageInfo,
+                RequestsList = requests.ToList()
+            });
         }
         [HttpPost]
         public async Task<IActionResult> Index(RequestsListViewModel model)
         {
-            var requests = _mapper.Map<IEnumerable<StudentRequest>>(model.RequestsList.Where(r => r.Selected));
-            if (requests.Count() == 0)
+            if (model.RequestsList != null)
             {
-                return RedirectToAction("Index", "Requests", new { id = model.RequestsList.FirstOrDefault().CourseId});
+                var requests = _mapper.Map<IEnumerable<StudentRequest>>(model.RequestsList.Where(r => r.Selected));
+                _studentRequestService.AssignRequestToGroups(requests, model.GroupId);
+                //Если заявку была одна и мы добавили ее в группу то преадресовываем на все заявки
+                if (model.RequestsList.Count == 1)
+                {
+                    return RedirectToAction("Index", "Requests");
+                }
             }
-            _studentRequestService.AssignRequestToGroups(requests, model.GroupId);
-            return RedirectToAction("Index", "Requests");
+            if (model.PageInfo == null)
+            {
+                return RedirectToAction("Index", "Requests", new
+                {
+                    courseId = model.Search.CourseId
+                }, null);
+            }
+            return RedirectToAction("Index", "Requests", new
+            {
+                pageSize = model.PageInfo.PageSize,
+                pageNumber = model.PageInfo.PageNumber,
+                courseId = model.Search.CourseId,
+            }, null);
         }
         [HttpGet]
         //[Authorize(Roles = "manager")]
@@ -138,18 +184,6 @@ namespace ONX.CRM.Controllers
         public IActionResult Delete(int id)
         {
             _studentRequestService.Delete(id);
-            return RedirectToAction("Index");
-        }
-        public IActionResult SearchRequests(RequestsListViewModel model)
-        {
-            if (model.Search.CourseId != 0)
-            {
-                return RedirectToAction("Index", "Requests", new
-                {
-                    courseId = model.Search.CourseId
-                }, null);
-            }
-
             return RedirectToAction("Index");
         }
     }

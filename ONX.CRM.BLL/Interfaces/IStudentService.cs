@@ -6,7 +6,10 @@ namespace ONX.CRM.BLL.Interfaces
 {
     public interface IStudentService : IEntityService<Student>
     {
-        Task<IEnumerable<Student>> SearchStudents(string query, int courseId, int type);
+        Task<IEnumerable<Student>> GetListOfStudentsByParameters(string query, int courseId, int type, int skip, int take);
+        Task<int> GetNumberOfStudentsByParameters(string query, int courseId, int type);
         Task<Dictionary<int, string>> GetActiveCoursesIdTitle();
+        Task<IEnumerable<Student>> GetStudentsWithSkipAndTakeAsync(int skip, int take);
+        Task<int> GetNumberOfStudents();
     }
 }

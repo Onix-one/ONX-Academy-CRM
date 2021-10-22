@@ -41,10 +41,6 @@ namespace ONX.CRM.BLL.Services
         {
             _requestsRepository.Delete(id);
         }
-        public async Task<IEnumerable<StudentRequest>> GetRequestsByCourseId(int courseId)
-        {
-            return await _requestsRepository.GetRequestsByCourseId(courseId);
-        }
         public void AssignRequestToGroups(IEnumerable<StudentRequest> requests, int groupId)
         {
             foreach (var request in requests)
@@ -67,6 +63,22 @@ namespace ONX.CRM.BLL.Services
                 activeCoursesIdTitle[course.Id] = course.Title;
             }
             return activeCoursesIdTitle;
+        }
+        public Task<IEnumerable<StudentRequest>> GetRequestsByCourseId(int courseId, int skip, int take)
+        {
+            return _requestsRepository.GetRequestsByCourseId(courseId, skip, take);
+        }
+        public Task<IEnumerable<StudentRequest>> GetRequestsWithSkipAndTakeAsync(int skip, int take)
+        {
+            return _requestsRepository.GetRequestsWithSkipAndTakeAsync(skip, take);
+        }
+        public Task<int> GetNumberOfRequests()
+        {
+            return _requestsRepository.GetNumberOfRequests();
+        }
+        public Task<int> GetNumberOfRequestsByCourseId(int courseId)
+        {
+            return _requestsRepository.GetNumberOfRequestsByCourseId(courseId);
         }
     }
 }

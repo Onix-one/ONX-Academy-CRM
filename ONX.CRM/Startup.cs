@@ -15,6 +15,7 @@ using ONX.CRM.DAL.EF.Contexts;
 using ONX.CRM.Filters;
 using ONX.CRM.ServiceExtensions;
 using ONX.CRM.ViewModel;
+using ONX.CRM.ViewModel.PageInfo;
 
 namespace ONX.CRM
 {
@@ -65,6 +66,7 @@ namespace ONX.CRM
                 Configuration.GetSection(SecurityOptions.SectionTitle));
 
             services.AddScoped<RequestsListViewModel, RequestsListViewModel>();
+            services.AddScoped<PageInfoViewModel, PageInfoViewModel>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env,

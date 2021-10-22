@@ -25,6 +25,14 @@ namespace ONX.CRM.DAL.EF.Repositories
         {
             return await _context.Teachers.AsNoTracking().ToListAsync();
         }
+        public async Task<IEnumerable<Teacher>> GetTeachersWithSkipAndTakeAsync(int skip, int take)
+        {
+            return await _context.Teachers.AsNoTracking().Skip(skip).Take(take).ToListAsync();
+        }
+        public async Task<int> GetNumberOfTeachers()
+        {
+            return await _context.Teachers.CountAsync();
+        }
         public async Task<Teacher> GetEntityByIdAsync(int id)
         {
             return await _context.Teachers.FindAsync(id);
@@ -58,15 +66,25 @@ namespace ONX.CRM.DAL.EF.Repositories
                 _context.SaveChanges();
             }
         }
-        public async Task<IEnumerable<Teacher>> GetTeachersByQuery(string query)
+        public async Task<IEnumerable<Teacher>> GetTeachersByQuery(string query, int skip, int take)
         {
-            var allTeachers = await _context.Teachers.AsNoTracking().ToListAsync();
-            return allTeachers.Where(s => s.FirstName.Contains(query, StringComparison.OrdinalIgnoreCase)
-                                          || s.LastName.Contains(query, StringComparison.OrdinalIgnoreCase)
-                                          || s.Email.Contains(query, StringComparison.OrdinalIgnoreCase)
-                                          || s.Phone.Contains(query, StringComparison.OrdinalIgnoreCase)
-                                          || s.WorkExperience.Contains(query, StringComparison.OrdinalIgnoreCase));
-
+            var teachers = await _context.Teachers.AsNoTracking().ToListAsync();
+            return teachers
+                .Where(s => s.FirstName.Contains(query, StringComparison.OrdinalIgnoreCase)
+                            || s.LastName.Contains(query, StringComparison.OrdinalIgnoreCase)
+                            || s.Email.Contains(query, StringComparison.OrdinalIgnoreCase)
+                            || s.Phone.Contains(query, StringComparison.OrdinalIgnoreCase)
+                            || s.WorkExperience.Contains(query, StringComparison.OrdinalIgnoreCase))
+                .Skip(skip).Take(take);
+        }
+        public async Task<int> GetNumberOfTeachersByQuery(string query)
+        {
+            var numberOfTeachers = await _context.Teachers.AsNoTracking().ToListAsync();
+            return numberOfTeachers.Count(s => s.FirstName.Contains(query, StringComparison.OrdinalIgnoreCase)
+                                               || s.LastName.Contains(query, StringComparison.OrdinalIgnoreCase)
+                                               || s.Email.Contains(query, StringComparison.OrdinalIgnoreCase)
+                                               || s.Phone.Contains(query, StringComparison.OrdinalIgnoreCase)
+                                               || s.WorkExperience.Contains(query, StringComparison.OrdinalIgnoreCase));
         }
     }
 }

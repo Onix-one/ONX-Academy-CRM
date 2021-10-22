@@ -5,8 +5,10 @@ namespace ONX.CRM.DAL.Interfaces
 {
     public interface ISqlStudentsRepository<T> : IRepository<T>
     {
-        Task<IEnumerable<T>> GetStudentsByType(int type);
-        Task<IEnumerable<T>> GetStudentsByCourseId(int courseId);
-        Task<IEnumerable<T>> GetStudentsByQuery(string query);
+        Task<IEnumerable<T>> GetListOfStudentsByParameters(string query, int courseId, int type, int skip, int take);
+        Task<int> GetNumberOfStudentsByParameters(string query, int courseId, int type);
+        Task<IEnumerable<T>> GetStudentsWithSkipAndTakeAsync(int skip, int take);
+        Task<int> GetNumberOfStudents();
+
     }
 }
