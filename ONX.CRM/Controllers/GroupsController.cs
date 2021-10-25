@@ -36,6 +36,7 @@ namespace ONX.CRM.Controllers
         }
         public async Task<IActionResult> Index(string query, int status, int pageSize, int pageNumber)
         {
+            ViewBag.Theme = "semi-dark";
             PageInfoViewModel pageInfo;
             int skip;
             int take;
