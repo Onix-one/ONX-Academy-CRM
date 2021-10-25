@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using ONX.CRM.ViewModel.PageInfo;
 using ONX.CRM.ViewModel.Search;
 
 namespace ONX.CRM.ViewModel
@@ -8,5 +9,6 @@ namespace ONX.CRM.ViewModel
         public IList<StudentRequestViewModel> RequestsList { get; set; }
         public int GroupId { get; set; }
         public SearchRequestViewModel Search { get; set; }
+        public PageInfoViewModel PageInfo { get; set; }
     }
 }

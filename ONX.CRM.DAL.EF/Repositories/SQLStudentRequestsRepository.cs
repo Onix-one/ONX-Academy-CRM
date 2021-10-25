@@ -25,6 +25,29 @@ namespace ONX.CRM.DAL.EF.Repositories
             return await _context.StudentRequests.AsNoTracking()
                 .Include(_ => _.Course).AsNoTracking().ToListAsync();
         }
+        public async Task<IEnumerable<StudentRequest>> GetRequestsWithSkipAndTakeAsync(int skip, int take)
+        {
+            return await _context.StudentRequests.AsNoTracking().Skip(skip).Take(take)
+                .Include(_ => _.Course).AsNoTracking().ToListAsync();
+        }
+        public async Task<int> GetNumberOfRequests()
+        {
+            return await _context.StudentRequests.CountAsync();
+        }
+        public async Task<IEnumerable<StudentRequest>> GetRequestsByCourseId(int courseId, int skip, int take)
+        {
+            var requestsList = await _context.StudentRequests
+                .Where(r => r.CourseId == courseId)
+                .AsNoTracking().Skip(skip).Take(take)
+                .Include(_ => _.Course).AsNoTracking().ToListAsync(); ;
+            return requestsList;
+        }
+        public async Task<int> GetNumberOfRequestsByCourseId(int courseId)
+        {
+            return await _context.StudentRequests
+                .Where(s => s.CourseId == courseId)
+                .AsNoTracking().CountAsync();
+        }
         public async Task<StudentRequest> GetEntityByIdAsync(int id)
         {
             return await _context.StudentRequests.FindAsync(id);
@@ -47,13 +70,6 @@ namespace ONX.CRM.DAL.EF.Repositories
                 _context.StudentRequests.Remove(request);
                 _context.SaveChanges();
             }
-        }
-        public async Task<IEnumerable<StudentRequest>> GetRequestsByCourseId(int courseId)
-        {
-            var requestsList = await _context.StudentRequests
-                .Where(r => r.CourseId == courseId)
-                .Include(_ => _.Course).AsNoTracking().ToListAsync(); ;
-            return requestsList;
         }
     }
 }

@@ -31,6 +31,18 @@ namespace ONX.CRM.DAL.EF.Repositories
                 .ThenInclude(_ => _.Course)
                 .AsNoTracking().ToListAsync();
         }
+        public async Task<IEnumerable<Student>> GetStudentsWithSkipAndTakeAsync(int skip, int take)
+        {
+            return await _context.Students.AsNoTracking().Skip(skip).Take(take)
+                .Include(_ => _.Group)
+                .ThenInclude(_ => _.Course)
+                .AsNoTracking().ToListAsync();
+        }
+        public async Task<int> GetNumberOfStudents()
+        {
+            return await _context.Students.CountAsync();
+        }
+
         public async Task<Student> GetEntityByIdAsync(int id)
         {
             return await _context.Students.FindAsync(id);
@@ -54,34 +66,94 @@ namespace ONX.CRM.DAL.EF.Repositories
                 _context.SaveChanges();
             }
         }
-        public async Task<IEnumerable<Student>> GetStudentsByType(int type)
+
+        private async Task<IEnumerable<Student>> GetStudentsByQuery(string query, int skip, int take)
         {
-            var studentsList = await _context.Students
-                .Where(s => s.Type == (StudentType)Enum.ToObject(typeof(StudentType), type))
-                .Include(s=>s.Group)
-                .ThenInclude(_ => _.Course).AsNoTracking().ToListAsync();
-            return studentsList;
+            var studentsList = await GetAllAsync();
+            return studentsList
+                .Where(s => s.FirstName.Contains(query, StringComparison.OrdinalIgnoreCase)
+                            || s.LastName.Contains(query, StringComparison.OrdinalIgnoreCase)
+                            || s.Email.Contains(query, StringComparison.OrdinalIgnoreCase)
+                            || s.Phone.Contains(query, StringComparison.OrdinalIgnoreCase)
+                            || s.Group.Number.Contains(query, StringComparison.OrdinalIgnoreCase))
+                .Skip(skip).Take(take);
         }
-        public async Task<IEnumerable<Student>> GetStudentsByCourseId(int courseId)
+
+        private async Task<IEnumerable<Student>> GetStudentsByCourseId(int courseId, int skip, int take)
         {
             var studentsList = await _context.Students
                 .Where(s => s.Group.CourseId == courseId)
+                .AsNoTracking().Skip(skip).Take(take)
                 .Include(s => s.Group)
                 .ThenInclude(_ => _.Course).AsNoTracking().ToListAsync();
             return studentsList;
         }
-        public async Task<IEnumerable<Student>> GetStudentsByQuery(string query)
-        {
-            var allStudents = await _context.Students.AsNoTracking()
-                .Include(_ => _.Group)
-                .ThenInclude(_ => _.Course)
-                .AsNoTracking().ToListAsync();
 
-            return allStudents.Where(s => s.FirstName.Contains(query, StringComparison.OrdinalIgnoreCase)
-                                          || s.LastName.Contains(query, StringComparison.OrdinalIgnoreCase)
-                                          || s.Email.Contains(query, StringComparison.OrdinalIgnoreCase)
-                                          || s.Phone.Contains(query, StringComparison.OrdinalIgnoreCase)
-                                          || s.Group.Number.Contains(query, StringComparison.OrdinalIgnoreCase));
+        private async Task<IEnumerable<Student>> GetStudentsByType(int type, int skip, int take)
+        {
+            var studentsList = await _context.Students
+                .Where(s => s.Type == (StudentType)Enum.ToObject(typeof(StudentType), type))
+                .AsNoTracking().Skip(skip).Take(take)
+                .Include(s=>s.Group)
+                .ThenInclude(_ => _.Course).AsNoTracking().ToListAsync();
+            return studentsList;
+        }
+
+
+        private async Task<int> GetNumberOfStudentsByQuery(string query)
+        {
+            var studentsList = await GetAllAsync();
+            return studentsList
+                .Count(s => s.FirstName.Contains(query, StringComparison.OrdinalIgnoreCase)
+                            || s.LastName.Contains(query, StringComparison.OrdinalIgnoreCase)
+                            || s.Email.Contains(query, StringComparison.OrdinalIgnoreCase)
+                            || s.Phone.Contains(query, StringComparison.OrdinalIgnoreCase)
+                            || s.Group.Number.Contains(query, StringComparison.OrdinalIgnoreCase));
+        }
+        private async Task<int> GetNumberOfStudentsByCourseId(int courseId)
+        {
+            return await _context.Students
+                .Where(s => s.Group.CourseId == courseId)
+                .AsNoTracking().CountAsync();
+        }
+        private async Task<int> GetNumberOfStudentsByType(int type)
+        { 
+            var numberOfStudentsByType = await _context.Students
+                .Where(s => s.Type == (StudentType)Enum.ToObject(typeof(StudentType), type))
+                .AsNoTracking().CountAsync();
+            return numberOfStudentsByType;
+        }
+        public async Task<IEnumerable<Student>> GetListOfStudentsByParameters(string query, int courseId, int type, int skip, int take)
+        {
+            if (!string.IsNullOrEmpty(query))
+            {
+                return await GetStudentsByQuery(query, skip, take);
+            }
+            if (courseId != 0)
+            {
+                return await GetStudentsByCourseId(courseId, skip, take);
+            }
+            if (type != 0)
+            {
+                return await GetStudentsByType(type, skip, take);
+            }
+            return null;
+        }
+        public async Task<int> GetNumberOfStudentsByParameters(string query, int courseId, int type)
+        {
+            if (!string.IsNullOrEmpty(query))
+            {
+                return await GetNumberOfStudentsByQuery(query);
+            }
+            if (courseId != 0)
+            {
+                return await GetNumberOfStudentsByCourseId(courseId);
+            }
+            if (type != 0)
+            {
+              return  await GetNumberOfStudentsByType(type);
+            }
+            return 0;
         }
     }
 }

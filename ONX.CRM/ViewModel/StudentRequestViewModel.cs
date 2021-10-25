@@ -14,5 +14,6 @@ namespace ONX.CRM.ViewModel
         public StudentType? Type { get; set; }
         public string? Comments { get; set; }
         public bool Selected { get; set; }
+       
     }
 }

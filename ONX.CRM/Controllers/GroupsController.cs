@@ -5,8 +5,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ONX.CRM.BLL.Interfaces;
 using ONX.CRM.BLL.Models;
+using ONX.CRM.Extensions;
 using ONX.CRM.Filters;
 using ONX.CRM.ViewModel;
+using ONX.CRM.ViewModel.PageInfo;
 using ONX.CRM.ViewModel.Search;
 
 namespace ONX.CRM.Controllers
@@ -20,36 +22,65 @@ namespace ONX.CRM.Controllers
         private readonly ILogger<GroupsController> _logger;
         private readonly ITeacherService _teacherService;
         private readonly ICourseService _courseService;
+        private readonly PageInfoViewModel _pageInfo;
         public GroupsController(IGroupService groupService, ITeacherService teacherService,
-            ICourseService courseService, IMapper mapper, ILogger<GroupsController> logger)
+            ICourseService courseService, IMapper mapper,
+            ILogger<GroupsController> logger, PageInfoViewModel pageInfo)
         {
+            _pageInfo = pageInfo;
             _mapper = mapper;
             _logger = logger;
             _groupService = groupService;
             _teacherService = teacherService;
             _courseService = courseService;
         }
-        public async Task<IActionResult> Index(string query, int status)
+        public async Task<IActionResult> Index(string query, int status, int pageSize, int pageNumber)
         {
-            if (await CheckingForSearchOrSorting(query, status))
+            PageInfoViewModel pageInfo;
+            int skip;
+            int take;
+            if (CheckingForSearchOrSorting(query, status))
             {
+                pageInfo = _pageInfo.CheckingPageInfo(pageSize, pageNumber, await _groupService
+                    .GetNumberOfGroupsByParameters(query, status));
+                skip = (pageInfo.PageNumber - 1) * pageInfo.PageSize;
+                take = pageInfo.PageSize;
 
-                if (!string.IsNullOrEmpty(query))
+                ViewBag.Groups = _mapper.Map<IEnumerable<GroupViewModel>>(await _groupService
+                    .GetListOfGroupsByParameters(query, status, skip, take));
+                return View(new GroupViewModel
                 {
-                    ViewBag.Groups = _mapper.Map<IEnumerable<GroupViewModel>>(await _groupService
-                        .GetGroupsByQuery(query));
-                    return View(new GroupViewModel() { Search = new SearchGroupViewModel() { Query = query } });
-                }
-
-                if (status != 0)
-                {
-                    ViewBag.Groups = _mapper.Map<IEnumerable<GroupViewModel>>(await _groupService
-                        .GetGroupsByStatus(status));
-                    return View(new GroupViewModel { Search = new SearchGroupViewModel() });
-                }
+                    Search = new SearchGroupViewModel
+                    {
+                        Query = query,
+                        Status = status
+                    },
+                    PageInfo = pageInfo
+                });
             }
-            ViewBag.Groups = _mapper.Map<IEnumerable<GroupViewModel>>(await _groupService.GetAllAsync());
-            return View(new GroupViewModel { Search = new SearchGroupViewModel() });
+
+            pageInfo = _pageInfo.CheckingPageInfo(pageSize, pageNumber, await _groupService
+                .GetNumberOfGroups());
+            skip = (pageInfo.PageNumber - 1) * pageInfo.PageSize;
+            take = pageInfo.PageSize;
+            ViewBag.Groups = _mapper
+                .Map<IEnumerable<GroupViewModel>>(await _groupService.GetGroupsWithSkipAndTakeAsync(skip, take));
+            return View(new GroupViewModel
+            {
+                Search = new SearchGroupViewModel(),
+                PageInfo = pageInfo
+            });
+        }
+        [HttpPost]
+        public async Task<IActionResult> Pagination(GroupViewModel model)
+        {
+            return RedirectToAction("Index", "Groups", new
+            {
+                pageSize = model.PageInfo.PageSize,
+                pageNumber = model.PageInfo.PageNumber,
+                query = model.Search.Query,
+                status = model.Search.Status,
+            }, null);
         }
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
@@ -81,20 +112,15 @@ namespace ONX.CRM.Controllers
             _groupService.Delete(id);
             return RedirectToAction("Index");
         }
-
         public async Task<IActionResult> SearchGroups(GroupViewModel model)
         {
-            if (await CheckingForSearchOrSorting(model.Search.Query, model.Search.Status))
+            return RedirectToAction("Index", "Groups", new
             {
-                return RedirectToAction("Index", "Groups", new
-                {
-                    query = model.Search.Query,
-                    status = model.Search.Status
-                }, null);
-            }
-            return RedirectToAction("Index");
+                query = model.Search.Query,
+                status = model.Search.Status
+            }, null);
         }
-        private async Task<bool> CheckingForSearchOrSorting(string query, int status)
+        private bool CheckingForSearchOrSorting(string query, int status)
         {
             if (!string.IsNullOrEmpty(query) || status != 0)
             {

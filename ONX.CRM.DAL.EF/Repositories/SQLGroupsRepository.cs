@@ -31,6 +31,18 @@ namespace ONX.CRM.DAL.EF.Repositories
                 .Include(_ => _.Course).AsNoTracking()
                 .Include(_ => _.Teacher).AsNoTracking().ToListAsync();
         }
+        public async Task<IEnumerable<Group>> GetGroupsWithSkipAndTakeAsync(int skip, int take)
+        {
+            return await _context.Groups.AsNoTracking().Skip(skip).Take(take)
+                .Include(_ => _.Students).AsNoTracking()
+                .Include(_ => _.Course).AsNoTracking()
+                .Include(_ => _.Teacher).AsNoTracking().ToListAsync();
+        }
+        public async Task<int> GetNumberOfGroups()
+        {
+            return await _context.Groups.CountAsync();
+        }
+
         public async Task<Group> GetEntityByIdAsync(int id)
         {
             return await _context.Groups.FindAsync(id);
@@ -64,26 +76,66 @@ namespace ONX.CRM.DAL.EF.Repositories
                 _context.SaveChanges();
             }
         }
-        public async Task<IEnumerable<Group>> GetGroupsByStatus(int status)
+        private async Task<IEnumerable<Group>> GetGroupsByQuery(string query, int skip, int take)
+        {
+            var groups = await GetAllAsync();
+            return groups
+                .Where(g => g.Number.Contains(query, StringComparison.OrdinalIgnoreCase)
+                            || g.Course.Title.Contains(query, StringComparison.OrdinalIgnoreCase)
+                            || g.Teacher.FirstName.Contains(query, StringComparison.OrdinalIgnoreCase)
+                            || g.Teacher.LastName.Contains(query, StringComparison.OrdinalIgnoreCase)
+                            || g.StartDate.ToString().Contains(query, StringComparison.OrdinalIgnoreCase))
+                .Skip(skip).Take(take);
+        }
+        private async Task<IEnumerable<Group>> GetGroupsByStatus(int status, int skip, int take)
         {
             var groups = await _context.Groups
                 .Where(s => s.Status == (GroupStatus)Enum.ToObject(typeof(GroupStatus), status))
-                .Include(g=>g.Course).AsNoTracking()
+                .AsNoTracking().Skip(skip).Take(take)
+                .Include(g => g.Course).AsNoTracking()
                 .Include(g => g.Teacher).AsNoTracking().ToListAsync();
             return groups;
         }
-        public async Task<IEnumerable<Group>> GetGroupsByQuery(string query)
+        private async Task<int> GetNumberOfGroupsByQuery(string query)
         {
-            var groups = await _context.Groups
-                .Include(g => g.Students).AsNoTracking()
-                .Include(g => g.Course).AsNoTracking()
-                .Include(g => g.Teacher).AsNoTracking().ToListAsync();
-
-            return groups.Where(g => g.Number.Contains(query, StringComparison.OrdinalIgnoreCase)
-                                     || g.Course.Title.Contains(query, StringComparison.OrdinalIgnoreCase)
-                                     || g.Teacher.FirstName.Contains(query, StringComparison.OrdinalIgnoreCase)
-                                     || g.Teacher.LastName.Contains(query, StringComparison.OrdinalIgnoreCase)
-                                     || g.StartDate.ToString().Contains(query, StringComparison.OrdinalIgnoreCase));
+            var numberOfGroupsByQuery = await GetAllAsync();
+            return numberOfGroupsByQuery
+                .Count(g => g.Number.Contains(query, StringComparison.OrdinalIgnoreCase)
+                            || g.Course.Title.Contains(query, StringComparison.OrdinalIgnoreCase)
+                            || g.Teacher.FirstName.Contains(query, StringComparison.OrdinalIgnoreCase)
+                            || g.Teacher.LastName.Contains(query, StringComparison.OrdinalIgnoreCase)
+                            || g.StartDate.ToString().Contains(query, StringComparison.OrdinalIgnoreCase));
+        }
+        private async Task<int> GetNumberOfGroupsByStatus(int status)
+        {
+            var numberOfGroupsByStatus = await _context.Groups
+                .Where(s => s.Status == (GroupStatus)Enum.ToObject(typeof(GroupStatus), status))
+                .AsNoTracking().CountAsync();
+            return numberOfGroupsByStatus;
+        }
+        public async Task<IEnumerable<Group>> GetListOfGroupsByParameters(string query, int status, int skip, int take)
+        {
+            if (!string.IsNullOrEmpty(query))
+            {
+                return await GetGroupsByQuery(query, skip, take);
+            }
+            if (status != 0)
+            {
+                return await GetGroupsByStatus(status, skip, take);
+            }
+            return null;
+        }
+        public async Task<int> GetNumberOfGroupsByParameters(string query, int status)
+        {
+            if (!string.IsNullOrEmpty(query))
+            {
+                return await GetNumberOfGroupsByQuery(query);
+            }
+            if (status != 0)
+            {
+                return await GetNumberOfGroupsByStatus(status);
+            }
+            return 0;
         }
     }
 }

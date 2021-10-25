@@ -1,6 +1,4 @@
-﻿@using ONX.CRM.ViewModel
-
-@{ var studentTypeList = new Dictionary<int, string>
+﻿@{ var studentTypeList = new Dictionary<int, string>
     {
         [1] = "Online",
         [2] = "Offline",
@@ -8,6 +6,34 @@
     };
     Dictionary<int, string> activeCoursesIdTitle = ViewBag.Courses;
     IEnumerable<StudentViewModel> studentsList = ViewBag.Students;
+
+    string paginationInfo = null;
+    if (Model.PageInfo.PageNumber == 1)
+    {
+        int showingFrom = 1;
+        int showingTo = Model.PageInfo.PageSize;
+        if (showingTo >= Model.PageInfo.TotalItems)
+        {
+            showingTo = Model.PageInfo.TotalItems;
+        }
+        paginationInfo = $"Showing {showingFrom} to {showingTo} of  {Model.PageInfo.TotalItems} entries";
+    }
+    else
+    {
+        int showingFrom = ((Model.PageInfo.PageNumber - 1) * Model.PageInfo.PageSize) + 1;
+        int showingTo = Model.PageInfo.PageNumber * Model.PageInfo.PageSize;
+        if (showingTo >= Model.PageInfo.TotalItems)
+        {
+            showingTo = Model.PageInfo.TotalItems;
+        }
+        paginationInfo = $"Showing {showingFrom} to {showingTo} of  {Model.PageInfo.TotalItems} entries";
+    }
+
+    int nextPageNumber = Model.PageInfo.PageNumber + 1;
+    int previousPageNumber = Model.PageInfo.PageNumber - 1;
+
+    var pageSizes = new List<int> { 10, 25, 50 };
+
 }
 @model StudentViewModel
 
@@ -119,151 +145,181 @@
                 </div>
             </div>
         </div>
-
         <div class="card">
             <div class="card-body ">
-                
-
                 <div class="row">
-                    <div class="col-12">
-                        <div class="row align-items-center">
-                            <div class="col-lg-9 col-xl-9">
-                                <div class="row row-cols-lg-auto g-2 pb-2">
-                                    <div class="col-12">
-                                        Show
-                                    </div>
-                                    <div class="col-12 mt-1">
-                                        <select name="example_length" aria-controls="example" class="form-select form-select-sm">
-                                            <option value="10">10</option>
-                                            <option value="25">25</option>
-                                            <option value="50">50</option>
-                                            <option value="100">100</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-12">
-                                        entries
-                                    </div>
+                    <div class="col-6">
+                        <div class="row row-cols-lg-auto g-2 pb-2 justify-content-start">
+                            <div class="col-12">
+                                Show
+                            </div>
+                            <div class="col-12 mt-1">
+                                <div class="dropdown">
+                                    <button class="form-select form-select-sm"
+                                            role="button" data-bs-toggle="dropdown">
+                                        <div class="px-1">@Model.PageInfo.PageSize</div>
+                                    </button>
+                                    <ul class="dropdown-menu" style="min-width: 3.5rem !important">
+                                        @foreach (var pageSize in pageSizes)
+                                        {
+                                            <li>
+                                                <form asp-controller="Students" asp-action="Pagination" method="post">
+                                                    <input asp-for="Search.CourseId" type="hidden" value="@Model.Search.CourseId">
+                                                    <input asp-for="Search.Query" type="hidden" value="@Model.Search.Query">
+                                                    <input asp-for="Search.Type" type="hidden" value="@Model.Search.Type">
+                                                    <input asp-for="PageInfo.PageSize" type="hidden" value="@pageSize">
+                                                    <button type="submit" class="dropdown-item" type="submit"><span>@pageSize.ToString()</span></button>
+                                                </form>
+                                            </li>
+                                        }
+                                    </ul>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="table-responsive-sm">
-                        <table class="table table-hover mb-0">
-                            <thead class="table-light">
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Last Name</th>
-                                    <th>First Name</th>
-                                    <th>Email</th>
-                                    <th>Phone</th>
-                                    <th>Group Number</th>
-                                    <th>Course</th>
-                                    <th>Type of Training</th>
-                                    <th>View Details</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var student in studentsList)
-                                {
-                                    <tr>
-                                        <td>@student.Id</td>
-                                        <td>@student.LastName</td>
-                                        <td>@student.FirstName</td>
-                                        <td>@student.Email</td>
-                                        <td>@student.Phone</td>
-
-                                        @if (student.GroupId != null)
-                                        {
-                                            <td>@student.Group.Number</td>
-                                        }
-                                        else
-                                        {
-                                            <td></td>
-                                        }
-                                        @if (student.GroupId != null)
-                                        {
-                                            <td>@student.Group.Course.Title</td>
-                                        }
-                                        else
-                                        {
-                                            <td></td>
-                                        }
-                                        @if (student.Type.ToString() == "Online")
-                                        {
-                                            <td>
-                                                <div class="badge rounded-pill bg-light-success text-success w-100">@student.Type.ToString()</div>
-                                            </td>
-                                        }
-                                        @if (student.Type.ToString() == "Offline")
-                                        {
-                                            <td>
-                                                <div class="badge rounded-pill bg-light-danger text-danger w-100">@student.Type.ToString()</div>
-                                            </td>
-                                        }
-                                        @if (student.Type.ToString() == "Mix")
-                                        {
-                                            <td>
-                                                <div class="badge rounded-pill bg-light-info text-info w-100">@student.Type.ToString()</div>
-                                            </td>
-                                        }
-                                        <td>
-                                            <button type="button" class="btn btn-outline-primary btn-sm radius-30 px-4">View</button>
-                                        </td>
-                                        <td>
-                                            <div class="d-flex order-actions">
-                                                <div class="d-flex order-actions">
-                                                    <div>
-                                                        <a asp-controller="Students" asp-action="Edit"
-                                                           asp-route-id="@student.Id"><i class='bx bxs-edit'></i></a>
-                                                    </div>
-
-                                                    <div class="ps-2">
-                                                        <a asp-controller="Students" asp-action="Delete"
-                                                           asp-route-id="@student.Id">
-                                                            <i class='bx bxs-trash'></i>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-               
-                    <div class="row mt-3 pe-0">
-                        <div class="col-sm-12 col-md-5">
-                            <div>Showing 1 to 10 of  @studentsList.Count() entries</div>
-                        </div>
-                        <div class="col-sm-12 col-md-7 pe-0">
-                            <div class="dataTables_paginate">
-                                <ul class="pagination justify-content-end mb-0">
-                                    <li class="page-item">
-                                        <a href="#" class="page-link">Prev</a>
-                                    </li>
-                                    <li class="page-item active">
-                                        <a href="#" class="page-link">1</a>
-                                    </li>
-                                    <li class="page-item ">
-                                        <a href="#" class="page-link">2</a>
-                                    </li>
-                                    <li class=" page-item ">
-                                        <a href="#" class="page-link">3</a>
-                                    </li>
-                                    <li class="page-item" id="example_next">
-                                        <a href="#" class="page-link">Next</a>
-                                    </li>
-                                </ul>
+                            <div class="col-12">
+                                entries
                             </div>
                         </div>
                     </div>
+                    <div class="col-6">
+                        <div class="row row-cols-lg-auto g-2 pb-2 justify-content-end">
+                            <div class="col-12  mt-2">
+                                @paginationInfo
+                            </div>
+                            @if (Model.PageInfo.PageNumber == 1)
+                            {
+                                <div class="col-12 mt-0">
+                                    <button class="btn btn-white px-2 ms-2 disabled">
+                                        <i class="bx bx-chevron-left me-0"></i>
+                                    </button>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-12 mt-0">
+                                    <form asp-controller="Students" asp-action="Pagination" method="post">
+                                        <input asp-for="Search.CourseId" type="hidden" value="@Model.Search.CourseId">
+                                        <input asp-for="Search.Query" type="hidden" value="@Model.Search.Query">
+                                        <input asp-for="Search.Type" type="hidden" value="@Model.Search.Type">
+                                        <input asp-for="PageInfo.PageSize" type="hidden" value="@Model.PageInfo.PageSize">
+                                        <input asp-for="PageInfo.PageNumber" type="hidden" value="@previousPageNumber">
+                                        <button type="submit" class="btn btn-white px-2 ms-2">
+                                            <i class="bx bx-chevron-left me-0"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            }
+                            @if (Model.PageInfo.PageNumber == Model.PageInfo.TotalPages)
+                            {
+                                <div class="col-12 mt-0">
+                                    <button class="btn btn-white px-2 ms-0 disabled">
+                                        <i class="bx bx-chevron-right me-0"></i>
+                                    </button>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-12 mt-0">
+                                    <form asp-controller="Students" asp-action="Pagination" method="post">
+                                        <input asp-for="Search.CourseId" type="hidden" value="@Model.Search.CourseId">
+                                        <input asp-for="Search.Query" type="hidden" value="@Model.Search.Query">
+                                        <input asp-for="Search.Type" type="hidden" value="@Model.Search.Type">
+                                        <input asp-for="PageInfo.PageSize" type="hidden" value="@Model.PageInfo.PageSize">
+                                        <input asp-for="PageInfo.PageNumber" type="hidden" value="@nextPageNumber">
+                                        <button type="submit" class="btn btn-white px-2 ms-0">
+                                            <i class="bx bx-chevron-right me-0"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive-sm">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>ID</th>
+                                <th>Last Name</th>
+                                <th>First Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Group Number</th>
+                                <th>Course</th>
+                                <th>Type of Training</th>
+                                <th>View Details</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var student in studentsList)
+                            {
+                                <tr>
+                                    <td>@student.Id</td>
+                                    <td>@student.LastName</td>
+                                    <td>@student.FirstName</td>
+                                    <td>@student.Email</td>
+                                    <td>@student.Phone</td>
 
+                                    @if (student.GroupId != null)
+                                    {
+                                        <td>@student.Group.Number</td>
+                                    }
+                                    else
+                                    {
+                                        <td></td>
+                                    }
+                                    @if (student.GroupId != null)
+                                    {
+                                        <td>@student.Group.Course.Title</td>
+                                    }
+                                    else
+                                    {
+                                        <td></td>
+                                    }
+                                    @if (student.Type.ToString() == "Online")
+                                    {
+                                        <td>
+                                            <div class="badge rounded-pill bg-light-success text-success w-100">@student.Type.ToString()</div>
+                                        </td>
+                                    }
+                                    @if (student.Type.ToString() == "Offline")
+                                    {
+                                        <td>
+                                            <div class="badge rounded-pill bg-light-danger text-danger w-100">@student.Type.ToString()</div>
+                                        </td>
+                                    }
+                                    @if (student.Type.ToString() == "Mix")
+                                    {
+                                        <td>
+                                            <div class="badge rounded-pill bg-light-info text-info w-100">@student.Type.ToString()</div>
+                                        </td>
+                                    }
+                                    <td>
+                                        <button type="button" class="btn btn-outline-primary btn-sm radius-30 px-4">View</button>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex order-actions">
+                                            <div class="d-flex order-actions">
+                                                <div>
+                                                    <a asp-controller="Students" asp-action="Edit"
+                                                       asp-route-id="@student.Id"><i class='bx bxs-edit'></i></a>
+                                                </div>
+
+                                                <div class="ps-2">
+                                                    <a asp-controller="Students" asp-action="Delete"
+                                                       asp-route-id="@student.Id">
+                                                        <i class='bx bxs-trash'></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
