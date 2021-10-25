@@ -78,11 +78,7 @@ namespace ONX.CRM.DAL.EF.Repositories
         }
         private async Task<IEnumerable<Group>> GetGroupsByQuery(string query, int skip, int take)
         {
-            var groups = await _context.Groups
-                .Include(g => g.Students).AsNoTracking()
-                .Include(g => g.Course).AsNoTracking()
-                .Include(g => g.Teacher).AsNoTracking().ToListAsync();
-
+            var groups = await GetAllAsync();
             return groups
                 .Where(g => g.Number.Contains(query, StringComparison.OrdinalIgnoreCase)
                             || g.Course.Title.Contains(query, StringComparison.OrdinalIgnoreCase)
@@ -102,11 +98,7 @@ namespace ONX.CRM.DAL.EF.Repositories
         }
         private async Task<int> GetNumberOfGroupsByQuery(string query)
         {
-            var numberOfGroupsByQuery = await _context.Groups
-                .Include(g => g.Students).AsNoTracking()
-                .Include(g => g.Course).AsNoTracking()
-                .Include(g => g.Teacher).AsNoTracking().ToListAsync();
-
+            var numberOfGroupsByQuery = await GetAllAsync();
             return numberOfGroupsByQuery
                 .Count(g => g.Number.Contains(query, StringComparison.OrdinalIgnoreCase)
                             || g.Course.Title.Contains(query, StringComparison.OrdinalIgnoreCase)

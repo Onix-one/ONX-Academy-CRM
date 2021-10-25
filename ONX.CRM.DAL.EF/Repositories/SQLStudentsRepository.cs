@@ -69,11 +69,7 @@ namespace ONX.CRM.DAL.EF.Repositories
 
         private async Task<IEnumerable<Student>> GetStudentsByQuery(string query, int skip, int take)
         {
-            var studentsList = await _context.Students.AsNoTracking()
-                .Include(_ => _.Group)
-                .ThenInclude(_ => _.Course)
-                .AsNoTracking().ToListAsync();
-
+            var studentsList = await GetAllAsync();
             return studentsList
                 .Where(s => s.FirstName.Contains(query, StringComparison.OrdinalIgnoreCase)
                             || s.LastName.Contains(query, StringComparison.OrdinalIgnoreCase)
@@ -106,11 +102,7 @@ namespace ONX.CRM.DAL.EF.Repositories
 
         private async Task<int> GetNumberOfStudentsByQuery(string query)
         {
-            var studentsList = await _context.Students.AsNoTracking()
-                .Include(_ => _.Group)
-                .ThenInclude(_ => _.Course)
-                .AsNoTracking().ToListAsync();
-
+            var studentsList = await GetAllAsync();
             return studentsList
                 .Count(s => s.FirstName.Contains(query, StringComparison.OrdinalIgnoreCase)
                             || s.LastName.Contains(query, StringComparison.OrdinalIgnoreCase)
@@ -131,7 +123,6 @@ namespace ONX.CRM.DAL.EF.Repositories
                 .AsNoTracking().CountAsync();
             return numberOfStudentsByType;
         }
-
         public async Task<IEnumerable<Student>> GetListOfStudentsByParameters(string query, int courseId, int type, int skip, int take)
         {
             if (!string.IsNullOrEmpty(query))
@@ -148,7 +139,6 @@ namespace ONX.CRM.DAL.EF.Repositories
             }
             return null;
         }
-
         public async Task<int> GetNumberOfStudentsByParameters(string query, int courseId, int type)
         {
             if (!string.IsNullOrEmpty(query))

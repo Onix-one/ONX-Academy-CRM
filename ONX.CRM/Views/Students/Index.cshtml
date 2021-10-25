@@ -1,6 +1,4 @@
-﻿@using ONX.CRM.ViewModel
-
-@{ var studentTypeList = new Dictionary<int, string>
+﻿@{ var studentTypeList = new Dictionary<int, string>
     {
         [1] = "Online",
         [2] = "Offline",
@@ -34,7 +32,7 @@
     int nextPageNumber = Model.PageInfo.PageNumber + 1;
     int previousPageNumber = Model.PageInfo.PageNumber - 1;
 
-    var pageSizes = new List<int> { 5, 10, 25, 50 };
+    var pageSizes = new List<int> { 10, 25, 50 };
 
 }
 @model StudentViewModel

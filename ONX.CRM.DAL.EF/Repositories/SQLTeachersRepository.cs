@@ -68,7 +68,7 @@ namespace ONX.CRM.DAL.EF.Repositories
         }
         public async Task<IEnumerable<Teacher>> GetTeachersByQuery(string query, int skip, int take)
         {
-            var teachers = await _context.Teachers.AsNoTracking().ToListAsync();
+            var teachers = await GetAllAsync();
             return teachers
                 .Where(s => s.FirstName.Contains(query, StringComparison.OrdinalIgnoreCase)
                             || s.LastName.Contains(query, StringComparison.OrdinalIgnoreCase)
@@ -79,7 +79,7 @@ namespace ONX.CRM.DAL.EF.Repositories
         }
         public async Task<int> GetNumberOfTeachersByQuery(string query)
         {
-            var numberOfTeachers = await _context.Teachers.AsNoTracking().ToListAsync();
+            var numberOfTeachers = await GetAllAsync();
             return numberOfTeachers.Count(s => s.FirstName.Contains(query, StringComparison.OrdinalIgnoreCase)
                                                || s.LastName.Contains(query, StringComparison.OrdinalIgnoreCase)
                                                || s.Email.Contains(query, StringComparison.OrdinalIgnoreCase)

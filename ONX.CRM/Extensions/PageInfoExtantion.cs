@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ONX.CRM.ViewModel.PageInfo;
+﻿using ONX.CRM.ViewModel.PageInfo;
 
 namespace ONX.CRM.Extensions
 {
@@ -14,15 +10,9 @@ namespace ONX.CRM.Extensions
             const int startPageSize = 10;
             const int startPageNumber = 1;
 
-            if (pageSize != 0)
-            {
-                if (pageNumber != 0)
-                {
-                    return pageInfo.SetPageSizePageNumberAndTotalItems(pageSize, pageNumber, totalItems);
-                }
-                return pageInfo.SetPageSizePageNumberAndTotalItems(pageSize, startPageNumber, totalItems);
-            }
-            return pageInfo.SetPageSizePageNumberAndTotalItems(startPageSize, startPageNumber, totalItems);
+            return pageInfo.SetPageSizePageNumberAndTotalItems(
+                pageSize != 0 ? pageSize : startPageSize, 
+                pageNumber != 0 ? pageNumber : startPageNumber, totalItems);
         }
 
         private static PageInfoViewModel SetPageSizePageNumberAndTotalItems(this PageInfoViewModel pageInfo,
