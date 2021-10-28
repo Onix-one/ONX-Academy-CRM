@@ -1,4 +1,4 @@
-﻿namespace ONX.CRM.BLL.Models
+﻿namespace ONX.CRM.DAL.Models
 {
     public abstract class Person
     {

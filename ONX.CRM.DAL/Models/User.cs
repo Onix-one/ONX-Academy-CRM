@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace ONX.CRM.BLL.Models
+namespace ONX.CRM.DAL.Models
 {
     public class User : IdentityUser
     {

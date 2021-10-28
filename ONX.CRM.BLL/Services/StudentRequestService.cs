@@ -2,20 +2,20 @@
 using System.Linq;
 using System.Threading.Tasks;
 using ONX.CRM.BLL.Interfaces;
-using ONX.CRM.BLL.Models;
 using ONX.CRM.DAL.Interfaces;
+using ONX.CRM.DAL.Models;
 
 namespace ONX.CRM.BLL.Services
 {
     public class StudentRequestService : IStudentRequestService
     {
         private readonly ISqlStudentRequestsRepository<StudentRequest> _requestsRepository;
-        private readonly ISqlStudentsRepository<Student> _studentsService;
+        private readonly ISqlStudentsRepository<Student> _studentsRepository;
         public StudentRequestService(ISqlStudentRequestsRepository<StudentRequest> requestsRepository, 
             ISqlStudentsRepository<Student> studentsService)
         {
             _requestsRepository = requestsRepository;
-            _studentsService = studentsService;
+            _studentsRepository = studentsService;
         }
         public IEnumerable<StudentRequest> GetAll()
         {
@@ -50,13 +50,13 @@ namespace ONX.CRM.BLL.Services
                     FirstName = request.FirstName, LastName = request.LastName,
                     Email = request.Email, Phone = request.Phone, Type = request.Type, GroupId = groupId
                 };
-                _studentsService.Create(student);
+                _studentsRepository.Create(student);
                 _requestsRepository.Delete(request.Id);
             }
         }
         public async Task<Dictionary<int, string>> GetActiveCoursesIdTitle()
         {
-            var courses = (await _requestsRepository.GetAllAsync()).Select(r => r.Course);
+            var courses = await _studentsRepository.GetActiveCourses();
             var activeCoursesIdTitle = new Dictionary<int, string>();
             foreach (var course in courses)
             {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using ONX.CRM.BLL.Models;
+using ONX.CRM.DAL.Models;
 
 namespace ONX.CRM.BLL.Interfaces
 {

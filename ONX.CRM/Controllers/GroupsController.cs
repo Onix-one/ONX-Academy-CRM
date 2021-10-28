@@ -4,7 +4,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ONX.CRM.BLL.Interfaces;
-using ONX.CRM.BLL.Models;
+using ONX.CRM.DAL.Models;
 using ONX.CRM.Extensions;
 using ONX.CRM.Filters;
 using ONX.CRM.ViewModel;

@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Threading.Tasks;
 using ONX.CRM.BLL.Interfaces;
-using ONX.CRM.BLL.Models;
 using ONX.CRM.DAL.Interfaces;
+using ONX.CRM.DAL.Models;
 
 namespace ONX.CRM.BLL.Services
 {
@@ -70,7 +70,7 @@ namespace ONX.CRM.BLL.Services
 
         public async Task<Dictionary<int, string>> GetActiveCoursesIdTitle()
         {
-            var courses = (await _studentRepository.GetAllAsync()).Select(r => r.Group.Course);
+            var courses = await _studentRepository.GetActiveCourses();
             var activeCoursesIdTitle = new Dictionary<int, string>();
 
             foreach (var course in courses)

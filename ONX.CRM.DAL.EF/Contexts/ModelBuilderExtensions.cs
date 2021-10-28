@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
-using ONX.CRM.BLL.Enums;
-using ONX.CRM.BLL.Models;
+using ONX.CRM.DAL.Enums;
+using ONX.CRM.DAL.Models;
 
 namespace ONX.CRM.DAL.EF.Contexts
 {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using ONX.CRM.BLL.Models;
+using ONX.CRM.DAL.Models;
 
 namespace ONX.CRM.DAL.EF.Contexts
 {
