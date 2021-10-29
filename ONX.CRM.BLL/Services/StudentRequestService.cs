@@ -56,7 +56,7 @@ namespace ONX.CRM.BLL.Services
         }
         public async Task<Dictionary<int, string>> GetActiveCoursesIdTitle()
         {
-            var courses = await _studentsRepository.GetActiveCourses();
+            var courses = (await _requestsRepository.GetAllAsync()).Select(r => r.Course);
             var activeCoursesIdTitle = new Dictionary<int, string>();
             foreach (var course in courses)
             {
