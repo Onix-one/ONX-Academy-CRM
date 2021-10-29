@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using ONX.CRM.BLL.Models;
 using ONX.CRM.DAL.EF.Contexts;
 using ONX.CRM.DAL.Interfaces;
+using ONX.CRM.DAL.Models;
 
 namespace ONX.CRM.DAL.EF.Repositories
 {

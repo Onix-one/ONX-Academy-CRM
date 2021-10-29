@@ -1,6 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using ONX.CRM.BLL.Enums;
+using ONX.CRM.DAL.Enums;
 
 namespace ONX.CRM.ViewModel
 {

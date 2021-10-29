@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using ONX.CRM.BLL.Models;
+using ONX.CRM.DAL.Models;
 using ONX.CRM.WebAPI.Dto;
 
 namespace ONX.CRM.WebAPI.Mapper

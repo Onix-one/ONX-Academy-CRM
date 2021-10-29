@@ -4,7 +4,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using ONX.CRM.Angular.Dto;
 using ONX.CRM.BLL.Interfaces;
-using ONX.CRM.BLL.Models;
+using ONX.CRM.DAL.Models;
 
 namespace ONX.CRM.Angular.Controllers
 {

@@ -9,12 +9,12 @@ using AutoMapper;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using ONX.CRM.BLL.Interfaces;
-using ONX.CRM.BLL.Models;
 using ONX.CRM.BLL.Services;
 using ONX.CRM.DAL.Dapper.Repositories;
 using ONX.CRM.DAL.EF.Contexts;
 using ONX.CRM.DAL.EF.Repositories;
 using ONX.CRM.DAL.Interfaces;
+using ONX.CRM.DAL.Models;
 using ONX.CRM.WebAPI.Mapper;
 
 namespace ONX.CRM.WebAPI

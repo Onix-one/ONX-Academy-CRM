@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using ONX.CRM.Angular.Dto;
-using ONX.CRM.BLL.Models;
+using ONX.CRM.DAL.Models;
 
 namespace ONX.CRM.Angular.Mapper
 {

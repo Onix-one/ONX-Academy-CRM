@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ONX.CRM.BLL.Models
+namespace ONX.CRM.DAL.Models
 {
     public class Specialization
     {

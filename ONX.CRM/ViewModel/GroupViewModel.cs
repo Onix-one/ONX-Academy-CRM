@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using ONX.CRM.BLL.Enums;
+using ONX.CRM.DAL.Enums;
 using ONX.CRM.ViewModel.PageInfo;
 using ONX.CRM.ViewModel.Search;
 

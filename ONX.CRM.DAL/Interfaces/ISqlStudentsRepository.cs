@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using ONX.CRM.DAL.Models;
 
 namespace ONX.CRM.DAL.Interfaces
 {
@@ -9,6 +10,6 @@ namespace ONX.CRM.DAL.Interfaces
         Task<int> GetNumberOfStudentsByParameters(string query, int courseId, int type);
         Task<IEnumerable<T>> GetStudentsWithSkipAndTakeAsync(int skip, int take);
         Task<int> GetNumberOfStudents();
-
+        Task<IEnumerable<Course>> GetActiveCourses();
     }
 }

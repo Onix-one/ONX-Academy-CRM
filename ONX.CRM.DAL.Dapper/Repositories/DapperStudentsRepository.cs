@@ -3,8 +3,8 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Dapper;
-using ONX.CRM.BLL.Models;
 using ONX.CRM.DAL.Interfaces;
+using ONX.CRM.DAL.Models;
 
 namespace ONX.CRM.DAL.Dapper.Repositories
 {

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using ONX.CRM.BLL.Models;
+using ONX.CRM.DAL.Models;
 
 namespace ONX.CRM.Configuration
 {

@@ -1,4 +1,4 @@
-﻿namespace ONX.CRM.BLL.Enums
+﻿namespace ONX.CRM.DAL.Enums
 {
     public enum GroupStatus
     {

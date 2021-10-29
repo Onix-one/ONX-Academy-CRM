@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using ONX.CRM.BLL.Interfaces;
-using ONX.CRM.BLL.Models;
 using ONX.CRM.DAL.Interfaces;
+using ONX.CRM.DAL.Models;
 
 namespace ONX.CRM.BLL.Services
 {
@@ -38,9 +38,9 @@ namespace ONX.CRM.BLL.Services
         {
             _teachersRepository.Delete(id);
         }
-        public async Task<IEnumerable<Teacher>> GetTeachersByQuery(string query, int skip, int take)
+        public Task<IEnumerable<Teacher>> GetTeachersByQuery(string query, int skip, int take)
         {
-            return await _teachersRepository.GetTeachersByQuery(query, skip, take);
+            return  _teachersRepository.GetTeachersByQuery(query, skip, take);
         }
         public Task<int> GetNumberOfTeachersByQuery(string query)
         {

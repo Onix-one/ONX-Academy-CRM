@@ -8,11 +8,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ONX.CRM.Angular.Mapper;
 using ONX.CRM.BLL.Interfaces;
-using ONX.CRM.BLL.Models;
 using ONX.CRM.BLL.Services;
 using ONX.CRM.DAL.EF.Contexts;
 using ONX.CRM.DAL.EF.Repositories;
 using ONX.CRM.DAL.Interfaces;
+using ONX.CRM.DAL.Models;
 
 namespace ONX.CRM.Angular
 {

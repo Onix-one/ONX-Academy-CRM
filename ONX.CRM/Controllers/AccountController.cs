@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
-using ONX.CRM.BLL.Models;
+using ONX.CRM.DAL.Models;
 using ONX.CRM.Filters;
 using ONX.CRM.ViewModel;
 

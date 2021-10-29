@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using ONX.CRM.BLL.Enums;
+using ONX.CRM.DAL.Enums;
 
-namespace ONX.CRM.BLL.Models
+namespace ONX.CRM.DAL.Models
 {
     public class Group
     {

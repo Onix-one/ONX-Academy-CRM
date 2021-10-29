@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using ONX.CRM.BLL.Models;
 using ONX.CRM.DAL.Dapper.Repositories;
 using ONX.CRM.DAL.EF.Repositories;
 using ONX.CRM.DAL.Interfaces;
+using ONX.CRM.DAL.Models;
 
 namespace ONX.CRM.ServiceExtensions
 {
