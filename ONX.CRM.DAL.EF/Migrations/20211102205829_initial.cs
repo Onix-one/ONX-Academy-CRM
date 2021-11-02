@@ -58,7 +58,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ImgLink = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImgLink = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -93,7 +93,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ImgLink = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImgLink = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -273,7 +273,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ImgLink = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImgLink = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -299,7 +299,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ImgLink = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImgLink = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -331,9 +331,9 @@ namespace ONX.CRM.DAL.EF.Migrations
                 columns: new[] { "Id", "Bio", "Email", "FirstName", "ImgLink", "LastName", "Phone", "UserId", "WorkExperience" },
                 values: new object[,]
                 {
-                    { 1, "Area of interest: development of web applications based on Sitecore, ASP.NET MVC / .NET Core and mobile applications using the Xamarin cross-platform framework; Sitecore JavaScript Services (JSS); the introduction of search engines such as Solr, Coveo; using cloud Azure solutions.", "VadzimPapko@gmail.com", "Вадим", "VadzimPapko.jpg", "Папко", "+375291133322", null, "5 years" },
-                    { 2, "Area of interest: development of web applications in ASP.NET MVC using JavaScript libraries (Angular, JQuery), API, microservices, Data Science, Machine Learning. Agile software development methodologies (Agile, Scrum, Kanban, Lean).", "DmitriyAlhimovich@gmail.com", "Дмитрий", "DmitriyAlhimovich.jpg", "Альхимович", "+375293322211", null, "10 years" },
-                    { 3, "Area of interest: optimization, programming of gameplay systems.", "RostislavNikishin@gmail.com", "Ростислав", "RostislavNikishin.jpg", "Никишин", "+375441188800", null, "4 years" }
+                    { 1, "Area of interest: development of web applications based on Sitecore, ASP.NET MVC / .NET Core and mobile applications using the Xamarin cross-platform framework; Sitecore JavaScript Services (JSS); the introduction of search engines such as Solr, Coveo; using cloud Azure solutions.", "VadzimPapko@gmail.com", "Вадим", null, "Папко", "+375291133322", null, "5 years" },
+                    { 2, "Area of interest: development of web applications in ASP.NET MVC using JavaScript libraries (Angular, JQuery), API, microservices, Data Science, Machine Learning. Agile software development methodologies (Agile, Scrum, Kanban, Lean).", "DmitriyAlhimovich@gmail.com", "Дмитрий", null, "Альхимович", "+375293322211", null, "10 years" },
+                    { 3, "Area of interest: optimization, programming of gameplay systems.", "RostislavNikishin@gmail.com", "Ростислав", null, "Никишин", "+375441188800", null, "4 years" }
                 });
 
             migrationBuilder.InsertData(

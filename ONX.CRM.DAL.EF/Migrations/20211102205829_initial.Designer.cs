@@ -10,7 +10,7 @@ using ONX.CRM.DAL.EF.Contexts;
 namespace ONX.CRM.DAL.EF.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20211102013933_initial")]
+    [Migration("20211102205829_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -358,8 +358,8 @@ namespace ONX.CRM.DAL.EF.Migrations
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImgLink")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("ImgLink")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
@@ -450,8 +450,8 @@ namespace ONX.CRM.DAL.EF.Migrations
                     b.Property<int?>("GroupId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ImgLink")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("ImgLink")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
@@ -796,8 +796,8 @@ namespace ONX.CRM.DAL.EF.Migrations
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImgLink")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("ImgLink")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
@@ -956,8 +956,8 @@ namespace ONX.CRM.DAL.EF.Migrations
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImgLink")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("ImgLink")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
@@ -982,7 +982,6 @@ namespace ONX.CRM.DAL.EF.Migrations
                             Bio = "Area of interest: development of web applications based on Sitecore, ASP.NET MVC / .NET Core and mobile applications using the Xamarin cross-platform framework; Sitecore JavaScript Services (JSS); the introduction of search engines such as Solr, Coveo; using cloud Azure solutions.",
                             Email = "VadzimPapko@gmail.com",
                             FirstName = "Вадим",
-                            ImgLink = "VadzimPapko.jpg",
                             LastName = "Папко",
                             Phone = "+375291133322",
                             WorkExperience = "5 years"
@@ -993,7 +992,6 @@ namespace ONX.CRM.DAL.EF.Migrations
                             Bio = "Area of interest: development of web applications in ASP.NET MVC using JavaScript libraries (Angular, JQuery), API, microservices, Data Science, Machine Learning. Agile software development methodologies (Agile, Scrum, Kanban, Lean).",
                             Email = "DmitriyAlhimovich@gmail.com",
                             FirstName = "Дмитрий",
-                            ImgLink = "DmitriyAlhimovich.jpg",
                             LastName = "Альхимович",
                             Phone = "+375293322211",
                             WorkExperience = "10 years"
@@ -1004,7 +1002,6 @@ namespace ONX.CRM.DAL.EF.Migrations
                             Bio = "Area of interest: optimization, programming of gameplay systems.",
                             Email = "RostislavNikishin@gmail.com",
                             FirstName = "Ростислав",
-                            ImgLink = "RostislavNikishin.jpg",
                             LastName = "Никишин",
                             Phone = "+375441188800",
                             WorkExperience = "4 years"
