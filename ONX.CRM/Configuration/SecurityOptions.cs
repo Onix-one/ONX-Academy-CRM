@@ -3,7 +3,8 @@
     public class SecurityOptions
     {
         public const string SectionTitle = "Security";
-        public string ManagerEmail { get; set; }
-        public string ManagerPassword { get; set; }
+
+        public string AdminEmail { get; set; }
+        public string AdminPassword { get; set; }
     }
 }

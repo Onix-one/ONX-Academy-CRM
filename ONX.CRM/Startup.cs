@@ -9,7 +9,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using ONX.CRM.BLL.Interfaces;
+using ONX.CRM.BLL.Services;
 using ONX.CRM.Configuration;
+using ONX.CRM.Controllers;
 using ONX.CRM.DAL.EF.Contexts;
 using ONX.CRM.DAL.Models;
 using ONX.CRM.Filters;
@@ -42,9 +45,9 @@ namespace ONX.CRM
             {
                 opts.Password.RequiredLength = 6;
                 opts.Password.RequireNonAlphanumeric = false;
-                opts.Password.RequireLowercase = true;
+                opts.Password.RequireLowercase = false;
                 opts.Password.RequireUppercase = false;
-                opts.Password.RequireDigit = true;
+                opts.Password.RequireDigit = false;
             })
                 .AddEntityFrameworkStores<Context>();
 
@@ -58,13 +61,16 @@ namespace ONX.CRM
             services.AddMvc(options =>
                 options.Filters.Add<GlobalExceptionFilter>()
             );
-
+            services.AddMvc(options =>
+            {
+                options.Filters.Add<ViewBagActionFilter>();
+            });
             services.AddControllersWithViews()
                 .AddViewOptions(options => options.HtmlHelperOptions.ClientValidationEnabled = true);
 
             services.Configure<SecurityOptions>(
                 Configuration.GetSection(SecurityOptions.SectionTitle));
-
+            
             services.AddScoped<RequestsListViewModel, RequestsListViewModel>();
             services.AddScoped<PageInfoViewModel, PageInfoViewModel>();
         }
@@ -95,9 +101,7 @@ namespace ONX.CRM
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
-
-            RoleInitializer.InitializeAsync(serviceProvider, securityOptions).Wait(); ;
+            RoleInitializer.InitializeAsync(serviceProvider, securityOptions).Wait();
         }
-
     }
 }

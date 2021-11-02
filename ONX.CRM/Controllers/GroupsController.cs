@@ -15,7 +15,7 @@ namespace ONX.CRM.Controllers
 {
     [TypeFilter(typeof(LocalExceptionFilter))]
     //[Authorize(Roles = "manager")]
-    public class GroupsController : Controller
+    public class GroupsController : BaseController
     {
         private readonly IGroupService _groupService;
         private readonly IMapper _mapper;

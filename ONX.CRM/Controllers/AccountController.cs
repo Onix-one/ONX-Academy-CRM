@@ -8,7 +8,7 @@ using ONX.CRM.ViewModel;
 namespace ONX.CRM.Controllers
 {
     [TypeFilter(typeof(LocalExceptionFilter))]
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;

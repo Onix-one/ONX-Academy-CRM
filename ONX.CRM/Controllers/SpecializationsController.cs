@@ -10,7 +10,7 @@ using ONX.CRM.ViewModel;
 namespace ONX.CRM.Controllers
 {
     [TypeFilter(typeof(LocalExceptionFilter))]
-    public class SpecializationsController : Controller
+    public class SpecializationsController : BaseController
     {
         private readonly ISpecializationService _specializationService;
         private readonly IMapper _mapper;

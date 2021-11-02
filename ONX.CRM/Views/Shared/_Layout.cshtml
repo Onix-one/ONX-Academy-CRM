@@ -1,5 +1,8 @@
-﻿<!doctype html>
-<html lang="en" class="dark-theme">
+﻿@{
+    var theme = (string)ViewBag.Theme;
+}
+<!doctype html>
+<html lang="en" class="@theme">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -30,7 +33,7 @@
         <div class="sidebar-wrapper" data-simplebar="true">
             <div class="sidebar-header">
                 <div>
-                    <img src="~/assets/images/crm-logo.png" class="logo-icon" alt="logo icon">
+                    <img src="~/assets/images/cap_graduation.png" class="logo-icon" alt="logo icon">
                 </div>
                 <div>
                     <a asp-controller="Home" asp-action="Index"><h4 class="logo-text">ONX.CRM</h4></a>
@@ -87,7 +90,7 @@
                 }
 
 
-                @if (User.Identity.IsAuthenticated)
+                @if (User.IsInRole("admin") || User.IsInRole("manager"))
                 {
                     <li class="menu-label">Administration</li>
 
@@ -125,7 +128,17 @@
                             <div class="menu-title">Teachers</div>
                         </a>
                     </li>
-
+                    @if (User.IsInRole("admin"))
+                    {
+                        <li>
+                            <a asp-controller="Managers" asp-action="Index">
+                                <div class="parent-icon">
+                                    <i class="lni lni-consulting"></i>
+                                </div>
+                                <div class="menu-title">Managers</div>
+                            </a>
+                        </li>
+                    }
 
 
 
@@ -189,51 +202,25 @@
                                     <i class='bx bx-search'></i>
                                 </a>
                             </li>
-                            <li class="nav-item dropdown dropdown-large">
+                            <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="#" role="button"
                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class='bx bx-category'></i>
+                                    <i class='lni lni-pallet'></i>
                                 </a>
-                                <div class="dropdown-menu dropdown-menu-end">
-                                    <div class="row row-cols-3 g-3 p-3">
-                                        <div class="col text-center">
-                                            <div class="app-box mx-auto bg-gradient-cosmic text-white">
-                                                <i class='bx bx-group'></i>
-                                            </div>
-                                            <div class="app-title">Teams</div>
-                                        </div>
-                                        <div class="col text-center">
-                                            <div class="app-box mx-auto bg-gradient-burning text-white">
-                                                <i class='bx bx-atom'></i>
-                                            </div>
-                                            <div class="app-title">Projects</div>
-                                        </div>
-                                        <div class="col text-center">
-                                            <div class="app-box mx-auto bg-gradient-lush text-white">
-                                                <i class='bx bx-shield'></i>
-                                            </div>
-                                            <div class="app-title">Tasks</div>
-                                        </div>
-                                        <div class="col text-center">
-                                            <div class="app-box mx-auto bg-gradient-kyoto text-dark">
-                                                <i class='bx bx-notification'></i>
-                                            </div>
-                                            <div class="app-title">Feeds</div>
-                                        </div>
-                                        <div class="col text-center">
-                                            <div class="app-box mx-auto bg-gradient-blues text-dark">
-                                                <i class='bx bx-file'></i>
-                                            </div>
-                                            <div class="app-title">Files</div>
-                                        </div>
-                                        <div class="col text-center">
-                                            <div class="app-box mx-auto bg-gradient-moonlit text-white">
-                                                <i class='bx bx-filter-alt'></i>
-                                            </div>
-                                            <div class="app-title">Alerts</div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="Base" asp-action="ChangeTheme"
+                                           asp-route-themeId="0">Dark Theme</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-controller="Base" asp-action="ChangeTheme"
+                                           asp-route-themeId="1">Light Theme</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" a asp-controller="Base" asp-action="ChangeTheme"
+                                           asp-route-themeId="2">Semi Dark Theme</a>
+                                    </li>
+                                </ul>
                             </li>
                             <li class="nav-item dropdown dropdown-large">
                                 <a class="nav-link dropdown-toggle dropdown-toggle-nocaret position-relative" href="#"

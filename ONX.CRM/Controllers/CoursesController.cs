@@ -11,7 +11,7 @@ using ONX.CRM.ViewModel;
 namespace ONX.CRM.Controllers
 {
     [TypeFilter(typeof(LocalExceptionFilter))]
-    public class CoursesController : Controller
+    public class CoursesController : BaseController
     {
         private readonly ISpecializationService _specializationService;
         private readonly ICourseService _courseService;

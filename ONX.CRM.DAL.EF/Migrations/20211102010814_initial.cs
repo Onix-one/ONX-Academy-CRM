@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ONX.CRM.DAL.EF.Migrations
 {
-    public partial class init : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -49,6 +49,24 @@ namespace ONX.CRM.DAL.EF.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Managers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImgLink = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Managers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Specializations",
                 columns: table => new
                 {
@@ -69,13 +87,13 @@ namespace ONX.CRM.DAL.EF.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PNGName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     WorkExperience = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Bio = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImgLink = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -253,7 +271,8 @@ namespace ONX.CRM.DAL.EF.Migrations
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImgLink = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -277,7 +296,8 @@ namespace ONX.CRM.DAL.EF.Migrations
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImgLink = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -305,12 +325,12 @@ namespace ONX.CRM.DAL.EF.Migrations
 
             migrationBuilder.InsertData(
                 table: "Teachers",
-                columns: new[] { "Id", "Bio", "Email", "FirstName", "LastName", "PNGName", "Phone", "WorkExperience" },
+                columns: new[] { "Id", "Bio", "Email", "FirstName", "ImgLink", "LastName", "Phone", "WorkExperience" },
                 values: new object[,]
                 {
-                    { 1, "Area of interest: development of web applications based on Sitecore, ASP.NET MVC / .NET Core and mobile applications using the Xamarin cross-platform framework; Sitecore JavaScript Services (JSS); the introduction of search engines such as Solr, Coveo; using cloud Azure solutions.", "VadzimPapko@gmail.com", "Вадим", "Папко", "VadzimPapko.jpg", "+375291133322", "5 years" },
-                    { 2, "Area of interest: development of web applications in ASP.NET MVC using JavaScript libraries (Angular, JQuery), API, microservices, Data Science, Machine Learning. Agile software development methodologies (Agile, Scrum, Kanban, Lean).", "DmitriyAlhimovich@gmail.com", "Дмитрий", "Альхимович", "DmitriyAlhimovich.jpg", "+375293322211", "10 years" },
-                    { 3, "Area of interest: optimization, programming of gameplay systems.", "RostislavNikishin@gmail.com", "Ростислав", "Никишин", "RostislavNikishin.jpg", "+375441188800", "4 years" }
+                    { 1, "Area of interest: development of web applications based on Sitecore, ASP.NET MVC / .NET Core and mobile applications using the Xamarin cross-platform framework; Sitecore JavaScript Services (JSS); the introduction of search engines such as Solr, Coveo; using cloud Azure solutions.", "VadzimPapko@gmail.com", "Вадим", "VadzimPapko.jpg", "Папко", "+375291133322", "5 years" },
+                    { 2, "Area of interest: development of web applications in ASP.NET MVC using JavaScript libraries (Angular, JQuery), API, microservices, Data Science, Machine Learning. Agile software development methodologies (Agile, Scrum, Kanban, Lean).", "DmitriyAlhimovich@gmail.com", "Дмитрий", "DmitriyAlhimovich.jpg", "Альхимович", "+375293322211", "10 years" },
+                    { 3, "Area of interest: optimization, programming of gameplay systems.", "RostislavNikishin@gmail.com", "Ростислав", "RostislavNikishin.jpg", "Никишин", "+375441188800", "4 years" }
                 });
 
             migrationBuilder.InsertData(
@@ -344,56 +364,56 @@ namespace ONX.CRM.DAL.EF.Migrations
 
             migrationBuilder.InsertData(
                 table: "StudentRequests",
-                columns: new[] { "Id", "Comments", "CourseId", "Created", "Email", "FirstName", "LastName", "Phone", "Type" },
+                columns: new[] { "Id", "Comments", "CourseId", "Created", "Email", "FirstName", "ImgLink", "LastName", "Phone", "Type" },
                 values: new object[,]
                 {
-                    { 1, "", 11, new DateTime(2021, 7, 15, 13, 17, 0, 0, DateTimeKind.Unspecified), "Nesterov23@gmail.com", "Андрей", "Нестеров", "+375441188132", 1 },
-                    { 2, "", 11, new DateTime(2021, 7, 23, 20, 57, 0, 0, DateTimeKind.Unspecified), "Haritonov432@gmail.com", "Роман", "Харитонов", "+375441188365", 1 },
-                    { 3, "", 11, new DateTime(2021, 8, 23, 8, 13, 0, 0, DateTimeKind.Unspecified), "Agafonov440@gmail.com", "Аркадий", "Агафонов", "+375441145830", 1 },
-                    { 4, "", 11, new DateTime(2021, 9, 4, 23, 15, 0, 0, DateTimeKind.Unspecified), "Muraviov438@gmail.com", "Алексей", "Муравьёв", "+375441185430", 1 },
-                    { 5, "", 11, new DateTime(2021, 7, 27, 20, 5, 0, 0, DateTimeKind.Unspecified), "Larionova85@gmail.com", "Ангелина", "Ларионова", "+375441348830", 1 },
-                    { 6, "", 15, new DateTime(2021, 8, 15, 19, 44, 0, 0, DateTimeKind.Unspecified), "Fedoseyev86@gmail.com", "Денис", "Федосеев", "+375441675830", 1 },
-                    { 7, "", 15, new DateTime(2021, 9, 3, 22, 36, 0, 0, DateTimeKind.Unspecified), "Zimin984@gmail.com", "Николай", "Зимин", "+375441186730", 1 },
-                    { 8, "", 15, new DateTime(2021, 8, 20, 21, 17, 0, 0, DateTimeKind.Unspecified), "Pahomov43@gmail.com", "Максим", "Пахомов", "+375441188554", 1 },
-                    { 9, "", 15, new DateTime(2021, 8, 3, 15, 35, 0, 0, DateTimeKind.Unspecified), "Shubin69@gmail.com", "Геннадий", "Шубин", "+375441188896", 1 },
-                    { 10, "", 15, new DateTime(2021, 9, 1, 3, 40, 0, 0, DateTimeKind.Unspecified), "Ignatova38@gmail.com", "Екатерина", "Игнатова", "+375441183830", 1 }
+                    { 1, "", 11, new DateTime(2021, 7, 15, 13, 17, 0, 0, DateTimeKind.Unspecified), "Nesterov23@gmail.com", "Андрей", null, "Нестеров", "+375441188132", 1 },
+                    { 2, "", 11, new DateTime(2021, 7, 23, 20, 57, 0, 0, DateTimeKind.Unspecified), "Haritonov432@gmail.com", "Роман", null, "Харитонов", "+375441188365", 1 },
+                    { 3, "", 11, new DateTime(2021, 8, 23, 8, 13, 0, 0, DateTimeKind.Unspecified), "Agafonov440@gmail.com", "Аркадий", null, "Агафонов", "+375441145830", 1 },
+                    { 4, "", 11, new DateTime(2021, 9, 4, 23, 15, 0, 0, DateTimeKind.Unspecified), "Muraviov438@gmail.com", "Алексей", null, "Муравьёв", "+375441185430", 1 },
+                    { 5, "", 11, new DateTime(2021, 7, 27, 20, 5, 0, 0, DateTimeKind.Unspecified), "Larionova85@gmail.com", "Ангелина", null, "Ларионова", "+375441348830", 1 },
+                    { 6, "", 15, new DateTime(2021, 8, 15, 19, 44, 0, 0, DateTimeKind.Unspecified), "Fedoseyev86@gmail.com", "Денис", null, "Федосеев", "+375441675830", 1 },
+                    { 7, "", 15, new DateTime(2021, 9, 3, 22, 36, 0, 0, DateTimeKind.Unspecified), "Zimin984@gmail.com", "Николай", null, "Зимин", "+375441186730", 1 },
+                    { 8, "", 15, new DateTime(2021, 8, 20, 21, 17, 0, 0, DateTimeKind.Unspecified), "Pahomov43@gmail.com", "Максим", null, "Пахомов", "+375441188554", 1 },
+                    { 9, "", 15, new DateTime(2021, 8, 3, 15, 35, 0, 0, DateTimeKind.Unspecified), "Shubin69@gmail.com", "Геннадий", null, "Шубин", "+375441188896", 1 },
+                    { 10, "", 15, new DateTime(2021, 9, 1, 3, 40, 0, 0, DateTimeKind.Unspecified), "Ignatova38@gmail.com", "Екатерина", null, "Игнатова", "+375441183830", 1 }
                 });
 
             migrationBuilder.InsertData(
                 table: "Students",
-                columns: new[] { "Id", "Email", "FirstName", "GroupId", "LastName", "Phone", "Type" },
+                columns: new[] { "Id", "Email", "FirstName", "GroupId", "ImgLink", "LastName", "Phone", "Type" },
                 values: new object[,]
                 {
-                    { 1, "Lazarev0981@gmail.com", "Николай", 3, "Лазарев", "+375441188801", 1 },
-                    { 23, "Matveyev67@gmail.com", "Владислав", 1, "Матвеев", "+375441188823", 2 },
-                    { 22, "Egorov212@gmail.com", "Василий", 1, "Егоров", "+375441188822", 2 },
-                    { 21, "Dorofeyev45@gmail.com", "Виталий", 1, "Дорофеев", "+375441188821", 2 },
-                    { 30, "Timofeev22@gmail.com", "Виталий", 2, "Тимофеев", "+375441188830", 3 },
-                    { 29, "Sokolova1212@gmail.com", "Екатерина", 2, "Соколова", "+375441188829", 3 },
-                    { 28, "Antonov543@gmail.com", "Александр", 2, "Антонов", "+375441188828", 3 },
-                    { 27, "Anisimov987@gmail.com", "Алексей", 2, "Анисимов", "+375441188827", 3 },
-                    { 26, "Kalinin45@gmail.com", "Сергей", 2, "Калинин", "+375441188826", 3 },
-                    { 20, "Fedotov88@gmail.com", "Андрей", 3, "Федотов", "+375441188820", 1 },
-                    { 19, "Belousov78@gmail.com", "Евгений", 3, "Белоусов", "+375441188819", 1 },
-                    { 18, "Osipov0990@gmail.com", "Александр", 3, "Осипов", "+375441188818", 1 },
-                    { 17, "Sidorov610@gmail.com", "Егор", 3, "Сидоров", "+375441188817", 1 },
-                    { 16, "Maksimov77@gmail.com", "Максим", 3, "Максимов", "+375441188816", 1 },
-                    { 15, "Krylov96@gmail.com", "Сергей", 3, "Крылов", "+375441188815", 1 },
-                    { 14, "Nikolayev61@gmail.com", "Роман", 3, "Николаев", "+375441188814", 1 },
-                    { 13, "Juravliov43@gmail.com", "Светлана", 3, "Журавлёва", "+375441188813", 1 },
-                    { 12, "Lapin0110@gmail.com", "Виктор", 3, "Лапин", "+375441188812", 1 },
-                    { 11, "Frolov855@gmail.com", "Геннадий", 3, "Фролов", "+375441188811", 1 },
-                    { 10, "Jukov07@gmail.com", "Антон", 3, "Жуков", "+375441188810", 1 },
-                    { 9, "Danilova355@gmail.com", "Виктория", 3, "Данилова", "+375441188809", 1 },
-                    { 8, "Cvetkova41@gmail.com", "Надежда", 3, "Цветкова", "+375441188808", 1 },
-                    { 7, "Polyakov99@gmail.com", "Алексей", 3, "Поляков", "+375441188807", 1 },
-                    { 6, "Ryabov903@gmail.com", "Анна", 3, "Рябова", "+375441188806", 1 },
-                    { 5, "Sobolev11@gmail.com", "Сергей", 3, "Соболев", "+375441188805", 1 },
-                    { 4, "Nikitin01@gmail.com", "Роман", 3, "Никитин", "+375441188804", 1 },
-                    { 3, "Ershov9512@gmail.com", "Александр", 3, "Ершов", "+375441188803", 1 },
-                    { 2, "Medvedev1990@gmail.com", "Егор", 3, "Медведев", "+375441188802", 1 },
-                    { 24, "Bobrova72@gmail.com", "Анастасия", 1, "Боброва", "+375441188824", 2 },
-                    { 25, "Dmitrieva1221@gmail.com", "Наталья", 1, "Дмитриева", "+375441188825", 2 }
+                    { 1, "Lazarev0981@gmail.com", "Николай", 3, null, "Лазарев", "+375441188801", 1 },
+                    { 23, "Matveyev67@gmail.com", "Владислав", 1, null, "Матвеев", "+375441188823", 2 },
+                    { 22, "Egorov212@gmail.com", "Василий", 1, null, "Егоров", "+375441188822", 2 },
+                    { 21, "Dorofeyev45@gmail.com", "Виталий", 1, null, "Дорофеев", "+375441188821", 2 },
+                    { 30, "Timofeev22@gmail.com", "Виталий", 2, null, "Тимофеев", "+375441188830", 3 },
+                    { 29, "Sokolova1212@gmail.com", "Екатерина", 2, null, "Соколова", "+375441188829", 3 },
+                    { 28, "Antonov543@gmail.com", "Александр", 2, null, "Антонов", "+375441188828", 3 },
+                    { 27, "Anisimov987@gmail.com", "Алексей", 2, null, "Анисимов", "+375441188827", 3 },
+                    { 26, "Kalinin45@gmail.com", "Сергей", 2, null, "Калинин", "+375441188826", 3 },
+                    { 20, "Fedotov88@gmail.com", "Андрей", 3, null, "Федотов", "+375441188820", 1 },
+                    { 19, "Belousov78@gmail.com", "Евгений", 3, null, "Белоусов", "+375441188819", 1 },
+                    { 18, "Osipov0990@gmail.com", "Александр", 3, null, "Осипов", "+375441188818", 1 },
+                    { 17, "Sidorov610@gmail.com", "Егор", 3, null, "Сидоров", "+375441188817", 1 },
+                    { 16, "Maksimov77@gmail.com", "Максим", 3, null, "Максимов", "+375441188816", 1 },
+                    { 15, "Krylov96@gmail.com", "Сергей", 3, null, "Крылов", "+375441188815", 1 },
+                    { 14, "Nikolayev61@gmail.com", "Роман", 3, null, "Николаев", "+375441188814", 1 },
+                    { 13, "Juravliov43@gmail.com", "Светлана", 3, null, "Журавлёва", "+375441188813", 1 },
+                    { 12, "Lapin0110@gmail.com", "Виктор", 3, null, "Лапин", "+375441188812", 1 },
+                    { 11, "Frolov855@gmail.com", "Геннадий", 3, null, "Фролов", "+375441188811", 1 },
+                    { 10, "Jukov07@gmail.com", "Антон", 3, null, "Жуков", "+375441188810", 1 },
+                    { 9, "Danilova355@gmail.com", "Виктория", 3, null, "Данилова", "+375441188809", 1 },
+                    { 8, "Cvetkova41@gmail.com", "Надежда", 3, null, "Цветкова", "+375441188808", 1 },
+                    { 7, "Polyakov99@gmail.com", "Алексей", 3, null, "Поляков", "+375441188807", 1 },
+                    { 6, "Ryabov903@gmail.com", "Анна", 3, null, "Рябова", "+375441188806", 1 },
+                    { 5, "Sobolev11@gmail.com", "Сергей", 3, null, "Соболев", "+375441188805", 1 },
+                    { 4, "Nikitin01@gmail.com", "Роман", 3, null, "Никитин", "+375441188804", 1 },
+                    { 3, "Ershov9512@gmail.com", "Александр", 3, null, "Ершов", "+375441188803", 1 },
+                    { 2, "Medvedev1990@gmail.com", "Егор", 3, null, "Медведев", "+375441188802", 1 },
+                    { 24, "Bobrova72@gmail.com", "Анастасия", 1, null, "Боброва", "+375441188824", 2 },
+                    { 25, "Dmitrieva1221@gmail.com", "Наталья", 1, null, "Дмитриева", "+375441188825", 2 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -477,6 +497,9 @@ namespace ONX.CRM.DAL.EF.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Managers");
 
             migrationBuilder.DropTable(
                 name: "StudentRequests");

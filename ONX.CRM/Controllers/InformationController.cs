@@ -2,7 +2,7 @@
 
 namespace ONX.CRM.Controllers
 {
-    public class InformationController : Controller
+    public class InformationController : BaseController
     {
         public IActionResult AboutUs()
         {

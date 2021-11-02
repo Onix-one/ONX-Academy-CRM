@@ -14,7 +14,7 @@ using ONX.CRM.ViewModel.Search;
 namespace ONX.CRM.Controllers
 {
     [TypeFilter(typeof(LocalExceptionFilter))]
-    public class TeachersController : Controller
+    public class TeachersController : BaseController
     {
         private readonly ITeacherService _teacherService;
         private readonly IMapper _mapper;

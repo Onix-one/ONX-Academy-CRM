@@ -17,9 +17,13 @@ namespace ONX.CRM.Configuration
             _userManager = serviceProvider.GetRequiredService<UserManager<User>>();
             _roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-            string managerEmail = securityOptions.Value.ManagerEmail;
-            string password = securityOptions.Value.ManagerPassword;
+            string adminEmail = securityOptions.Value.AdminEmail;
+            string password = securityOptions.Value.AdminPassword;
 
+            if (await _roleManager.FindByNameAsync("admin") == null)
+            {
+                await _roleManager.CreateAsync(new IdentityRole("admin"));
+            }
             if (await _roleManager.FindByNameAsync("manager") == null)
             {
                 await _roleManager.CreateAsync(new IdentityRole("manager"));
@@ -28,13 +32,13 @@ namespace ONX.CRM.Configuration
             {
                 await _roleManager.CreateAsync(new IdentityRole("student"));
             }
-            if (await _userManager.FindByNameAsync(managerEmail) == null)
+            if (await _userManager.FindByNameAsync(adminEmail) == null)
             {
-                User admin = new User { Email = managerEmail, UserName = managerEmail };
+                User admin = new User {LastName = "Smith", FirstName = "Alex", Email = adminEmail, UserName = adminEmail };
                 IdentityResult result = await _userManager.CreateAsync(admin, password);
                 if (result.Succeeded)
                 {
-                    await _userManager.AddToRoleAsync(admin, "manager");
+                    await _userManager.AddToRoleAsync(admin, "admin");
                 }
             }
         }

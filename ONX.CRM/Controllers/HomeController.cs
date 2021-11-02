@@ -3,7 +3,7 @@ using ONX.CRM.Filters;
 
 namespace ONX.CRM.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         [TypeFilter(typeof(LocalExceptionFilter))]
         public IActionResult Index()

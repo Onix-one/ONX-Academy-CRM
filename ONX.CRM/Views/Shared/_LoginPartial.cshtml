@@ -5,16 +5,27 @@
         <div class="user-box dropdown">
                 <a class="d-flex align-items-center nav-link dropdown-toggle dropdown-toggle-nocaret" href="#"
                    role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img src="~/assets/images/avatars/avatar-2.png" class="user-img" alt="user avatar">
+                    <img src="~/assets/images/avatar-lazybones.png" class="user-img" alt="user avatar">
                     <div class="user-info ps-3">
-                        <p class="user-name mb-0">Pauline Seitz</p>
-                        <p class="designattion mb-0">Web Designer</p>
+                        <p class="user-name mb-0">@User.Identity.Name</p>
+                        @if (User.IsInRole("admin"))
+                        {
+                            <p class="designattion mb-0">Admin</p>
+                        }
+                        @if (User.IsInRole("manager"))
+                        {
+                            <p class="designattion mb-0">Manager</p>
+                        }
+                        @if (User.IsInRole("student"))
+                        {
+                            <p class="designattion mb-0">Student</p>
+                        }
                     </div>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li>
-                        <a class="dropdown-item" href="javascript:;">
-                            <i class="bx bx-user"></i><span>Profile</span>
+                        <a class="dropdown-item" asp-controller="Profile" asp-action="Index">
+                            <i asp-controller ="" class="bx bx-user"></i><span>Profile</span>
                         </a>
                     </li>
                     <li>

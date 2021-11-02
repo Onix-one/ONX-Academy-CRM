@@ -16,7 +16,7 @@ using ONX.CRM.ViewModel.Search;
 namespace ONX.CRM.Controllers
 {
     [TypeFilter(typeof(LocalExceptionFilter))]
-    public class RequestsController : Controller
+    public class RequestsController : BaseController
     {
         private readonly IMapper _mapper;
         private readonly ILogger<RequestsController> _logger;
@@ -161,7 +161,7 @@ namespace ONX.CRM.Controllers
             else
                 _studentRequestService.Create(_mapper.Map<StudentRequest>(studentRequest));
 
-            if (User.IsInRole("manager"))
+            if (User.IsInRole("manager") || User.IsInRole("admin"))
             {
                 return RedirectToAction("Index");
             }

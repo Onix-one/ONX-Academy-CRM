@@ -11,6 +11,7 @@ namespace ONX.CRM.Mapper
             CreateMap<Person, PersonViewModel>().ReverseMap();
             CreateMap<Student, StudentViewModel>().ReverseMap();
             CreateMap<Teacher, TeacherViewModel>().ReverseMap();
+            CreateMap<Manager, ManagerViewModel>().ReverseMap();
             CreateMap<Course, CourseViewModel>().ReverseMap();
             CreateMap<Specialization, SpecializationViewModel>().ReverseMap();
             CreateMap<StudentRequest, StudentRequestViewModel>().ReverseMap();

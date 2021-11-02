@@ -12,8 +12,12 @@ namespace ONX.CRM.ServiceExtensions
             services.AddScoped<IStudentService, StudentService>();
             services.AddScoped<ITeacherService, TeacherService>();
             services.AddScoped<ICourseService, CourseService>();
+            services.AddScoped<IManagerService, ManagerService>();
             services.AddScoped<ISpecializationService, SpecializationService>();
             services.AddScoped<IStudentRequestService, StudentRequestService>();
+
+            services.AddScoped<INotificationService, NotificationService>();
+            services.AddScoped<IUserService, UserService>();
             return services;
         }
     }

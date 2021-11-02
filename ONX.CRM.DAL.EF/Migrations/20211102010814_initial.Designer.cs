@@ -10,15 +10,15 @@ using ONX.CRM.DAL.EF.Contexts;
 namespace ONX.CRM.DAL.EF.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20211019003701_init")]
-    partial class init
+    [Migration("20211102010814_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.10")
+                .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -152,7 +152,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("ONX.CRM.BLL.Models.Course", b =>
+            modelBuilder.Entity("ONX.CRM.DAL.Models.Course", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -276,7 +276,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ONX.CRM.BLL.Models.Group", b =>
+            modelBuilder.Entity("ONX.CRM.DAL.Models.Group", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -345,7 +345,37 @@ namespace ONX.CRM.DAL.EF.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ONX.CRM.BLL.Models.Specialization", b =>
+            modelBuilder.Entity("ONX.CRM.DAL.Models.Manager", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImgLink")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Managers");
+                });
+
+            modelBuilder.Entity("ONX.CRM.DAL.Models.Specialization", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -404,7 +434,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ONX.CRM.BLL.Models.Student", b =>
+            modelBuilder.Entity("ONX.CRM.DAL.Models.Student", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -419,6 +449,9 @@ namespace ONX.CRM.DAL.EF.Migrations
 
                     b.Property<int?>("GroupId")
                         .HasColumnType("int");
+
+                    b.Property<string>("ImgLink")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
@@ -738,7 +771,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ONX.CRM.BLL.Models.StudentRequest", b =>
+            modelBuilder.Entity("ONX.CRM.DAL.Models.StudentRequest", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -758,6 +791,9 @@ namespace ONX.CRM.DAL.EF.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImgLink")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
@@ -898,7 +934,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ONX.CRM.BLL.Models.Teacher", b =>
+            modelBuilder.Entity("ONX.CRM.DAL.Models.Teacher", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -914,10 +950,10 @@ namespace ONX.CRM.DAL.EF.Migrations
                     b.Property<string>("FirstName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("LastName")
+                    b.Property<string>("ImgLink")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PNGName")
+                    b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
@@ -937,8 +973,8 @@ namespace ONX.CRM.DAL.EF.Migrations
                             Bio = "Area of interest: development of web applications based on Sitecore, ASP.NET MVC / .NET Core and mobile applications using the Xamarin cross-platform framework; Sitecore JavaScript Services (JSS); the introduction of search engines such as Solr, Coveo; using cloud Azure solutions.",
                             Email = "VadzimPapko@gmail.com",
                             FirstName = "Вадим",
+                            ImgLink = "VadzimPapko.jpg",
                             LastName = "Папко",
-                            PNGName = "VadzimPapko.jpg",
                             Phone = "+375291133322",
                             WorkExperience = "5 years"
                         },
@@ -948,8 +984,8 @@ namespace ONX.CRM.DAL.EF.Migrations
                             Bio = "Area of interest: development of web applications in ASP.NET MVC using JavaScript libraries (Angular, JQuery), API, microservices, Data Science, Machine Learning. Agile software development methodologies (Agile, Scrum, Kanban, Lean).",
                             Email = "DmitriyAlhimovich@gmail.com",
                             FirstName = "Дмитрий",
+                            ImgLink = "DmitriyAlhimovich.jpg",
                             LastName = "Альхимович",
-                            PNGName = "DmitriyAlhimovich.jpg",
                             Phone = "+375293322211",
                             WorkExperience = "10 years"
                         },
@@ -959,14 +995,14 @@ namespace ONX.CRM.DAL.EF.Migrations
                             Bio = "Area of interest: optimization, programming of gameplay systems.",
                             Email = "RostislavNikishin@gmail.com",
                             FirstName = "Ростислав",
+                            ImgLink = "RostislavNikishin.jpg",
                             LastName = "Никишин",
-                            PNGName = "RostislavNikishin.jpg",
                             Phone = "+375441188800",
                             WorkExperience = "4 years"
                         });
                 });
 
-            modelBuilder.Entity("ONX.CRM.BLL.Models.User", b =>
+            modelBuilder.Entity("ONX.CRM.DAL.Models.User", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -1048,7 +1084,7 @@ namespace ONX.CRM.DAL.EF.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("ONX.CRM.BLL.Models.User", null)
+                    b.HasOne("ONX.CRM.DAL.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1057,7 +1093,7 @@ namespace ONX.CRM.DAL.EF.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("ONX.CRM.BLL.Models.User", null)
+                    b.HasOne("ONX.CRM.DAL.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1072,7 +1108,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ONX.CRM.BLL.Models.User", null)
+                    b.HasOne("ONX.CRM.DAL.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1081,16 +1117,16 @@ namespace ONX.CRM.DAL.EF.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("ONX.CRM.BLL.Models.User", null)
+                    b.HasOne("ONX.CRM.DAL.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ONX.CRM.BLL.Models.Course", b =>
+            modelBuilder.Entity("ONX.CRM.DAL.Models.Course", b =>
                 {
-                    b.HasOne("ONX.CRM.BLL.Models.Specialization", "Specialization")
+                    b.HasOne("ONX.CRM.DAL.Models.Specialization", "Specialization")
                         .WithMany("Courses")
                         .HasForeignKey("SpecializationId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1099,13 +1135,13 @@ namespace ONX.CRM.DAL.EF.Migrations
                     b.Navigation("Specialization");
                 });
 
-            modelBuilder.Entity("ONX.CRM.BLL.Models.Group", b =>
+            modelBuilder.Entity("ONX.CRM.DAL.Models.Group", b =>
                 {
-                    b.HasOne("ONX.CRM.BLL.Models.Course", "Course")
+                    b.HasOne("ONX.CRM.DAL.Models.Course", "Course")
                         .WithMany("Groups")
                         .HasForeignKey("CourseId");
 
-                    b.HasOne("ONX.CRM.BLL.Models.Teacher", "Teacher")
+                    b.HasOne("ONX.CRM.DAL.Models.Teacher", "Teacher")
                         .WithMany()
                         .HasForeignKey("TeacherId");
 
@@ -1114,18 +1150,18 @@ namespace ONX.CRM.DAL.EF.Migrations
                     b.Navigation("Teacher");
                 });
 
-            modelBuilder.Entity("ONX.CRM.BLL.Models.Student", b =>
+            modelBuilder.Entity("ONX.CRM.DAL.Models.Student", b =>
                 {
-                    b.HasOne("ONX.CRM.BLL.Models.Group", "Group")
+                    b.HasOne("ONX.CRM.DAL.Models.Group", "Group")
                         .WithMany("Students")
                         .HasForeignKey("GroupId");
 
                     b.Navigation("Group");
                 });
 
-            modelBuilder.Entity("ONX.CRM.BLL.Models.StudentRequest", b =>
+            modelBuilder.Entity("ONX.CRM.DAL.Models.StudentRequest", b =>
                 {
-                    b.HasOne("ONX.CRM.BLL.Models.Course", "Course")
+                    b.HasOne("ONX.CRM.DAL.Models.Course", "Course")
                         .WithMany()
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1134,17 +1170,17 @@ namespace ONX.CRM.DAL.EF.Migrations
                     b.Navigation("Course");
                 });
 
-            modelBuilder.Entity("ONX.CRM.BLL.Models.Course", b =>
+            modelBuilder.Entity("ONX.CRM.DAL.Models.Course", b =>
                 {
                     b.Navigation("Groups");
                 });
 
-            modelBuilder.Entity("ONX.CRM.BLL.Models.Group", b =>
+            modelBuilder.Entity("ONX.CRM.DAL.Models.Group", b =>
                 {
                     b.Navigation("Students");
                 });
 
-            modelBuilder.Entity("ONX.CRM.BLL.Models.Specialization", b =>
+            modelBuilder.Entity("ONX.CRM.DAL.Models.Specialization", b =>
                 {
                     b.Navigation("Courses");
                 });
