@@ -11,6 +11,5 @@ namespace ONX.CRM.ViewModel
         public StudentType? Type { get; set; }
         public SearchStudentViewModel Search { get; set; }
         public PageInfoViewModel PageInfo { get; set; }
-
     }
 }

@@ -10,7 +10,7 @@ using ONX.CRM.DAL.EF.Contexts;
 namespace ONX.CRM.DAL.EF.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20211102010814_initial")]
+    [Migration("20211102013933_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -462,6 +462,9 @@ namespace ONX.CRM.DAL.EF.Migrations
                     b.Property<int?>("Type")
                         .HasColumnType("int");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("GroupId");
@@ -805,6 +808,9 @@ namespace ONX.CRM.DAL.EF.Migrations
                     b.Property<int?>("Type")
                         .HasColumnType("int");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CourseId");
@@ -957,6 +963,9 @@ namespace ONX.CRM.DAL.EF.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("WorkExperience")

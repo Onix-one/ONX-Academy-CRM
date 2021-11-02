@@ -17,6 +17,7 @@ namespace ONX.CRM.ViewModel
         [Required(ErrorMessage = "This field cannot be empty")]
         [Phone(ErrorMessage = "Invalid Phone number")]
         public string? Phone { get; set; }
+        public string? UserId { get; set; }
         public string FullName => $"{LastName} {FirstName}";
        
     }

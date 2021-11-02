@@ -8,6 +8,5 @@ namespace ONX.CRM.DAL.Models
 {
     public class Manager : Person
     {
-        public string UserId { get; set; }
     }
 }

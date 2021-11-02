@@ -5,6 +5,5 @@ namespace ONX.CRM.ViewModel
 {
     public class ManagerViewModel : PersonViewModel
     {
-        public string? UserId { get; set; }
     }
 }
