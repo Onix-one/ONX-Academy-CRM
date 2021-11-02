@@ -29,3 +29,18 @@ $(document).ready(function () {
         }
     });
 });
+$(document).ready(function () {
+    $("#show_hide_new_password a").on('click', function (event) {
+        event.preventDefault();
+        if ($('#show_hide_new_password input').attr("type") == "text") {
+            $('#show_hide_new_password input').attr('type', 'password');
+            $('#show_hide_new_password i').addClass("bx-hide");
+            $('#show_hide_new_password i').removeClass("bx-show");
+        } else if ($('#show_hide_new_password input').attr("type") == "password") {
+            $('#show_hide_new_password input').attr('type', 'text');
+            $('#show_hide_new_password i').removeClass("bx-hide");
+            $('#show_hide_new_password i').addClass("bx-show");
+        }
+    });
+});
+

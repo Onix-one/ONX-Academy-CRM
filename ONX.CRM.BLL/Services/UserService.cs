@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using ONX.CRM.BLL.Interfaces;
@@ -10,6 +11,7 @@ namespace ONX.CRM.BLL.Services
     {
         private static INotificationService _notificationService;
         private readonly UserManager<User> _userManager;
+        private readonly UserManager<ClaimsPrincipal> _claimsUserManager;
         public UserService(INotificationService notificationService, UserManager<User> userManager)
         {
             _notificationService = notificationService;
@@ -88,8 +90,5 @@ namespace ONX.CRM.BLL.Services
             }
             return new string(chars);
         }
-
-
-
     }
 }

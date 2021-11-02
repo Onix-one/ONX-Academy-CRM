@@ -130,7 +130,7 @@ namespace ONX.CRM.Controllers
                         await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
                     if (result.Succeeded)
                     {
-                        return RedirectToAction("Index");
+                        return RedirectToAction("Index", "Profile");
                     }
                     else
                     {

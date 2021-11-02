@@ -8,6 +8,7 @@ namespace ONX.CRM.Mapper
     {
         public MappingProfile()
         {
+            
             CreateMap<Person, PersonViewModel>().ReverseMap();
             CreateMap<Student, StudentViewModel>().ReverseMap();
             CreateMap<Teacher, TeacherViewModel>().ReverseMap();
@@ -15,6 +16,8 @@ namespace ONX.CRM.Mapper
             CreateMap<Course, CourseViewModel>().ReverseMap();
             CreateMap<Specialization, SpecializationViewModel>().ReverseMap();
             CreateMap<StudentRequest, StudentRequestViewModel>().ReverseMap();
+            CreateMap<Manager, ProfileViewModel>().ReverseMap();
+            CreateMap<Student, ProfileViewModel>().ReverseMap();
             CreateMap<Group, GroupViewModel>()
                 .ForMember(model => model.TeacherName, 
                     map => map

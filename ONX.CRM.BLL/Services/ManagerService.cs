@@ -48,5 +48,10 @@ namespace ONX.CRM.BLL.Services
         {
            return _managerRepository.CheckIfManagerExists(email);
         }
+
+        public Task<IEnumerable<Manager>> FindByUserIdAsync(string userId)
+        {
+            return _managerRepository.FindByUserIdAsync(userId);
+        }
     }
 }

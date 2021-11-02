@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -51,6 +52,11 @@ namespace ONX.CRM.DAL.EF.Repositories
                 return true;
             }
             return false;
+        }
+
+        public async Task<IEnumerable<Manager>> FindByUserIdAsync(string userId)
+        {
+            return await _context.Managers.Where(m => m.UserId.Contains(userId)).AsNoTracking().ToListAsync();
         }
     }
 }
