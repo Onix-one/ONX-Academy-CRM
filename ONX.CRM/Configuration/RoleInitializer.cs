@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,18 +21,16 @@ namespace ONX.CRM.Configuration
             string adminEmail = securityOptions.Value.AdminEmail;
             string password = securityOptions.Value.AdminPassword;
 
-            if (await _roleManager.FindByNameAsync("admin") == null)
+            var roles = new List<string>() { "admin", "manager", "student", "teacher" };
+
+            foreach (var role in roles)
             {
-                await _roleManager.CreateAsync(new IdentityRole("admin"));
+                if (await _roleManager.FindByNameAsync(role) == null)
+                {
+                    await _roleManager.CreateAsync(new IdentityRole(role));
+                }
             }
-            if (await _roleManager.FindByNameAsync("manager") == null)
-            {
-                await _roleManager.CreateAsync(new IdentityRole("manager"));
-            }
-            if (await _roleManager.FindByNameAsync("student") == null)
-            {
-                await _roleManager.CreateAsync(new IdentityRole("student"));
-            }
+            
             if (await _userManager.FindByNameAsync(adminEmail) == null)
             {
                 User admin = new User {LastName = "Smith", FirstName = "Alex", Email = adminEmail, UserName = adminEmail };

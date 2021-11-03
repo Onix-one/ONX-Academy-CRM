@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ONX.CRM.BLL.Interfaces;
@@ -20,13 +22,14 @@ namespace ONX.CRM.Controllers
         private readonly UserManager<User> _userManager;
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
-        public ProfileController(IManagerService managerService, IStudentService studentService, 
+        public ProfileController(IManagerService managerService, IStudentService studentService,
             UserManager<User> userManager, IMapper mapper, IUserService userService)
         {
+            _managerService = managerService;
             _userManager = userManager;
             _userService = userService;
             _studentService = studentService;
-            _managerService = managerService;
+           
             _mapper = mapper;
         }
         public async Task<IActionResult> Index()
@@ -63,7 +66,7 @@ namespace ONX.CRM.Controllers
 
             }
             return RedirectToAction("Index");
-            
+
         }
         public async Task<IActionResult> ChangePassword(string id)
         {
@@ -103,7 +106,40 @@ namespace ONX.CRM.Controllers
                 }
             }
             return View(model);
+        }
 
+        [HttpPost]
+        public async Task<IActionResult> UploadImage(int id, IFormFile uploadedFile)
+        {
+            if (uploadedFile != null)
+            {
+                if (uploadedFile.Length > 600000)
+                {
+                    var userId = _userManager.GetUserId(User);
+                    if (User.IsInRole("manager"))
+                    {
+                        ModelState.AddModelError(string.Empty, "The image file is too large");
+                        var manager = await _managerService.FindByUserIdAsync(userId);
+                        return View("Index", _mapper.Map<ProfileViewModel>(manager.FirstOrDefault()));
+                    }
+
+                }
+                //save file to DB (Person)
+                await using var memoryStream = new MemoryStream();
+
+                await uploadedFile.CopyToAsync(memoryStream);
+
+                var content = memoryStream.ToArray();
+
+                _managerService.SaveImage(id, content);
+            }
+
+            return RedirectToAction("Index");
+        }
+        public async Task<IActionResult> DeleteImage(int id)
+        {
+            _managerService.DeleteImage(id);
+            return RedirectToAction("Index");
         }
     }
 }

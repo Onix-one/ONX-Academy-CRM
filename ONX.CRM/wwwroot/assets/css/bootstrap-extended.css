@@ -361,7 +361,12 @@ a {
 .bg-danger {
 	background-color: #f41127 !important;
   }
-
+.bg-white {
+	background-color: #ffffff !important;
+}
+.bg-black {
+    background-color: #000000 !important;
+}
 
 .topbar .dropdown-menu {
 	position: absolute;

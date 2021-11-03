@@ -1,5 +1,6 @@
 ﻿@{
     var theme = (string)ViewBag.Theme;
+    var photo = (byte[])ViewBag.Photo;
 }
 <!doctype html>
 <html lang="en" class="@theme">
@@ -174,6 +175,78 @@
                 }
 
 
+                @if (User.IsInRole("teacher"))
+                {
+                    <li class="menu-label">Administration</li>
+
+                    <li>
+                        <a asp-controller="Teachers" asp-action="Index">
+                            <div class="parent-icon">
+                                <i class="lni lni-network"></i>
+                            </div>
+                            <div class="menu-title">Home</div>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a asp-controller="Requests" asp-action="Index">
+                            <div class="parent-icon">
+                                <i class="lni lni-write"></i>
+                            </div>
+                            <div class="menu-title">Schedule</div>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a asp-controller="Groups" asp-action="Index">
+                            <div class="parent-icon">
+                                <i class="lni lni-school-bench-alt"></i>
+                            </div>
+                            <div class="menu-title">Materials</div>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a asp-controller="Students" asp-action="Index">
+                            <div class="parent-icon">
+                                <i class="lni lni-graduation"></i>
+                            </div>
+                            <div class="menu-title">Webinar room</div>
+                        </a>
+                    </li>
+
+
+
+
+                    <li>
+                        <a href="javascript:;" class="has-arrow">
+                            <div class="parent-icon">
+                                <i class='bx bx-cart'></i>
+                            </div>
+                            <div class="menu-title">eCommerce</div>
+                        </a>
+                        <ul>
+                            <li>
+                                <a href="ecommerce-products.html"><i class="bx bx-right-arrow-alt"></i>Products</a>
+                            </li>
+                            <li>
+                                <a href="ecommerce-products-details.html">
+                                    <i class="bx bx-right-arrow-alt"></i>Product
+                                    Details
+                                </a>
+                            </li>
+                            <li>
+                                <a href="ecommerce-add-new-products.html">
+                                    <i class="bx bx-right-arrow-alt"></i>Add New
+                                    Products
+                                </a>
+                            </li>
+                            <li>
+                                <a href="ecommerce-orders.html"><i class="bx bx-right-arrow-alt"></i>Orders</a>
+                            </li>
+                        </ul>
+                    </li>
+                }
                 @if (User.IsInRole("student"))
                 {
                     <li class="menu-label">Administration</li>
@@ -213,8 +286,8 @@
                             <div class="menu-title">Webinar room</div>
                         </a>
                     </li>
-                   
-                   
+
+
 
 
                     <li>
@@ -246,7 +319,6 @@
                         </ul>
                     </li>
                 }
-
 
             </ul>
 
