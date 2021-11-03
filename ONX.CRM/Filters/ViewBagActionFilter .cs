@@ -29,6 +29,7 @@ namespace ONX.CRM.Filters
             if (context.Controller is Controller contextController)
             {
                 contextController.ViewBag.Theme = BaseController.Theme ?? "dark-theme";
+
                 BaseController.Photo = SetPhoto();
                 contextController.ViewBag.Photo = BaseController.Photo ?? new byte[] { };
             }
