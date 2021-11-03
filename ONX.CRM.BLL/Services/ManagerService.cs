@@ -53,5 +53,22 @@ namespace ONX.CRM.BLL.Services
         {
             return _managerRepository.FindByUserIdAsync(userId);
         }
+
+        public void SaveImage(int id, byte[] content)
+        {
+            var manager =  _managerRepository.GetEntityByIdAsync(id).Result;
+
+            manager.Image = content;
+
+            _managerRepository.Update(manager);
+        }
+        public void DeleteImage(int id)
+        {
+            var manager = _managerRepository.GetEntityByIdAsync(id).Result;
+
+            manager.Image = null;
+
+            _managerRepository.Update(manager);
+        }
     }
 }

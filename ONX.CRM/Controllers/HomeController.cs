@@ -12,7 +12,6 @@ namespace ONX.CRM.Controllers
             {
                 return RedirectToAction("Index", "Requests");
             }
-
             return View();
         }
         public IActionResult Error()

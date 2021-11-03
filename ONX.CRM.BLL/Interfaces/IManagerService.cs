@@ -8,5 +8,7 @@ namespace ONX.CRM.BLL.Interfaces
     {
         Task<bool> CheckIfManagerExists(string email);
         Task<IEnumerable<Manager>> FindByUserIdAsync(string userId);
+        void SaveImage(int id, byte[] content);
+        void DeleteImage(int id);
     }
 }

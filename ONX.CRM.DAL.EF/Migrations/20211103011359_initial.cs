@@ -58,7 +58,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ImgLink = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    Image = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -93,7 +93,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ImgLink = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    Image = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -273,7 +273,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ImgLink = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    Image = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -299,7 +299,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Phone = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ImgLink = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    Image = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -328,7 +328,7 @@ namespace ONX.CRM.DAL.EF.Migrations
 
             migrationBuilder.InsertData(
                 table: "Teachers",
-                columns: new[] { "Id", "Bio", "Email", "FirstName", "ImgLink", "LastName", "Phone", "UserId", "WorkExperience" },
+                columns: new[] { "Id", "Bio", "Email", "FirstName", "Image", "LastName", "Phone", "UserId", "WorkExperience" },
                 values: new object[,]
                 {
                     { 1, "Area of interest: development of web applications based on Sitecore, ASP.NET MVC / .NET Core and mobile applications using the Xamarin cross-platform framework; Sitecore JavaScript Services (JSS); the introduction of search engines such as Solr, Coveo; using cloud Azure solutions.", "VadzimPapko@gmail.com", "Вадим", null, "Папко", "+375291133322", null, "5 years" },
@@ -367,7 +367,7 @@ namespace ONX.CRM.DAL.EF.Migrations
 
             migrationBuilder.InsertData(
                 table: "StudentRequests",
-                columns: new[] { "Id", "Comments", "CourseId", "Created", "Email", "FirstName", "ImgLink", "LastName", "Phone", "Type", "UserId" },
+                columns: new[] { "Id", "Comments", "CourseId", "Created", "Email", "FirstName", "Image", "LastName", "Phone", "Type", "UserId" },
                 values: new object[,]
                 {
                     { 1, "", 11, new DateTime(2021, 7, 15, 13, 17, 0, 0, DateTimeKind.Unspecified), "Nesterov23@gmail.com", "Андрей", null, "Нестеров", "+375441188132", 1, null },
@@ -384,7 +384,7 @@ namespace ONX.CRM.DAL.EF.Migrations
 
             migrationBuilder.InsertData(
                 table: "Students",
-                columns: new[] { "Id", "Email", "FirstName", "GroupId", "ImgLink", "LastName", "Phone", "Type", "UserId" },
+                columns: new[] { "Id", "Email", "FirstName", "GroupId", "Image", "LastName", "Phone", "Type", "UserId" },
                 values: new object[,]
                 {
                     { 1, "Lazarev0981@gmail.com", "Николай", 3, null, "Лазарев", "+375441188801", 1, null },
