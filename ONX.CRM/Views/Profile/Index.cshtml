@@ -44,15 +44,14 @@
                                             <h4>@Model.FirstName @Model.LastName</h4>
                                         </div>
                                         <div class="text-danger" asp-validation-summary="ModelOnly"></div>
-
                                         <form asp-action="UploadImage" asp-controller="Profile" method="post" enctype="multipart/form-data">
                                             @Html.HiddenFor(x => x.Id)
                                             <div class="mb-3">
                                                 <label for="formFileSm" class="form-label">Small file input example</label>
-                                                <input  name="uploadedFile" class="form-control form-control-sm" id="formFileSm" type="file">
+                                                <input name="uploadedFile" class="form-control form-control-sm" id="formFileSm" type="file">
                                             </div>
-                                            <button type="submit" class="btn btn-outline-primary">Upload </button>
-                                            <a asp-action="DeleteImage" asp-controller="Profile" asp-route-id="@Model.Id"  class="btn btn-outline-danger">Delete</a>
+                                            <button type="submit" class="btn btn-outline-primary">Upload</button>
+                                            <a asp-action="DeleteImage" asp-controller="Profile" asp-route-id="@Model.Id" class="btn btn-outline-danger">Delete</a>
                                         </form>
                                     </div>
                                 </div>
@@ -62,15 +61,14 @@
                                     <form asp-controller="Profile" asp-action="Index" method="post">
                                         <h2 class="text-center m-0">Manager</h2>
                                         <div class="card-body">
-                                            <div>
-                                                <input type="hidden" asp-for="Id" value="@Model.Id" />
-                                            </div>
+                                            @Html.HiddenFor(x => x.Id)
+                                            @Html.HiddenFor(x => x.Image)
                                             <div class="row mb-3">
                                                 <div class="col-sm-3">
                                                     <h6 class="mb-0">First Name</h6>
                                                 </div>
                                                 <div class="col-sm-9 text-secondary">
-                                                    <input type="text" class="form-control" asp-for="FirstName" />
+                                                    <input type="text" class="form-control" asp-for="FirstName"/>
                                                     <span class="alert-danger" asp-validation-for="FirstName"></span>
                                                 </div>
                                             </div>
@@ -79,7 +77,7 @@
                                                     <h6 class="mb-0">Last Name</h6>
                                                 </div>
                                                 <div class="col-sm-9 text-secondary">
-                                                    <input type="text" class="form-control" asp-for="LastName" />
+                                                    <input type="text" class="form-control" asp-for="LastName"/>
                                                     <span class="alert-danger" asp-validation-for="LastName"></span>
                                                 </div>
                                             </div>
@@ -93,9 +91,7 @@
                                                 </div>
                                                 @if (Model != null)
                                                 {
-                                                    <div class="col-sm-9 text-secondary">
-                                                        <input type="hidden" class="form-control" asp-for="@Model.UserId" />
-                                                    </div>
+                                                    @Html.HiddenFor(x => x.UserId)
                                                 }
                                             </div>
                                             <div class="row mb-3">
@@ -103,7 +99,7 @@
                                                     <h6 class="mb-0">Phone</h6>
                                                 </div>
                                                 <div class="col-sm-9 text-secondary">
-                                                    <input type="text" placeholder="+375(XX)XXX-XX-XX" class="form-control" asp-for="Phone" />
+                                                    <input type="text" placeholder="+375(XX)XXX-XX-XX" class="form-control" asp-for="Phone"/>
                                                     <span class="alert-danger" asp-validation-for="Phone"></span>
                                                 </div>
                                             </div>
