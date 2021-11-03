@@ -10,11 +10,11 @@
 
                 @if (photo.Length != 0)
                 {
-                    <img src="data:image/jpeg;base64,@(Convert.ToBase64String(photo))" class="user-img" alt="user avatar">
+                    <img src="data:image/jpeg;base64,@(Convert.ToBase64String(photo))" class="user-img bg-primary" alt="user avatar">
                 }
                 else
                 {
-                    <img src="~/assets/images/user.png" class="user-img" alt="user avatar">
+                    <img src="~/assets/images/education1.png" class="user-img bg-primary" alt="user avatar">
                 }
                 <div class="user-info ps-3">
                     <p class="user-name mb-0">@User.Identity.Name</p>
@@ -33,11 +33,14 @@
                 </div>
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
-                <li>
-                    <a class="dropdown-item" asp-controller="Profile" asp-action="Index">
-                        <i asp-controller="" class="bx bx-user"></i><span>Profile</span>
-                    </a>
-                </li>
+                @if (!User.IsInRole("admin"))
+                {
+                    <li>
+                        <a class="dropdown-item" asp-controller="Profile" asp-action="Index">
+                            <i asp-controller="" class="bx bx-user"></i><span>Profile</span>
+                        </a>
+                    </li>
+                }
                 <li>
                     <a class="dropdown-item" href="javascript:;">
                         <i class="bx bx-cog"></i><span>Settings</span>
