@@ -349,7 +349,22 @@
                                                             <div class="col-lg-9 col-xl-9">
                                                                 <div class="row align-items-center">
                                                                     <div class="col-4">
-                                                                       
+                                                                        <div class="d-flex order-actions">
+                                                                            @if (lessonsList[i].Materials.Length != 0)
+                                                                            {
+                                                                                <div class="d-flex align-items-center">
+                                                                                    <div><i class="bx bxs-file-pdf me-2 font-24 text-danger"></i>
+                                                                                    </div>
+                                                                                    <div class="font-weight-bold text-danger">Material @lessonsList[i].Number</div>
+                                                                                </div>
+
+                                                                                <div class="ms-2">
+                                                                                    <a asp-action="DownloadMaterial" asp-controller="Lessons"
+                                                                                            asp-route-id="@lessonsList[i].Id"><i class="bx bx-downvote me-0"></i></a>
+                                                                                </div>
+
+                                                                            }
+                                                                        </div>
                                                                     </div>
                                                                     <form class="col-8" asp-action="UploadMaterial" asp-controller="Lessons"
                                                                           asp-route-id="@lessonsList[i].Id" method="post" enctype="multipart/form-data">
