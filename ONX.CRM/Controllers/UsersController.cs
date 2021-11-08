@@ -80,7 +80,6 @@ namespace ONX.CRM.Controllers
                     user.LastName = model.LastName;
                     user.Email = model.Email;
                     user.UserName = model.Email;
-                    
 
                     var result = await _userManager.UpdateAsync(user);
                     if (result.Succeeded)

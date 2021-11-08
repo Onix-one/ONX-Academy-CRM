@@ -15,6 +15,7 @@ namespace ONX.CRM.ServiceExtensions
             services.AddScoped<IManagerService, ManagerService>();
             services.AddScoped<ISpecializationService, SpecializationService>();
             services.AddScoped<IStudentRequestService, StudentRequestService>();
+            services.AddScoped<ILessonService, LessonService>();
 
             services.AddScoped<INotificationService, NotificationService>();
             services.AddScoped<IUserService, UserService>();

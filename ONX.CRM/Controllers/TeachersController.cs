@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ONX.CRM.BLL.Interfaces;
@@ -17,16 +19,28 @@ namespace ONX.CRM.Controllers
     public class TeachersController : BaseController
     {
         private readonly ITeacherService _teacherService;
+        private readonly IGroupService _groupService;
         private readonly IMapper _mapper;
         private readonly ILogger<TeachersController> _logger;
         private readonly PageInfoViewModel _pageInfo;
+        private readonly IUserService _userService;
+        private readonly UserManager<User> _userManager;
+        private readonly IStudentService _studentService;
+        private readonly ILessonService _lessonService;
         public TeachersController(ITeacherService teacherService, IMapper mapper,
-            ILogger<TeachersController> logger, PageInfoViewModel pageInfo)
+            ILogger<TeachersController> logger, IUserService userService,
+            UserManager<User> userManager, PageInfoViewModel pageInfo,
+            IStudentService studentService, ILessonService lessonService, IGroupService groupService)
         {
             _pageInfo = pageInfo;
             _logger = logger;
             _mapper = mapper;
             _teacherService = teacherService;
+            _userService = userService;
+            _userManager = userManager;
+            _groupService = groupService;
+            _studentService = studentService;
+            _lessonService = lessonService;
         }
         [HttpGet]
         public async Task<IActionResult> Index(string query, int pageSize, int pageNumber)
@@ -81,20 +95,43 @@ namespace ONX.CRM.Controllers
                 : new TeacherViewModel());
         }
         [HttpPost]
-        public IActionResult Edit(TeacherViewModel teacher)
+        public async Task<IActionResult> Edit(TeacherViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                return View(teacher);
+                return View(model);
             }
-            if (teacher.Id != 0)
-                _teacherService.Update(_mapper.Map<Teacher>(teacher));
+            if (model.Id != 0)
+            {
+                await _userService.Update(model.UserId, model.Email, model.FirstName, model.LastName);
+                _teacherService.Update(_mapper.Map<Teacher>(model));
+            }
             else
-                _teacherService.Create(_mapper.Map<Teacher>(teacher));
+            {
+                if (await _teacherService.CheckIfManagerExists(model.Email))
+                {
+                    ModelState.AddModelError("Email", "A user with this address is already registered.");
+                    return View(model);
+                }
+                User user = new User
+                {
+                    Email = model.Email,
+                    UserName = model.Email,
+                    LastName = model.LastName,
+                    FirstName = model.FirstName
+                };
+                await _userService.CreateAsync(user, "teacher");
+
+                model.UserId = user.Id;
+                _teacherService.Create(_mapper.Map<Teacher>(model));
+            }
             return RedirectToAction("Index");
         }
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
+            var teacher = await _teacherService.GetEntityByIdAsync(id);
+            await _userService.Delete(teacher.UserId);
+
             _teacherService.Delete(id);
             return RedirectToAction("Index");
         }
@@ -110,5 +147,49 @@ namespace ONX.CRM.Controllers
             }
             return RedirectToAction("Index");
         }
+
+        public async Task<IActionResult> Groups()
+        {
+            if (User.Identity != null)
+            {
+                var userId = _userManager.GetUserId(User);
+                var teacher = _teacherService.FindByUserIdAsync(userId).Result.FirstOrDefault();
+                if (teacher != null)
+                {
+                    ViewBag.Groups = _mapper
+                        .Map<IEnumerable<GroupViewModel>>(await _groupService.GetGroupsByTeacherId(teacher.Id));
+                    return View(new GroupViewModel
+                    {
+                        Search = new SearchGroupViewModel(),
+                        PageInfo = new PageInfoViewModel()
+                    });
+                }
+            }
+            ViewBag.Groups = new List<GroupViewModel>().AsEnumerable();
+            return View(new GroupViewModel
+            {
+                Search = new SearchGroupViewModel(),
+                PageInfo = new PageInfoViewModel()
+            });
+        }
+        public async Task<IActionResult> GroupInfo(int id)
+        {
+            ViewBag.Students = _mapper
+                .Map<IEnumerable<StudentViewModel>>(await _studentService.GetStudentsByGroupId(id));
+            ViewBag.Lessons = _mapper
+                .Map<IEnumerable<LessonViewModel>>(await _lessonService.GetLessonsByGroupId(id));
+
+            ViewBag.CurrentGroup = _mapper
+                .Map<GroupViewModel>(await _groupService.GetEntityByIdAsync(id));
+
+
+            return View(new LessonViewModel{GroupId = id});
+        }
+        public IActionResult Home()
+        {
+
+            return View();
+        }
+
     }
 }

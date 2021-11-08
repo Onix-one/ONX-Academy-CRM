@@ -110,6 +110,14 @@ namespace ONX.CRM.Controllers
             if (model.RequestsList != null)
             {
                 var requests = _mapper.Map<IEnumerable<StudentRequest>>(model.RequestsList.Where(r => r.Selected));
+                foreach (var request in requests)
+                {
+                    if (await _studentService.CheckIfManagerExists(request.Email))
+                    {
+                        ModelState.AddModelError("Email", "A user with this address is already registered.");
+                        return View(model);
+                    }
+                }
                 _studentRequestService.AssignRequestToGroups(requests, model.GroupId);
                 //Если заявку была одна и мы добавили ее в группу то преадресовываем на все заявки
                 if (model.RequestsList.Count == 1)
@@ -147,6 +155,8 @@ namespace ONX.CRM.Controllers
             ViewBag.CoursesSelected = false;
             ViewBag.Courses = _mapper.Map<IEnumerable<CourseViewModel>>(await _courseService.GetAllAsync());
             ViewBag.Students = _mapper.Map<IEnumerable<StudentViewModel>>(await _studentService.GetAllAsync());
+            var course = await _courseService.GetEntityByIdAsync(studentRequest.CourseId);
+            ViewBag.CourseName = course.Title;
             if (studentRequest.Created == null)
             {
                 studentRequest.Created = DateTime.Now;
@@ -157,9 +167,23 @@ namespace ONX.CRM.Controllers
                 else
                     return View(studentRequest);
             if (studentRequest.Id != 0)
+            {
+                if (await _studentService.CheckIfManagerExists(studentRequest.Email))
+                {
+                    ModelState.AddModelError("Email", "A user with this address is already registered.");
+                    return View(studentRequest);
+                }
                 _studentRequestService.Update(_mapper.Map<StudentRequest>(studentRequest));
+            }
             else
+            {
+                if (await _studentService.CheckIfManagerExists(studentRequest.Email))
+                {
+                    ModelState.AddModelError("Email", "A user with this address is already registered.");
+                    return View(studentRequest);
+                }
                 _studentRequestService.Create(_mapper.Map<StudentRequest>(studentRequest));
+            }
 
             if (User.IsInRole("manager") || User.IsInRole("admin"))
             {
@@ -171,10 +195,11 @@ namespace ONX.CRM.Controllers
         public async Task<IActionResult> EditFromQuery(int id)
         {
             var course = await _courseService.GetEntityByIdAsync(id);
+            ViewBag.CourseName = course.Title;
             ViewBag.SpecializationId = course.SpecializationId;
             var specialization = await _specializationService.GetEntityByIdAsync(course.SpecializationId);
             ViewBag.SpecializationTitle = specialization.Title;
-            ViewBag.CourseName = course.Title;
+           
             ViewBag.Courses = _mapper.Map<IEnumerable<CourseViewModel>>(await _courseService.GetAllAsync());
             ViewBag.Students = _mapper.Map<IEnumerable<StudentViewModel>>(await _studentService.GetAllAsync());
             return View("Edit", new StudentRequestViewModel() { Created = null, CourseId = id });

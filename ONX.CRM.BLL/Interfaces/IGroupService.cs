@@ -10,5 +10,6 @@ namespace ONX.CRM.BLL.Interfaces
         Task<int> GetNumberOfGroupsByParameters(string query, int status);
         Task<IEnumerable<Group>> GetGroupsWithSkipAndTakeAsync(int skip, int take);
         Task<int> GetNumberOfGroups();
+        Task<IEnumerable<Group>> GetGroupsByTeacherId(int id);
     }
 }

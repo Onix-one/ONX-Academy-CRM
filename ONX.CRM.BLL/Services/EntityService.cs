@@ -18,6 +18,5 @@ namespace ONX.CRM.BLL.Services
         public void Create(T item) => _repository.Create(item);
         public void Update(T item) => _repository.Update(item);
         public void Delete(int id) => _repository.Delete(id);
-
     }
 }

@@ -14,7 +14,6 @@ namespace ONX.CRM.Extensions
                 pageSize != 0 ? pageSize : startPageSize, 
                 pageNumber != 0 ? pageNumber : startPageNumber, totalItems);
         }
-
         private static PageInfoViewModel SetPageSizePageNumberAndTotalItems(this PageInfoViewModel pageInfo,
             int pageSize, int pageNumber, int totalItems)
         {

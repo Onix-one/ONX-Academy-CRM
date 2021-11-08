@@ -7,7 +7,6 @@ namespace ONX.CRM.BLL.Services
 {
     public class NotificationService : INotificationService
     {
-
         public async Task SendEmailAsync(string userEmail, string userFirstName, string userLastName, string userPass, string subject)
         {
             var emailMessage = new MimeMessage();
@@ -37,7 +36,5 @@ namespace ONX.CRM.BLL.Services
                              "<p>We strongly recommend changing your password immediately after authorization.</p>";
             return message;
         }
-
-
     }
 }

@@ -20,6 +20,5 @@ namespace ONX.CRM.ViewModel
         public string? UserId { get; set; }
         public string FullName => $"{LastName} {FirstName}";
         public byte[]? Image { get; set; }
-
     }
 }

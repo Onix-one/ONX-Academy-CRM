@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ONX.CRM.BLL.Services;
 using ONX.CRM.Filters;
 
 namespace ONX.CRM.Controllers
@@ -8,10 +9,23 @@ namespace ONX.CRM.Controllers
         [TypeFilter(typeof(LocalExceptionFilter))]
         public IActionResult Index()
         {
-            if (User.Identity.IsAuthenticated)
+            if (User.IsInRole("teacher"))
+            {
+                return RedirectToAction("Home", "Teachers");
+            }
+            if (User.IsInRole("manager"))
             {
                 return RedirectToAction("Index", "Requests");
             }
+            if (User.IsInRole("student"))
+            {
+                return RedirectToAction("Index", "Requests");
+            }
+            if (User.IsInRole("admin"))
+            {
+                return RedirectToAction("Index", "Requests");
+            }
+
             return View();
         }
         public IActionResult Error()

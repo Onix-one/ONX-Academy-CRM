@@ -44,9 +44,9 @@
                                     <form asp-controller="Students" asp-action="Edit" method="post">
                                         <h2 class="text-center m-0">Student</h2>
                                         <div class="card-body">
-                                            <div>
-                                                <input type="hidden" asp-for="Id" value="@Model.Id" />
-                                            </div>
+                                            @Html.HiddenFor(x => x.Id)
+                                            @Html.HiddenFor(x => x.Image)
+                                            @Html.HiddenFor(x => x.UserId)
                                             <div class="row mb-3">
                                                 <div class="col-sm-3">
                                                     <h6 class="mb-0">First Name</h6>

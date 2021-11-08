@@ -18,7 +18,6 @@
                 </nav>
             </div>
             <div class="ms-auto">
-                <input asp-for="UserId" type="hidden" value="@Model.UserId">
                 <a asp-controller="Profile" asp-action="ChangePassword"
                    asp-route-id="@Model.UserId" class="btn btn-outline-danger px-4"><span>Change Password</span></a>
             </div>
@@ -44,8 +43,8 @@
                                             <h4>@Model.FirstName @Model.LastName</h4>
                                         </div>
                                         <div class="text-danger" asp-validation-summary="ModelOnly"></div>
-                                        <form asp-action="UploadImage" asp-controller="Profile" method="post" enctype="multipart/form-data">
-                                            @Html.HiddenFor(x => x.Id)
+                                        <form asp-action="UploadImage" asp-controller="Profile" 
+                                              asp-route-id="@Model.Id" method="post" enctype="multipart/form-data">
                                             <div class="mb-3">
                                                 <label for="formFileSm" class="form-label">Small file input example</label>
                                                 <input name="uploadedFile" class="form-control form-control-sm" id="formFileSm" type="file">
@@ -63,6 +62,10 @@
                                         <div class="card-body">
                                             @Html.HiddenFor(x => x.Id)
                                             @Html.HiddenFor(x => x.Image)
+                                            @Html.HiddenFor(x => x.Bio)
+                                            @Html.HiddenFor(x => x.WorkExperience)
+                                            @Html.HiddenFor(x => x.GroupId)
+                                            @Html.HiddenFor(x => x.Type)
                                             <div class="row mb-3">
                                                 <div class="col-sm-3">
                                                     <h6 class="mb-0">First Name</h6>

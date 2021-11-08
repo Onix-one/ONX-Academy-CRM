@@ -9,7 +9,6 @@ namespace ONX.CRM.BLL.Services
     public class TeacherService :  ITeacherService
     {
         private readonly ISqlTeachersRepository<Teacher> _teachersRepository;
-
         public TeacherService(ISqlTeachersRepository<Teacher> teachersRepository)
         {
             _teachersRepository = teachersRepository;
@@ -53,6 +52,30 @@ namespace ONX.CRM.BLL.Services
         public Task<int> GetNumberOfTeachers()
         {
             return _teachersRepository.GetNumberOfTeachers();
+        }
+        public Task<bool> CheckIfManagerExists(string email)
+        {
+            return _teachersRepository.CheckIfTeacherExists(email);
+        }
+        public Task<IEnumerable<Teacher>> FindByUserIdAsync(string userId)
+        {
+            return _teachersRepository.FindByUserIdAsync(userId);
+        }
+        public void SaveImage(int id, byte[] content)
+        {
+            var teacher = _teachersRepository.GetEntityByIdAsync(id).Result;
+
+            teacher.Image = content;
+
+            _teachersRepository.Update(teacher);
+        }
+        public void DeleteImage(int id)
+        {
+            var teacher = _teachersRepository.GetEntityByIdAsync(id).Result;
+
+            teacher.Image = null;
+
+            _teachersRepository.Update(teacher);
         }
     }
 }

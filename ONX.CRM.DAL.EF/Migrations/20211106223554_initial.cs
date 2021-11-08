@@ -288,6 +288,31 @@ namespace ONX.CRM.DAL.EF.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Lessons",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Number = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Topic = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Homework = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    GroupId = table.Column<int>(type: "int", nullable: false),
+                    Materials = table.Column<byte[]>(type: "varbinary(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Lessons", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Lessons_Groups_GroupId",
+                        column: x => x.GroupId,
+                        principalTable: "Groups",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Students",
                 columns: table => new
                 {
@@ -314,6 +339,11 @@ namespace ONX.CRM.DAL.EF.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Managers",
+                columns: new[] { "Id", "Email", "FirstName", "Image", "LastName", "Phone", "UserId" },
+                values: new object[] { 1, "manager@mail.ru", "John", null, "Smith", "+375441183334", null });
+
+            migrationBuilder.InsertData(
                 table: "Specializations",
                 columns: new[] { "Id", "Description", "PNGName", "Title" },
                 values: new object[,]
@@ -331,7 +361,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                 columns: new[] { "Id", "Bio", "Email", "FirstName", "Image", "LastName", "Phone", "UserId", "WorkExperience" },
                 values: new object[,]
                 {
-                    { 1, "Area of interest: development of web applications based on Sitecore, ASP.NET MVC / .NET Core and mobile applications using the Xamarin cross-platform framework; Sitecore JavaScript Services (JSS); the introduction of search engines such as Solr, Coveo; using cloud Azure solutions.", "VadzimPapko@gmail.com", "Вадим", null, "Папко", "+375291133322", null, "5 years" },
+                    { 1, "Area of interest: development of web applications based on Sitecore, ASP.NET MVC / .NET Core and mobile applications using the Xamarin cross-platform framework; Sitecore JavaScript Services (JSS); the introduction of search engines such as Solr, Coveo; using cloud Azure solutions.", "teacher@mail.ru", "Вадим", null, "Папко", "+375291133322", null, "5 years" },
                     { 2, "Area of interest: development of web applications in ASP.NET MVC using JavaScript libraries (Angular, JQuery), API, microservices, Data Science, Machine Learning. Agile software development methodologies (Agile, Scrum, Kanban, Lean).", "DmitriyAlhimovich@gmail.com", "Дмитрий", null, "Альхимович", "+375293322211", null, "10 years" },
                     { 3, "Area of interest: optimization, programming of gameplay systems.", "RostislavNikishin@gmail.com", "Ростислав", null, "Никишин", "+375441188800", null, "4 years" }
                 });
@@ -359,10 +389,10 @@ namespace ONX.CRM.DAL.EF.Migrations
                 columns: new[] { "Id", "CourseId", "Number", "StartDate", "Status", "TeacherId" },
                 values: new object[,]
                 {
-                    { 3, 10, "MR00-2671-FG10", new DateTime(2021, 9, 30, 19, 30, 0, 0, DateTimeKind.Unspecified), 2, 1 },
-                    { 2, 11, "MR00-5512-DT12", new DateTime(2021, 12, 9, 18, 30, 0, 0, DateTimeKind.Unspecified), 1, 2 },
-                    { 4, 12, "MR00-2671-FG10", new DateTime(2021, 9, 30, 19, 30, 0, 0, DateTimeKind.Unspecified), 3, 1 },
-                    { 1, 15, "MR00-0012-FT04", new DateTime(2021, 11, 1, 19, 30, 0, 0, DateTimeKind.Unspecified), 1, 3 }
+                    { 3, 10, "MR00-2671-FG10", new DateTime(2021, 12, 15, 19, 30, 0, 0, DateTimeKind.Unspecified), 1, 2 },
+                    { 2, 11, "MR00-5512-DT12", new DateTime(2021, 11, 9, 18, 30, 0, 0, DateTimeKind.Unspecified), 2, 1 },
+                    { 4, 12, "MR00-2671-FG10", new DateTime(2021, 12, 9, 18, 30, 0, 0, DateTimeKind.Unspecified), 1, 2 },
+                    { 1, 15, "MR00-0012-FT04", new DateTime(2021, 11, 9, 19, 30, 0, 0, DateTimeKind.Unspecified), 2, 1 }
                 });
 
             migrationBuilder.InsertData(
@@ -370,6 +400,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                 columns: new[] { "Id", "Comments", "CourseId", "Created", "Email", "FirstName", "Image", "LastName", "Phone", "Type", "UserId" },
                 values: new object[,]
                 {
+                    { 11, "", 9, new DateTime(2021, 9, 1, 3, 40, 0, 0, DateTimeKind.Unspecified), "Timoshin3348@gmail.com", "Александр", null, "Тимошин", "+375441183334", 1, null },
                     { 1, "", 11, new DateTime(2021, 7, 15, 13, 17, 0, 0, DateTimeKind.Unspecified), "Nesterov23@gmail.com", "Андрей", null, "Нестеров", "+375441188132", 1, null },
                     { 2, "", 11, new DateTime(2021, 7, 23, 20, 57, 0, 0, DateTimeKind.Unspecified), "Haritonov432@gmail.com", "Роман", null, "Харитонов", "+375441188365", 1, null },
                     { 3, "", 11, new DateTime(2021, 8, 23, 8, 13, 0, 0, DateTimeKind.Unspecified), "Agafonov440@gmail.com", "Аркадий", null, "Агафонов", "+375441145830", 1, null },
@@ -383,40 +414,53 @@ namespace ONX.CRM.DAL.EF.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Lessons",
+                columns: new[] { "Id", "Date", "Description", "GroupId", "Homework", "Materials", "Number", "Topic" },
+                values: new object[,]
+                {
+                    { 5, new DateTime(2021, 11, 9, 19, 30, 0, 0, DateTimeKind.Unspecified), "Arithmetic. Relations. Logical. Appropriation. Bitwise. Using brackets. Division", 2, "To install the Git. Create repository and do the first PR. Create a console project and output \"hello world\" to the console.", null, "02", "C# Operators" },
+                    { 6, new DateTime(2021, 11, 11, 19, 30, 0, 0, DateTimeKind.Unspecified), "One-dimensional arrays. Multidimensional arrays. Strings and the StringBuilder class. String comparison", 2, "Create three string local variables. Make string concatenation. Output the result to the console.", null, "03", "Arrays & Strings" },
+                    { 3, new DateTime(2021, 11, 16, 19, 30, 0, 0, DateTimeKind.Unspecified), "Interface animations. Animations with Animator.", 1, "Create any animation and add it to the project", null, "03", "Animations" },
+                    { 2, new DateTime(2021, 11, 11, 19, 30, 0, 0, DateTimeKind.Unspecified), "Camera. Mesh, Material, Texture.", 1, "Add mesh, material, texture to the project", null, "02", "Basics of 3D" },
+                    { 1, new DateTime(2021, 11, 9, 19, 30, 0, 0, DateTimeKind.Unspecified), "Basic entities of the engine. Basic object manipulation. Features of using assets. Build the project.", 1, "Install Unity. Build the project for mobile devices and PC", null, "01", "Unity Editor" },
+                    { 4, new DateTime(2021, 11, 4, 19, 30, 0, 0, DateTimeKind.Unspecified), "Algorithms. Evolution of languages. C # language, general syntax concepts.", 2, "Install the Visual Studio 2019. Create a console project and run it.", null, "01", "Basics of programming" }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Students",
                 columns: new[] { "Id", "Email", "FirstName", "GroupId", "Image", "LastName", "Phone", "Type", "UserId" },
                 values: new object[,]
                 {
-                    { 1, "Lazarev0981@gmail.com", "Николай", 3, null, "Лазарев", "+375441188801", 1, null },
-                    { 23, "Matveyev67@gmail.com", "Владислав", 1, null, "Матвеев", "+375441188823", 2, null },
-                    { 22, "Egorov212@gmail.com", "Василий", 1, null, "Егоров", "+375441188822", 2, null },
-                    { 21, "Dorofeyev45@gmail.com", "Виталий", 1, null, "Дорофеев", "+375441188821", 2, null },
-                    { 30, "Timofeev22@gmail.com", "Виталий", 2, null, "Тимофеев", "+375441188830", 3, null },
-                    { 29, "Sokolova1212@gmail.com", "Екатерина", 2, null, "Соколова", "+375441188829", 3, null },
-                    { 28, "Antonov543@gmail.com", "Александр", 2, null, "Антонов", "+375441188828", 3, null },
-                    { 27, "Anisimov987@gmail.com", "Алексей", 2, null, "Анисимов", "+375441188827", 3, null },
+                    { 2, "Medvedev1990@gmail.com", "Егор", 3, null, "Медведев", "+375441188802", 1, null },
                     { 26, "Kalinin45@gmail.com", "Сергей", 2, null, "Калинин", "+375441188826", 3, null },
+                    { 27, "Anisimov987@gmail.com", "Алексей", 2, null, "Анисимов", "+375441188827", 3, null },
+                    { 28, "Antonov543@gmail.com", "Александр", 2, null, "Антонов", "+375441188828", 3, null },
+                    { 30, "Timofeev22@gmail.com", "Виталий", 2, null, "Тимофеев", "+375441188830", 3, null },
+                    { 21, "Dorofeyev45@gmail.com", "Виталий", 1, null, "Дорофеев", "+375441188821", 2, null },
+                    { 22, "Egorov212@gmail.com", "Василий", 1, null, "Егоров", "+375441188822", 2, null },
+                    { 23, "Matveyev67@gmail.com", "Владислав", 1, null, "Матвеев", "+375441188823", 2, null },
+                    { 24, "Bobrova72@gmail.com", "Анастасия", 1, null, "Боброва", "+375441188824", 2, null },
+                    { 29, "Sokolova1212@gmail.com", "Екатерина", 2, null, "Соколова", "+375441188829", 3, null },
                     { 20, "Fedotov88@gmail.com", "Андрей", 3, null, "Федотов", "+375441188820", 1, null },
                     { 19, "Belousov78@gmail.com", "Евгений", 3, null, "Белоусов", "+375441188819", 1, null },
                     { 18, "Osipov0990@gmail.com", "Александр", 3, null, "Осипов", "+375441188818", 1, null },
-                    { 17, "Sidorov610@gmail.com", "Егор", 3, null, "Сидоров", "+375441188817", 1, null },
-                    { 16, "Maksimov77@gmail.com", "Максим", 3, null, "Максимов", "+375441188816", 1, null },
-                    { 15, "Krylov96@gmail.com", "Сергей", 3, null, "Крылов", "+375441188815", 1, null },
-                    { 14, "Nikolayev61@gmail.com", "Роман", 3, null, "Николаев", "+375441188814", 1, null },
-                    { 13, "Juravliov43@gmail.com", "Светлана", 3, null, "Журавлёва", "+375441188813", 1, null },
-                    { 12, "Lapin0110@gmail.com", "Виктор", 3, null, "Лапин", "+375441188812", 1, null },
-                    { 11, "Frolov855@gmail.com", "Геннадий", 3, null, "Фролов", "+375441188811", 1, null },
-                    { 10, "Jukov07@gmail.com", "Антон", 3, null, "Жуков", "+375441188810", 1, null },
-                    { 9, "Danilova355@gmail.com", "Виктория", 3, null, "Данилова", "+375441188809", 1, null },
-                    { 8, "Cvetkova41@gmail.com", "Надежда", 3, null, "Цветкова", "+375441188808", 1, null },
-                    { 7, "Polyakov99@gmail.com", "Алексей", 3, null, "Поляков", "+375441188807", 1, null },
-                    { 6, "Ryabov903@gmail.com", "Анна", 3, null, "Рябова", "+375441188806", 1, null },
-                    { 5, "Sobolev11@gmail.com", "Сергей", 3, null, "Соболев", "+375441188805", 1, null },
-                    { 4, "Nikitin01@gmail.com", "Роман", 3, null, "Никитин", "+375441188804", 1, null },
                     { 3, "Ershov9512@gmail.com", "Александр", 3, null, "Ершов", "+375441188803", 1, null },
-                    { 2, "Medvedev1990@gmail.com", "Егор", 3, null, "Медведев", "+375441188802", 1, null },
-                    { 24, "Bobrova72@gmail.com", "Анастасия", 1, null, "Боброва", "+375441188824", 2, null },
-                    { 25, "Dmitrieva1221@gmail.com", "Наталья", 1, null, "Дмитриева", "+375441188825", 2, null }
+                    { 4, "Nikitin01@gmail.com", "Роман", 3, null, "Никитин", "+375441188804", 1, null },
+                    { 5, "Sobolev11@gmail.com", "Сергей", 3, null, "Соболев", "+375441188805", 1, null },
+                    { 6, "Ryabov903@gmail.com", "Анна", 3, null, "Рябова", "+375441188806", 1, null },
+                    { 7, "Polyakov99@gmail.com", "Алексей", 3, null, "Поляков", "+375441188807", 1, null },
+                    { 8, "Cvetkova41@gmail.com", "Надежда", 3, null, "Цветкова", "+375441188808", 1, null },
+                    { 9, "Danilova355@gmail.com", "Виктория", 3, null, "Данилова", "+375441188809", 1, null },
+                    { 10, "Jukov07@gmail.com", "Антон", 3, null, "Жуков", "+375441188810", 1, null },
+                    { 11, "Frolov855@gmail.com", "Геннадий", 3, null, "Фролов", "+375441188811", 1, null },
+                    { 12, "Lapin0110@gmail.com", "Виктор", 3, null, "Лапин", "+375441188812", 1, null },
+                    { 13, "Juravliov43@gmail.com", "Светлана", 3, null, "Журавлёва", "+375441188813", 1, null },
+                    { 14, "Nikolayev61@gmail.com", "Роман", 3, null, "Николаев", "+375441188814", 1, null },
+                    { 15, "Krylov96@gmail.com", "Сергей", 3, null, "Крылов", "+375441188815", 1, null },
+                    { 16, "Maksimov77@gmail.com", "Максим", 3, null, "Максимов", "+375441188816", 1, null },
+                    { 17, "Sidorov610@gmail.com", "Егор", 3, null, "Сидоров", "+375441188817", 1, null },
+                    { 25, "Dmitrieva1221@gmail.com", "Наталья", 1, null, "Дмитриева", "+375441188825", 2, null },
+                    { 1, "student@mail.ru", "Alex", 1, null, "Lazarev", "+375441188801", 1, null }
                 });
 
             migrationBuilder.CreateIndex(
@@ -474,6 +518,11 @@ namespace ONX.CRM.DAL.EF.Migrations
                 column: "TeacherId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Lessons_GroupId",
+                table: "Lessons",
+                column: "GroupId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_StudentRequests_CourseId",
                 table: "StudentRequests",
                 column: "CourseId");
@@ -500,6 +549,9 @@ namespace ONX.CRM.DAL.EF.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Lessons");
 
             migrationBuilder.DropTable(
                 name: "Managers");

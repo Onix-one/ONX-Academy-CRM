@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using ONX.CRM.BLL.Interfaces;
@@ -11,45 +10,24 @@ namespace ONX.CRM.BLL.Services
     {
         private static INotificationService _notificationService;
         private readonly UserManager<User> _userManager;
-        private readonly UserManager<ClaimsPrincipal> _claimsUserManager;
         public UserService(INotificationService notificationService, UserManager<User> userManager)
         {
             _notificationService = notificationService;
             _userManager = userManager;
         }
-
         public async Task CreateAsync(User user, string role)
         {
-            int passwordLength;
-            if (role == "manager")
+            var passwordLength = 10;
+            var password = CreateRandomPassword(passwordLength);
+            var result = await _userManager.CreateAsync(user, password);
+            if (result.Succeeded)
             {
-                passwordLength = 10;
-                var password = CreateRandomPassword(passwordLength);
-                var result = await _userManager.CreateAsync(user, password);
-                if (result.Succeeded)
-                {
-                    await _userManager.AddToRoleAsync(user, "manager");
-                }
-                await _notificationService.SendEmailAsync(user.Email, 
-                    user.FirstName, user.LastName, password, 
-                    "Access to the system ONX Academy");
+                await _userManager.AddToRoleAsync(user, role);
             }
-
-            if (role == "student")
-            {
-                passwordLength = 10;
-                var password = CreateRandomPassword(passwordLength);
-                var result = await _userManager.CreateAsync(user, password);
-                if (result.Succeeded)
-                {
-                    await _userManager.AddToRoleAsync(user, "student");
-                }
-                await _notificationService.SendEmailAsync(user.Email,
-                    user.FirstName, user.LastName, password,
-                    "Access to the system ONX Academy");
-            }
+            await _notificationService.SendEmailAsync(user.Email,
+                user.FirstName, user.LastName, password,
+                "Access to the system ONX Academy");
         }
-
         public async Task Update(string id, string email, string firstName, string lastName)
         {
             User user = await _userManager.FindByIdAsync(id);
@@ -67,7 +45,6 @@ namespace ONX.CRM.BLL.Services
                 }
             }
         }
-
         public async Task Delete(string id)
         {
             User user = await _userManager.FindByIdAsync(id);
@@ -76,7 +53,6 @@ namespace ONX.CRM.BLL.Services
                 IdentityResult result = await _userManager.DeleteAsync(user);
             }
         }
-
         private string CreateRandomPassword(int passwordLength)
         {
             const string allowedChars = "abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ0123456789";

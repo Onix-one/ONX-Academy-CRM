@@ -10,6 +10,7 @@ namespace ONX.CRM.DAL.EF.Contexts
         public DbSet<Group> Groups { get; set; } = default;
         public DbSet<Teacher> Teachers { get; set; } = default;
         public DbSet<Course> Courses { get; set; } = default;
+        public DbSet<Lesson> Lessons { get; set; } = default;
         public DbSet<Specialization> Specializations { get; set; } = default;
         public DbSet<StudentRequest> StudentRequests { get; set; } = default;
         public DbSet<Manager> Managers { get; set; }

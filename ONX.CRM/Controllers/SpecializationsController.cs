@@ -14,7 +14,6 @@ namespace ONX.CRM.Controllers
     {
         private readonly ISpecializationService _specializationService;
         private readonly IMapper _mapper;
-
         public SpecializationsController(ISpecializationService specializationService, IMapper mapper)
         {
             _specializationService = specializationService;

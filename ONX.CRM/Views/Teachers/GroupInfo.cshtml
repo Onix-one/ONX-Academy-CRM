@@ -1,0 +1,458 @@
+﻿@{
+
+    IEnumerable<StudentViewModel> studentsList = ViewBag.Students;
+    IEnumerable<LessonViewModel> lessonsCollection = ViewBag.Lessons;
+    var lessonsList = lessonsCollection.ToList();
+    var firstLesson = 0;
+    var lastLesson = lessonsList.Count() - 1;
+    GroupViewModel currentGroup = ViewBag.CurrentGroup;
+
+}
+@model LessonViewModel
+<div class="page-wrapper">
+    <div class="page-content">
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3">ONX.CRM</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                        <li class="breadcrumb-item">
+                            <a asp-controller="Home" asp-action="Index"><i class="bx bx-home-alt"></i></a>
+                        </li>
+                        <li class="breadcrumb-item" aria-current="page">
+                            <a asp-controller="Teachers" asp-action="Groups">Groups</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">Info</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <ul class="nav nav-tabs nav-primary" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link active" data-bs-toggle="tab" href="#primaryhome" role="tab" aria-selected="true">
+                            <div class="d-flex align-items-center">
+                                <div class="tab-icon">
+                                    <i class="bx bx-home font-18 me-1"></i>
+                                </div>
+                                <div class="tab-title">Lessons</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" data-bs-toggle="tab" href="#primaryprofile" role="tab" aria-selected="false">
+                            <div class="d-flex align-items-center">
+                                <div class="tab-icon">
+                                    <i class="bx bx-user-pin font-18 me-1"></i>
+                                </div>
+                                <div class="tab-title">Students</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" data-bs-toggle="tab" href="#primarycontact" role="tab" aria-selected="false">
+                            <div class="d-flex align-items-center">
+                                <div class="tab-icon">
+                                    <i class="bx bx-microphone font-18 me-1"></i>
+                                </div>
+                                <div class="tab-title">Assessments</div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content py-3">
+                    <div class="tab-pane fade show active" id="primaryhome" role="tabpanel">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-lg-9 col-xl-9">
+                                    <div class="float-lg-start">
+                                        <div class="row row-cols-lg-auto g-2">
+                                            <div class="col-12">
+                                                <h5 class="text-primary">
+                                                    @currentGroup.Course.Title
+                                                </h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-xl-3">
+                                    <div class="float-lg-end">
+                                        <div class="row row-cols-lg-auto g-2">
+                                            <div class="col-12">
+                                                <a asp-controller="Lessons" asp-action="Edit"
+                                                   asp-route-groupId="@Model.GroupId"
+                                                   class="btn btn-outline-primary mb-3 mb-lg-0">
+                                                    <i class="bx bxs-plus-square"></i>Add new lesson
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container py-2">
+
+                            @if (@lessonsList.Count != 0)
+                            {
+                                @for (int i = 0; i <= lessonsList.Count(); i++)
+                                {
+                                    int counter = i;
+                                    string dataTarget = $"#t2_details{counter}";
+                                    string id = $"t2_details{counter}";
+
+                                    string data = $"{@lessonsList[i].Date.Value.DayOfWeek}, " +
+                                                  $"{@lessonsList[i].Date.Value.Day}/" +
+                                                  $"{@lessonsList[i].Date.Value.Month}/ " +
+                                                  $"{@lessonsList[i].Date.Value.Year} " +
+                                                  $"{@lessonsList[i].Date.Value.Hour}:" +
+                                                  $"{@lessonsList[i].Date.Value.Minute}";
+
+                                    if (i == firstLesson)
+                                    {
+                                        <!-- timeline item 1 -->
+                                        <div class="row">
+                                            <!-- timeline item 1 left dot -->
+                                            <div class="col-auto text-center flex-column d-none d-sm-flex">
+                                                <div class="row h-50">
+                                                    <div class="col">&nbsp;</div>
+                                                    <div class="col">&nbsp;</div>
+                                                </div>
+                                                <h5 class="m-2">
+                                                    @if (lessonsList[i].Date.Value < DateTime.Now)
+                                                    {
+                                                        <span class="badge rounded-pill bg-light border">&nbsp;</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="badge rounded-pill bg-primary border">&nbsp;</span>
+                                                    }
+                                                </h5>
+                                                <div class="row h-50">
+                                                    <div class="col border-end">&nbsp;</div>
+                                                    <div class="col">&nbsp;</div>
+                                                </div>
+                                            </div>
+                                            <!-- timeline item 1 event content -->
+                                            <div class="col py-2">
+                                                <div class="card radius-15">
+                                                    <div class="card-body">
+                                                        @if (lessonsList[i].Date.Value < DateTime.Now)
+                                                        {
+                                                            <div class="float-end text-muted">@data</div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="float-end text-primary">@data</div>
+                                                        }
+                                                        <h4 class="card-title text-muted">Lesson @lessonsList[i].Number Topic: @lessonsList[i].Topic</h4>
+                                                        <p class="card-text">
+                                                            @lessonsList[i].Description
+                                                        </p>
+                                                        <div class="row align-items-center">
+                                                            <div class="col-lg-9 col-xl-9">
+                                                                <div class="float-lg-start">
+                                                                    <div class="row row-cols-lg-auto g-2">
+                                                                        <div class="col-12">
+                                                                            <button class="btn btn-sm btn-outline-secondary" type="button"
+                                                                                    data-bs-target="@dataTarget"
+                                                                                    data-bs-toggle="collapse">
+                                                                                Show Details ▼
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-3 col-xl-3">
+                                                                <div class="float-lg-end">
+                                                                    <div class="row row-cols-lg-auto g-2">
+                                                                        <div class="col-12">
+                                                                            <div class="d-flex order-actions">
+                                                                                <div class="d-flex order-actions">
+                                                                                    <div>
+                                                                                        <a asp-controller="Lessons" asp-action="Edit"
+                                                                                           asp-route-id="@lessonsList[i].Id"><i class='bx bxs-edit'></i></a>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="collapse border" id="@id">
+                                                            <div class="p-2 text-monospace">
+                                                                <div class="text-danger">Homework:</div>
+                                                                <div>@lessonsList[i].Homework</div>
+                                                            </div>
+                                                        </div>
+                                                    
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    else if (i == lastLesson)
+                                    {
+                                        <!--/row-->
+                                        <!-- timeline item 4 -->
+                                        <div class="row">
+                                            <div class="col-auto text-center flex-column d-none d-sm-flex">
+                                                <div class="row h-50">
+                                                    <div class="col border-end">&nbsp;</div>
+                                                    <div class="col">&nbsp;</div>
+                                                </div>
+                                                <h5 class="m-2">
+                                                    @if (lessonsList[i].Date.Value < DateTime.Now)
+                                                    {
+                                                        <span class="badge rounded-pill bg-light border">&nbsp;</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="badge rounded-pill bg-primary border">&nbsp;</span>
+                                                    }
+                                                </h5>
+                                                <div class="row h-50">
+                                                    <div class="col">&nbsp;</div>
+                                                    <div class="col">&nbsp;</div>
+                                                </div>
+                                            </div>
+                                            <div class="col py-2">
+                                                <div class="card radius-15">
+                                                    <div class="card-body">
+                                                        @if (lessonsList[i].Date.Value < DateTime.Now)
+                                                        {
+                                                            <div class="float-end text-muted">@data</div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="float-end text-primary">@data</div>
+                                                        }
+                                                        <h4 class="card-title text-muted">Lesson @lessonsList[i].Number Topic: @lessonsList[i].Topic</h4>
+                                                        <p>
+                                                            @lessonsList[i].Description
+                                                        </p>
+
+                                                        <div class="row align-items-center">
+                                                            <div class="col-lg-9 col-xl-9">
+                                                                <div class="float-lg-start">
+                                                                    <div class="row row-cols-lg-auto g-2">
+                                                                        <div class="col-12">
+                                                                            <button class="btn btn-sm btn-outline-secondary" type="button"
+                                                                                    data-bs-target="@dataTarget"
+                                                                                    data-bs-toggle="collapse">
+                                                                                Show Details ▼
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-3 col-xl-3">
+                                                                <div class="float-lg-end">
+                                                                    <div class="row row-cols-lg-auto g-2">
+                                                                        <div class="col-12">
+                                                                            <div class="d-flex order-actions">
+                                                                                <div class="d-flex order-actions">
+                                                                                    <div>
+                                                                                        <a asp-controller="Lessons" asp-action="Edit"
+                                                                                           asp-route-id="@lessonsList[i].Id"><i class='bx bxs-edit'></i></a>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="collapse border" id="@id">
+                                                            <div class="p-2 text-monospace">
+                                                                <div class="text-danger">Homework:</div>
+                                                                <div>@lessonsList[i].Homework</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        <!--/row-->
+                                        <!-- timeline item 2 -->
+                                        <div class="row">
+                                            <div class="col-auto text-center flex-column d-none d-sm-flex">
+                                                <div class="row h-50">
+                                                    <div class="col border-end">&nbsp;</div>
+                                                    <div class="col">&nbsp;</div>
+                                                </div>
+                                                <h5 class="m-2">
+                                                    @if (lessonsList[i].Date.Value < DateTime.Now)
+                                                    {
+                                                        <span class="badge rounded-pill bg-light border">&nbsp;</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="badge rounded-pill bg-primary border">&nbsp;</span>
+                                                    }
+                                                </h5>
+                                                <div class="row h-50">
+                                                    <div class="col border-end">&nbsp;</div>
+                                                    <div class="col">&nbsp;</div>
+                                                </div>
+                                            </div>
+                                            <div class="col py-2">
+                                                <div class="card radius-15">
+                                                    <div class="card-body">
+                                                        @if (lessonsList[i].Date.Value < DateTime.Now)
+                                                        {
+                                                            <div class="float-end text-muted">@data</div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="float-end text-primary">@data</div>
+                                                        }
+                                                        <h4 class="card-title text-muted">
+                                                            Lesson @lessonsList[i].Number
+                                                            Topic: @lessonsList[i].Topic
+                                                        </h4>
+                                                        <p class="card-text">
+                                                            @lessonsList[i].Description
+                                                        </p>
+                                                        <div class="row align-items-center">
+                                                            <div class="col-lg-9 col-xl-9">
+                                                                <div class="float-lg-start">
+                                                                    <div class="row row-cols-lg-auto g-2">
+                                                                        <div class="col-12">
+                                                                            <button class="btn btn-sm btn-outline-secondary" type="button"
+                                                                                    data-bs-target="@dataTarget"
+                                                                                    data-bs-toggle="collapse">
+                                                                                Show Details ▼
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-3 col-xl-3">
+                                                                <div class="float-lg-end">
+                                                                    <div class="row row-cols-lg-auto g-2">
+                                                                        <div class="col-12">
+                                                                            <div class="d-flex order-actions">
+                                                                                <div class="d-flex order-actions">
+                                                                                    <div>
+                                                                                        <a asp-controller="Lessons" asp-action="Edit"
+                                                                                           asp-route-id="@lessonsList[i].Id"><i class='bx bxs-edit'></i></a>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="collapse border" id="@id">
+                                                            <div class="p-2 text-monospace">
+                                                                <div class="text-danger">Homework:</div>
+                                                                <div>@lessonsList[i].Homework</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            }
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="primaryprofile" role="tabpanel">
+                        <div class="card">
+                            <div class="card-body ">
+                                <div class="table-responsive-sm">
+                                    <table class="table table-hover mb-0">
+                                        <thead class="table-light">
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Last Name</th>
+                                                <th>First Name</th>
+                                                <th>Email</th>
+                                                <th>Phone</th>
+                                                <th>Group Number</th>
+                                                <th>Course</th>
+                                                <th>Type of Training</th>
+                                                <th>View Details</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var student in studentsList)
+                                            {
+                                                <tr>
+                                                    <td>@student.Id</td>
+                                                    <td>@student.LastName</td>
+                                                    <td>@student.FirstName</td>
+                                                    <td>@student.Email</td>
+                                                    <td>@student.Phone</td>
+
+                                                    @if (student.GroupId != null)
+                                                    {
+                                                        <td>@student.Group.Number</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td></td>
+                                                    }
+                                                    @if (student.GroupId != null)
+                                                    {
+                                                        <td>@student.Group.Course.Title</td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td></td>
+                                                    }
+                                                    @if (student.Type.ToString() == "Online")
+                                                    {
+                                                        <td>
+                                                            <div class="badge rounded-pill
+                                                                 bg-light-success text-success
+                                                                 w-100">@student.Type.ToString()</div>
+                                                            </td>
+                                                        }
+                                                    @if (student.Type.ToString() == "Offline")
+                                                    {
+                                                        <td>
+                                                            <div class="badge rounded-pill
+                                                                 bg-light-danger text-danger
+                                                                 w-100">@student.Type.ToString()</div>
+                                                            </td>
+                                                        }
+                                                    @if (student.Type.ToString() == "Mix")
+                                                    {
+                                                        <td>
+                                                            <div class="badge rounded-pill
+                                                                 bg-light-info text-info
+                                                                 w-100">@student.Type.ToString()</div>
+                                                            </td>
+                                                        }
+                                                    <td>
+                                                        <button type="button"
+                                                                class="btn btn-outline-primary btn-sm
+                                                                radius-30 px-4">
+                                                            View
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="primarycontact" role="tabpanel">
+                        <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork. Williamsburg banh mi whatever gluten-free, carles pitchfork biodiesel fixie etsy retro mlkshk vice blog. Scenester cred you probably haven't heard of them, vinyl craft beer blog stumptown. Pitchfork sustainable tofu synth chambray yr.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

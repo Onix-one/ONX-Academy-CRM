@@ -10,5 +10,9 @@ namespace ONX.CRM.BLL.Interfaces
         Task<int> GetNumberOfTeachersByQuery(string query);
         Task<IEnumerable<Teacher>> GetTeachersWithSkipAndTakeAsync(int skip, int take);
         Task<int> GetNumberOfTeachers();
+        Task<bool> CheckIfManagerExists(string email);
+        Task<IEnumerable<Teacher>> FindByUserIdAsync(string userId);
+        void SaveImage(int id, byte[] content);
+        void DeleteImage(int id);
     }
 }

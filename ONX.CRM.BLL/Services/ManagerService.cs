@@ -18,42 +18,34 @@ namespace ONX.CRM.BLL.Services
         {
             return _managerRepository.GetAll();
         }
-
         public Task<IEnumerable<Manager>> GetAllAsync()
         {
             return _managerRepository.GetAllAsync();
         }
-
         public Task<Manager> GetEntityByIdAsync(int id)
         {
             return _managerRepository.GetEntityByIdAsync(id);
         }
-
         public void Create(Manager manager)
         {
             _managerRepository.Create(manager);
         }
-
         public void Update(Manager entity)
         {
             _managerRepository.Update(entity);
         }
-
         public void Delete(int id)
         {
             _managerRepository.Delete(id);
         }
-
         public Task<bool> CheckIfManagerExists(string email)
         {
            return _managerRepository.CheckIfManagerExists(email);
         }
-
         public Task<IEnumerable<Manager>> FindByUserIdAsync(string userId)
         {
             return _managerRepository.FindByUserIdAsync(userId);
         }
-
         public void SaveImage(int id, byte[] content)
         {
             var manager =  _managerRepository.GetEntityByIdAsync(id).Result;

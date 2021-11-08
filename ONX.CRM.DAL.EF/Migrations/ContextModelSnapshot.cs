@@ -310,36 +310,133 @@ namespace ONX.CRM.DAL.EF.Migrations
                             Id = 1,
                             CourseId = 15,
                             Number = "MR00-0012-FT04",
-                            StartDate = new DateTime(2021, 11, 1, 19, 30, 0, 0, DateTimeKind.Unspecified),
-                            Status = 1,
-                            TeacherId = 3
+                            StartDate = new DateTime(2021, 11, 9, 19, 30, 0, 0, DateTimeKind.Unspecified),
+                            Status = 2,
+                            TeacherId = 1
                         },
                         new
                         {
                             Id = 2,
                             CourseId = 11,
                             Number = "MR00-5512-DT12",
-                            StartDate = new DateTime(2021, 12, 9, 18, 30, 0, 0, DateTimeKind.Unspecified),
-                            Status = 1,
-                            TeacherId = 2
+                            StartDate = new DateTime(2021, 11, 9, 18, 30, 0, 0, DateTimeKind.Unspecified),
+                            Status = 2,
+                            TeacherId = 1
                         },
                         new
                         {
                             Id = 3,
                             CourseId = 10,
                             Number = "MR00-2671-FG10",
-                            StartDate = new DateTime(2021, 9, 30, 19, 30, 0, 0, DateTimeKind.Unspecified),
-                            Status = 2,
-                            TeacherId = 1
+                            StartDate = new DateTime(2021, 12, 15, 19, 30, 0, 0, DateTimeKind.Unspecified),
+                            Status = 1,
+                            TeacherId = 2
                         },
                         new
                         {
                             Id = 4,
                             CourseId = 12,
                             Number = "MR00-2671-FG10",
-                            StartDate = new DateTime(2021, 9, 30, 19, 30, 0, 0, DateTimeKind.Unspecified),
-                            Status = 3,
-                            TeacherId = 1
+                            StartDate = new DateTime(2021, 12, 9, 18, 30, 0, 0, DateTimeKind.Unspecified),
+                            Status = 1,
+                            TeacherId = 2
+                        });
+                });
+
+            modelBuilder.Entity("ONX.CRM.DAL.Models.Lesson", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime?>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("GroupId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Homework")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("Materials")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("Number")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Topic")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GroupId");
+
+                    b.ToTable("Lessons");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Date = new DateTime(2021, 11, 9, 19, 30, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Basic entities of the engine. Basic object manipulation. Features of using assets. Build the project.",
+                            GroupId = 1,
+                            Homework = "Install Unity. Build the project for mobile devices and PC",
+                            Number = "01",
+                            Topic = "Unity Editor"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Date = new DateTime(2021, 11, 11, 19, 30, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Camera. Mesh, Material, Texture.",
+                            GroupId = 1,
+                            Homework = "Add mesh, material, texture to the project",
+                            Number = "02",
+                            Topic = "Basics of 3D"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Date = new DateTime(2021, 11, 16, 19, 30, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Interface animations. Animations with Animator.",
+                            GroupId = 1,
+                            Homework = "Create any animation and add it to the project",
+                            Number = "03",
+                            Topic = "Animations"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Date = new DateTime(2021, 11, 4, 19, 30, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Algorithms. Evolution of languages. C # language, general syntax concepts.",
+                            GroupId = 2,
+                            Homework = "Install the Visual Studio 2019. Create a console project and run it.",
+                            Number = "01",
+                            Topic = "Basics of programming"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Date = new DateTime(2021, 11, 9, 19, 30, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Arithmetic. Relations. Logical. Appropriation. Bitwise. Using brackets. Division",
+                            GroupId = 2,
+                            Homework = "To install the Git. Create repository and do the first PR. Create a console project and output \"hello world\" to the console.",
+                            Number = "02",
+                            Topic = "C# Operators"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Date = new DateTime(2021, 11, 11, 19, 30, 0, 0, DateTimeKind.Unspecified),
+                            Description = "One-dimensional arrays. Multidimensional arrays. Strings and the StringBuilder class. String comparison",
+                            GroupId = 2,
+                            Homework = "Create three string local variables. Make string concatenation. Output the result to the console.",
+                            Number = "03",
+                            Topic = "Arrays & Strings"
                         });
                 });
 
@@ -371,6 +468,16 @@ namespace ONX.CRM.DAL.EF.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Managers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Email = "manager@mail.ru",
+                            FirstName = "John",
+                            LastName = "Smith",
+                            Phone = "+375441183334"
+                        });
                 });
 
             modelBuilder.Entity("ONX.CRM.DAL.Models.Specialization", b =>
@@ -470,16 +577,6 @@ namespace ONX.CRM.DAL.EF.Migrations
                     b.ToTable("Students");
 
                     b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Email = "Lazarev0981@gmail.com",
-                            FirstName = "Николай",
-                            GroupId = 3,
-                            LastName = "Лазарев",
-                            Phone = "+375441188801",
-                            Type = 1
-                        },
                         new
                         {
                             Id = 2,
@@ -769,6 +866,16 @@ namespace ONX.CRM.DAL.EF.Migrations
                             LastName = "Тимофеев",
                             Phone = "+375441188830",
                             Type = 3
+                        },
+                        new
+                        {
+                            Id = 1,
+                            Email = "student@mail.ru",
+                            FirstName = "Alex",
+                            GroupId = 1,
+                            LastName = "Lazarev",
+                            Phone = "+375441188801",
+                            Type = 1
                         });
                 });
 
@@ -935,6 +1042,18 @@ namespace ONX.CRM.DAL.EF.Migrations
                             LastName = "Игнатова",
                             Phone = "+375441183830",
                             Type = 1
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Comments = "",
+                            CourseId = 9,
+                            Created = new DateTime(2021, 9, 1, 3, 40, 0, 0, DateTimeKind.Unspecified),
+                            Email = "Timoshin3348@gmail.com",
+                            FirstName = "Александр",
+                            LastName = "Тимошин",
+                            Phone = "+375441183334",
+                            Type = 1
                         });
                 });
 
@@ -978,7 +1097,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                         {
                             Id = 1,
                             Bio = "Area of interest: development of web applications based on Sitecore, ASP.NET MVC / .NET Core and mobile applications using the Xamarin cross-platform framework; Sitecore JavaScript Services (JSS); the introduction of search engines such as Solr, Coveo; using cloud Azure solutions.",
-                            Email = "VadzimPapko@gmail.com",
+                            Email = "teacher@mail.ru",
                             FirstName = "Вадим",
                             LastName = "Папко",
                             Phone = "+375291133322",
@@ -1154,6 +1273,15 @@ namespace ONX.CRM.DAL.EF.Migrations
                     b.Navigation("Teacher");
                 });
 
+            modelBuilder.Entity("ONX.CRM.DAL.Models.Lesson", b =>
+                {
+                    b.HasOne("ONX.CRM.DAL.Models.Group", null)
+                        .WithMany("Lessons")
+                        .HasForeignKey("GroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("ONX.CRM.DAL.Models.Student", b =>
                 {
                     b.HasOne("ONX.CRM.DAL.Models.Group", "Group")
@@ -1181,6 +1309,8 @@ namespace ONX.CRM.DAL.EF.Migrations
 
             modelBuilder.Entity("ONX.CRM.DAL.Models.Group", b =>
                 {
+                    b.Navigation("Lessons");
+
                     b.Navigation("Students");
                 });
 

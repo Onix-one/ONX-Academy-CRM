@@ -9,5 +9,6 @@ namespace ONX.CRM.DAL.Interfaces
         Task<int> GetNumberOfGroupsByParameters(string query, int status);
         Task<IEnumerable<T>> GetGroupsWithSkipAndTakeAsync(int skip, int take);
         Task<int> GetNumberOfGroups();
+        Task<IEnumerable<T>> GetGroupsByTeacherId(int id);
     }
 }

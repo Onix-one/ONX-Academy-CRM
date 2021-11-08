@@ -23,14 +23,17 @@ namespace ONX.CRM.Controllers
         private readonly IMapper _mapper;
         private readonly ILogger<StudentsController> _logger;
         private readonly PageInfoViewModel _pageInfo;
+        private readonly IUserService _userService;
         public StudentsController(IStudentService studentService, IGroupService groupService,
-            IMapper mapper, ILogger<StudentsController> logger, PageInfoViewModel pageInfo)
+            IMapper mapper, IUserService userService,
+            ILogger<StudentsController> logger, PageInfoViewModel pageInfo)
         {
             _pageInfo = pageInfo;
             _mapper = mapper;
             _logger = logger;
             _studentService = studentService;
             _groupService = groupService;
+            _userService = userService;
         }
         public async Task<IActionResult> Index(string query, int courseId, int type, int pageSize, int pageNumber)
         {
@@ -61,7 +64,6 @@ namespace ONX.CRM.Controllers
                     PageInfo = pageInfo
                 });
             }
-
             pageInfo = _pageInfo.CheckingPageInfo(pageSize, pageNumber, await _studentService.GetNumberOfStudents());
             skip = (pageInfo.PageNumber - 1) * pageInfo.PageSize;
             take = pageInfo.PageSize;
@@ -98,22 +100,43 @@ namespace ONX.CRM.Controllers
                 : new StudentViewModel());
         }
         [HttpPost]
-        public async Task<IActionResult> Edit(StudentViewModel student)
+        public async Task<IActionResult> Edit(StudentViewModel model)
         {
             ViewBag.Groups = _mapper.Map<IEnumerable<GroupViewModel>>(await _groupService.GetAllAsync());
             if (!ModelState.IsValid)
-                return View(student);
+                return View(model);
 
-            if (student.Id != 0)
-                _studentService.Update(_mapper.Map<Student>(student));
+            if (model.Id != 0)
+            {
+                await _userService.Update(model.UserId, model.Email, model.FirstName, model.LastName);
+                _studentService.Update(_mapper.Map<Student>(model));
+            }
             else
-                _studentService.Create(_mapper.Map<Student>(student));
+            {
+                if (await _studentService.CheckIfManagerExists(model.Email))
+                {
+                    ModelState.AddModelError("Email", "A user with this address is already registered.");
+                    return View(model);
+                }
+                User user = new User
+                {
+                    Email = model.Email,
+                    UserName = model.Email,
+                    LastName = model.LastName,
+                    FirstName = model.FirstName
+                };
+                await _userService.CreateAsync(user, "student");
 
+                model.UserId = user.Id;
+                _studentService.Create(_mapper.Map<Student>(model));
+            }
             return RedirectToAction("Index");
         }
-        [HttpPost]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
+            var student = await _studentService.GetEntityByIdAsync(id);
+            await _userService.Delete(student.UserId);
+
             _studentService.Delete(id);
             return RedirectToAction("Index");
         }

@@ -42,7 +42,6 @@ namespace ONX.CRM.DAL.EF.Repositories
         {
             return await _context.Students.CountAsync();
         }
-
         public async Task<Student> GetEntityByIdAsync(int id)
         {
             return await _context.Students.FindAsync(id);
@@ -66,7 +65,6 @@ namespace ONX.CRM.DAL.EF.Repositories
                 _context.SaveChanges();
             }
         }
-
         private async Task<IEnumerable<Student>> GetStudentsByQuery(string query, int skip, int take)
         {
             var studentsList = await GetAllAsync();
@@ -78,7 +76,6 @@ namespace ONX.CRM.DAL.EF.Repositories
                             || s.Group.Number.Contains(query, StringComparison.OrdinalIgnoreCase))
                 .Skip(skip).Take(take);
         }
-
         private async Task<IEnumerable<Student>> GetStudentsByCourseId(int courseId, int skip, int take)
         {
             var studentsList = await _context.Students
@@ -88,7 +85,6 @@ namespace ONX.CRM.DAL.EF.Repositories
                 .ThenInclude(_ => _.Course).AsNoTracking().ToListAsync();
             return studentsList;
         }
-
         private async Task<IEnumerable<Student>> GetStudentsByType(int type, int skip, int take)
         {
             var studentsList = await _context.Students
@@ -98,7 +94,6 @@ namespace ONX.CRM.DAL.EF.Repositories
                 .ThenInclude(_ => _.Course).AsNoTracking().ToListAsync();
             return studentsList;
         }
-
 
         private async Task<int> GetNumberOfStudentsByQuery(string query)
         {
@@ -161,5 +156,28 @@ namespace ONX.CRM.DAL.EF.Repositories
             var courses = students.Select(r => r.Group.Course);
             return courses;
         }
+
+        public async Task<bool> CheckIfStudentExists(string email)
+        {
+            if (await _context.Students.Where(t => t.Email.Contains(email)).CountAsync() != 0)
+            {
+                return true;
+            }
+            return false;
+        }
+        public async Task<IEnumerable<Student>> FindByUserIdAsync(string userId)
+        {
+            return await _context.Students.Where(m => m.UserId.Contains(userId)).AsNoTracking().ToListAsync();
+        }
+        public async Task<IEnumerable<Student>> GetStudentsByGroupId(int id)
+        {
+            var students = await _context.Students
+                .Where(s => s.GroupId == id).AsNoTracking()
+                .Include(_ => _.Group)
+                .ThenInclude(_ => _.Course)
+                .AsNoTracking().ToListAsync();
+            return students;
+        }
+
     }
 }

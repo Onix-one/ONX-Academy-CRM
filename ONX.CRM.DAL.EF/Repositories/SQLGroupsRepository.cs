@@ -42,10 +42,19 @@ namespace ONX.CRM.DAL.EF.Repositories
         {
             return await _context.Groups.CountAsync();
         }
-
         public async Task<Group> GetEntityByIdAsync(int id)
         {
-            return await _context.Groups.FindAsync(id);
+            var group = await _context.Groups
+                .Where(s => s.Id == id).AsNoTracking()
+                .Include(g => g.Students).AsNoTracking()
+                .Include(g => g.Course).AsNoTracking()
+                .Include(g => g.Teacher).AsNoTracking()
+                .Include(g=>g.Lessons).AsNoTracking()
+                .ToListAsync();
+            return group.FirstOrDefault();
+
+
+            
         }
         public void Create(Group group)
         {
@@ -136,6 +145,17 @@ namespace ONX.CRM.DAL.EF.Repositories
                 return await GetNumberOfGroupsByStatus(status);
             }
             return 0;
+        }
+        public async Task<IEnumerable<Group>> GetGroupsByTeacherId(int id)
+        {
+            var groups = await _context.Groups
+                .Where(s => s.TeacherId == id).AsNoTracking()
+                .Include(g=>g.Students).AsNoTracking()
+                .Include(g => g.Course).AsNoTracking()
+                .Include(g => g.Teacher).AsNoTracking()
+                .Include(g => g.Lessons).AsNoTracking()
+                .ToListAsync();
+            return groups;
         }
     }
 }

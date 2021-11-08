@@ -15,6 +15,6 @@ namespace ONX.CRM.DAL.Models
         public DateTime? StartDate { get; set; }
         public GroupStatus? Status { get; set; }
         public List<Student> Students { get; set; }
-        
+        public List<Lesson> Lessons { get; set; }
     }
 }

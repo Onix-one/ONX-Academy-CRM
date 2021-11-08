@@ -8,5 +8,4 @@ namespace ONX.CRM.DAL.Models
         public Group Group { get; set; }
         public StudentType? Type { get; set; }
     }
-
 }

@@ -17,6 +17,7 @@ namespace ONX.CRM.ServiceExtensions
             services.AddScoped<ISqlManagersRepository<Manager>, SqlManagersRepository>();
             services.AddScoped<IRepository<Specialization>, SqlSpecializationsRepository>();
             services.AddScoped<ISqlStudentRequestsRepository<StudentRequest>, SqlStudentRequestsRepository>();
+            services.AddScoped<ISqlLessonsRepository<Lesson>, SQLLessonsRepository>();
             services.AddDapperRepositories();
             return services;
         }

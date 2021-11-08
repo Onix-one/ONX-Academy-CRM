@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
+using ONX.CRM.DAL.Enums;
 
 namespace ONX.CRM.ViewModel
 {
@@ -23,5 +20,10 @@ namespace ONX.CRM.ViewModel
         public string? UserId { get; set; }
         public string FullName => $"{LastName} {FirstName}";
         public byte[]? Image { get; set; }
+
+        public string WorkExperience { get; set; }
+        public string Bio { get; set; }
+        public int? GroupId { get; set; }
+        public StudentType? Type { get; set; }
     }
 }

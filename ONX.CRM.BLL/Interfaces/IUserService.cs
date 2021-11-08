@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
+﻿using System.Threading.Tasks;
 using ONX.CRM.DAL.Models;
 
 namespace ONX.CRM.BLL.Interfaces

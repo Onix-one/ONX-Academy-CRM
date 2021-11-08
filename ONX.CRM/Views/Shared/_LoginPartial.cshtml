@@ -1,5 +1,7 @@
 ﻿@{
     var photo = (byte[])ViewBag.Photo;
+    var roles = new List<string>() { "admin", "manager", "student", "teacher" };
+    var userName = (string)ViewBag.UserName;
 }
 <div>
     @if (User.Identity.IsAuthenticated)
@@ -8,7 +10,7 @@
             <a class="d-flex align-items-center nav-link dropdown-toggle dropdown-toggle-nocaret" href="#"
                role="button" data-bs-toggle="dropdown" aria-expanded="false">
 
-                @if (photo.Length != 0)
+                @if (photo != null && photo.Length != 0)
                 {
                     <img src="data:image/jpeg;base64,@(Convert.ToBase64String(photo))" class="user-img bg-primary" alt="user avatar">
                 }
@@ -17,18 +19,13 @@
                     <img src="~/assets/images/education1.png" class="user-img bg-primary" alt="user avatar">
                 }
                 <div class="user-info ps-3">
-                    <p class="user-name mb-0">@User.Identity.Name</p>
-                    @if (User.IsInRole("admin"))
+                    <p class="user-name mb-0">@userName</p>
+                    @foreach (var role in roles)
                     {
-                        <p class="designattion mb-0">Admin</p>
-                    }
-                    @if (User.IsInRole("manager"))
-                    {
-                        <p class="designattion mb-0">Manager</p>
-                    }
-                    @if (User.IsInRole("student"))
-                    {
-                        <p class="designattion mb-0">Student</p>
+                        @if (User.IsInRole(role))
+                        {
+                            <p class="designattion mb-0">@role</p>
+                        }
                     }
                 </div>
             </a>

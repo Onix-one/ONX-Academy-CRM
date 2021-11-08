@@ -262,46 +262,46 @@ namespace ONX.CRM.DAL.EF.Contexts
                 course06, course07, course08, course09, course10, course11);
 
             //Add groups
-            DateTime dateTimeForGroup01 = new DateTime(2021, 11, 01, 19, 30, 00);
+            DateTime dateTimeForGroup01 = new DateTime(2021, 11, 09, 19, 30, 00);
             var group01 = new Group()
             {
                 Id = 1,
                 Number = "MR00-0012-FT04",
-                TeacherId = 3,
+                TeacherId = 1,
                 CourseId = 15,
                 StartDate = dateTimeForGroup01,
-                Status = GroupStatus.Pending
+                Status = GroupStatus.Started
 
             };
-            DateTime dateTimeForGroup02 = new DateTime(2021, 12, 09, 18, 30, 00);
+            DateTime dateTimeForGroup02 = new DateTime(2021, 11, 09, 18, 30, 00);
             var group02 = new Group()
             {
                 Id = 2,
                 Number = "MR00-5512-DT12",
-                TeacherId = 2,
+                TeacherId = 1,
                 CourseId = 11,
                 StartDate = dateTimeForGroup02,
-                Status = GroupStatus.Pending
+                Status = GroupStatus.Started
             };
-            DateTime dateTimeForGroup03 = new DateTime(2021, 09, 30, 19, 30, 00);
+            DateTime dateTimeForGroup03 = new DateTime(2021, 12, 15, 19, 30, 00);
             var group03 = new Group()
             {
                 Id = 3,
                 Number = "MR00-2671-FG10",
-                TeacherId = 1,
+                TeacherId = 2,
                 CourseId = 10,
                 StartDate = dateTimeForGroup03,
-                Status = GroupStatus.Started
+                Status = GroupStatus.Pending
             };
-            DateTime dateTimeForGroup04 = new DateTime(2021, 09, 30, 19, 30, 00);
+            DateTime dateTimeForGroup04 = new DateTime(2021, 12, 09, 18, 30, 00);
             var group04 = new Group()
             {
                 Id = 4,
                 Number = "MR00-2671-FG10",
-                TeacherId = 1,
+                TeacherId = 2,
                 CourseId = 12,
                 StartDate = dateTimeForGroup04,
-                Status = GroupStatus.Finished
+                Status = GroupStatus.Pending
             };
 
             modelBuilder.Entity<Group>().HasData(group01, group02, group03, group04);
@@ -311,7 +311,7 @@ namespace ONX.CRM.DAL.EF.Contexts
                 Id = 1,
                 FirstName = "Вадим",
                 LastName = "Папко",
-                Email = "VadzimPapko@gmail.com",
+                Email = "teacher@mail.ru",
                 Phone = "+375291133322",
                 WorkExperience = "5 years",
                 Bio = "Area of interest: development of web applications based on Sitecore, " +
@@ -344,16 +344,6 @@ namespace ONX.CRM.DAL.EF.Contexts
             };
             modelBuilder.Entity<Teacher>().HasData(teacher01, teacher02, teacher03);
 
-            var student01 = new Student()
-            {
-                Id = 1,
-                GroupId = 3,
-                Type = StudentType.Online,
-                FirstName = "Николай",
-                LastName = "Лазарев",
-                Email = "Lazarev0981@gmail.com",
-                Phone = "+375441188801",
-            };
             var student02 = new Student()
             {
                 Id = 2,
@@ -645,7 +635,7 @@ namespace ONX.CRM.DAL.EF.Contexts
                 Phone = "+375441188830",
             };
 
-            modelBuilder.Entity<Student>().HasData(student01, student02, student03, student04, student05,
+            modelBuilder.Entity<Student>().HasData(student02, student03, student04, student05,
                  student06, student07, student08, student09, student10,
                  student11, student12, student13, student14, student15,
                  student16, student17, student18, student19, student20,
@@ -782,11 +772,130 @@ namespace ONX.CRM.DAL.EF.Contexts
                 Type = StudentType.Online,
                 Comments = ""
             };
-
+            DateTime dateTimeRequestCreated11 = new DateTime(2021, 09, 01, 03, 40, 00);
+            var studentRequest11 = new StudentRequest()
+            {
+                Id = 11,
+                Created = dateTimeRequestCreated11,
+                CourseId = 9,
+                FirstName = "Александр",
+                LastName = "Тимошин",
+                Email = "Timoshin3348@gmail.com",
+                Phone = "+375441183334",
+                Type = StudentType.Online,
+                Comments = ""
+            };
             modelBuilder.Entity<StudentRequest>().HasData(studentRequest01, studentRequest02,
                 studentRequest03, studentRequest04, studentRequest05,
                 studentRequest06, studentRequest07, studentRequest08,
-                studentRequest09, studentRequest10);
+                studentRequest09, studentRequest10, studentRequest11);
+
+            var manager01 = new Manager()
+            {
+                Id = 1,
+                FirstName = "John",
+                LastName = "Smith",
+                Email = "manager@mail.ru",
+                Phone = "+375441183334"
+            };
+            modelBuilder.Entity<Manager>().HasData(manager01);
+
+            var student01 = new Student()
+            {
+                Id = 1,
+                GroupId = 1,
+                Type = StudentType.Online,
+                FirstName = "Alex",
+                LastName = "Lazarev",
+                Email = "student@mail.ru",
+                Phone = "+375441188801",
+            };
+            modelBuilder.Entity<Student>().HasData(student01);
+
+
+            //Add Lessons
+            //For Group "Unity"
+            DateTime dateTimeForLesson01Group01 = new DateTime(2021, 11, 09, 19, 30, 00);
+            var lesson01Group01 = new Lesson()
+            {
+                Id = 1,
+                Number = "01",
+                Topic = "Unity Editor",
+                Description = "Basic entities of the engine. Basic object " +
+                              "manipulation. Features of using assets. Build the project.",
+                Homework = "Install Unity. Build the project for mobile devices and PC",
+                Date = dateTimeForLesson01Group01,
+                GroupId = 1
+
+            };
+            DateTime dateTimeForLesson02Group01 = new DateTime(2021, 11, 11, 19, 30, 00);
+            var lesson02Group01 = new Lesson()
+            {
+                Id = 2,
+                Number = "02",
+                Topic = "Basics of 3D",
+                Description = "Camera. Mesh, Material, Texture.",
+                Homework = "Add mesh, material, texture to the project",
+                Date = dateTimeForLesson02Group01,
+                GroupId = 1
+
+            };
+
+            DateTime dateTimeForLesson03Group01 = new DateTime(2021, 11, 16, 19, 30, 00);
+            var lesson03Group01 = new Lesson()
+            {
+                Id = 3,
+                Number = "03",
+                Topic = "Animations",
+                Description = "Interface animations. Animations with Animator.",
+                Homework = "Create any animation and add it to the project",
+                Date = dateTimeForLesson03Group01,
+                GroupId = 1
+            };
+            modelBuilder.Entity<Lesson>().HasData(lesson01Group01, lesson02Group01, lesson03Group01);
+
+            //Add Lessons
+            //For Group "C#"
+
+            DateTime dateTimeForLesson01Group02 = new DateTime(2021, 11, 04, 19, 30, 00);
+            var lesson01Group02 = new Lesson()
+            {
+                Id = 4,
+                Number = "01",
+                Topic = "Basics of programming",
+                Description = "Algorithms. Evolution of languages. C # language, general syntax concepts.",
+                Homework = "Install the Visual Studio 2019. Create a console project and run it.",
+                Date = dateTimeForLesson01Group02,
+                GroupId = 2
+            };
+            DateTime dateTimeForLesson02Group02 = new DateTime(2021, 11, 09, 19, 30, 00);
+            var lesson02Group02 = new Lesson()
+            {
+                Id = 5,
+                Number = "02",
+                Topic = "C# Operators",
+                Description = "Arithmetic. Relations. Logical. Appropriation. Bitwise. Using brackets. Division",
+                Homework = "To install the Git. Create repository and do the first " +
+                           "PR. Create a console project and output \"hello world\" to the console.",
+                Date = dateTimeForLesson02Group02,
+                GroupId = 2
+
+            };
+            DateTime dateTimeForLesson03Group02 = new DateTime(2021, 11, 11, 19, 30, 00);
+            var lesson03Group02 = new Lesson()
+            {
+                Id = 6,
+                Number = "03",
+                Topic = "Arrays & Strings",
+                Description = "One-dimensional arrays. Multidimensional arrays. " +
+                              "Strings and the StringBuilder class. String comparison",
+                Homework = "Create three string local variables. Make string " +
+                           "concatenation. Output the result to the console.",
+                Date = dateTimeForLesson03Group02,
+                GroupId = 2
+            };
+
+            modelBuilder.Entity<Lesson>().HasData(lesson01Group02, lesson02Group02, lesson03Group02);
         }
     }
 }

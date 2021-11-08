@@ -86,5 +86,17 @@ namespace ONX.CRM.DAL.EF.Repositories
                                                || s.Phone.Contains(query, StringComparison.OrdinalIgnoreCase)
                                                || s.WorkExperience.Contains(query, StringComparison.OrdinalIgnoreCase));
         }
+        public async Task<bool> CheckIfTeacherExists(string email)
+        {
+            if (await _context.Teachers.Where(t => t.Email.Contains(email)).CountAsync() != 0)
+            {
+                return true;
+            }
+            return false;
+        }
+        public async Task<IEnumerable<Teacher>> FindByUserIdAsync(string userId)
+        {
+            return await _context.Teachers.Where(m => m.UserId.Contains(userId)).AsNoTracking().ToListAsync();
+        }
     }
 }

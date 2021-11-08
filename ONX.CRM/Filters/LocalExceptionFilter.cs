@@ -23,7 +23,6 @@ namespace ONX.CRM.Filters
             _modelMetadataProvider = modelMetadataProvider;
             _logger = logger;
         }
-
         public void OnException(ExceptionContext context)
         {
             _logger.LogError($"Method didn't work({context.Exception.Message}), " +

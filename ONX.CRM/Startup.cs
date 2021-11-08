@@ -10,9 +10,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using ONX.CRM.BLL.Interfaces;
-using ONX.CRM.BLL.Services;
 using ONX.CRM.Configuration;
-using ONX.CRM.Controllers;
 using ONX.CRM.DAL.EF.Contexts;
 using ONX.CRM.DAL.Models;
 using ONX.CRM.Filters;
@@ -76,9 +74,9 @@ namespace ONX.CRM
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env,
-            IServiceProvider serviceProvider, IOptions<SecurityOptions> securityOptions)
+            IServiceProvider serviceProvider, IOptions<SecurityOptions> securityOptions, ITeacherService teacherService,
+            IManagerService managerService, IStudentService studentService)
         {
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -101,7 +99,7 @@ namespace ONX.CRM
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
-            RoleInitializer.InitializeAsync(serviceProvider, securityOptions).Wait();
+            RoleInitializer.InitializeAsync(serviceProvider, securityOptions, managerService, teacherService, studentService).Wait();
         }
     }
 }

@@ -11,5 +11,10 @@ namespace ONX.CRM.BLL.Interfaces
         Task<Dictionary<int, string>> GetActiveCoursesIdTitle();
         Task<IEnumerable<Student>> GetStudentsWithSkipAndTakeAsync(int skip, int take);
         Task<int> GetNumberOfStudents();
+        Task<bool> CheckIfManagerExists(string email);
+        Task<IEnumerable<Student>> FindByUserIdAsync(string userId);
+        void SaveImage(int id, byte[] content);
+        void DeleteImage(int id);
+        Task<IEnumerable<Student>> GetStudentsByGroupId(int id);
     }
 }

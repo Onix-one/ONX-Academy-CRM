@@ -17,13 +17,11 @@ namespace ONX.CRM.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
         }
-
         [HttpGet]
         public IActionResult Registration()
         {
             return  View();
         }
-
         [HttpPost]
         public async Task<IActionResult> Registration(RegisterViewModel model)
         {
@@ -48,13 +46,11 @@ namespace ONX.CRM.Controllers
             }
             return View(model);
         }
-
         [HttpGet]
         public IActionResult Authorization(string returnUrl = null)
         {
             return View(new AuthorizeViewModel() { ReturnUrl = returnUrl });
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Authorization(AuthorizeViewModel model)
@@ -71,7 +67,7 @@ namespace ONX.CRM.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Requests");
+                        return RedirectToAction("Index", "Home");
                     }
                 }
                 else

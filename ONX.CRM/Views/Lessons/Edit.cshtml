@@ -1,0 +1,118 @@
+﻿@{
+
+
+}
+@model LessonViewModel
+
+<div class="page-wrapper">
+    <div class="page-content">
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3">ONX.CRM</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                        <li class="breadcrumb-item">
+                            <a asp-controller="Home" asp-action="Index"><i class="bx bx-home-alt"></i></a>
+                        </li>
+                        <li class="breadcrumb-item" aria-current="page">
+                            <a asp-controller="Teachers" asp-action="GroupInfo" asp-route-id="@Model.GroupId">Group info</a>
+                        </li>
+                        @if (Model.Id == 0)
+                        {
+                            <li class="breadcrumb-item active" aria-current="page">Create</li>
+                        }
+                        else
+                        {
+                            <li class="breadcrumb-item active" aria-current="page">Edit</li>
+                        }
+
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="col mx-auto">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 mx-auto">
+                        <form asp-controller="Lessons" asp-action="Edit" method="post">
+                            @if (Model.Id == 0)
+                            {
+                                <h2 class="text-center m-0">Create lesson</h2>
+                            }
+                            else
+                            {
+                                <h2 class="text-center m-0">Edite lesson</h2>
+                            }
+                            <div class="card-body">
+                                @Html.HiddenFor(x => x.Id)
+                                @Html.HiddenFor(x => x.GroupId)
+                                <div class="row mb-3">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Number</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <input type="text" class="form-control" asp-for="Number"/>
+                                        <span class="alert-danger" asp-validation-for="Number"></span>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Topic</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <input type="text" class="form-control" asp-for="Topic"/>
+                                        <span class="alert-danger" asp-validation-for="Topic"></span>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Description</h6>
+                                    </div>
+                                    @*<div class="col-sm-9 text-secondary">
+                                        <input type="text" class="form-control" asp-for="Description" />
+                                        <span class="alert-danger" asp-validation-for="Description"></span>
+                                    </div>*@
+                                    <div class="col-sm-9 text-secondary">
+                                        <textarea class="form-control" rows="3" asp-for="Description"></textarea>
+                                        <span class="alert-danger" asp-validation-for="Description"></span>
+                                    </div>
+                                </div>
+
+
+                                <div class="row mb-3">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Homework</h6>
+                                    </div>
+                                    @*<div class="col-sm-9 text-secondary">
+                                        <input type="text" class="form-control" asp-for="Homework" />
+                                        <span class="alert-danger" asp-validation-for="Homework"></span>
+                                    </div>*@
+                                    <div class="col-sm-9 text-secondary">
+                                        <textarea class="form-control" rows="3" asp-for="Homework"></textarea>
+                                        <span class="alert-danger" asp-validation-for="Homework"></span>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Homework</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <input asp-for="Date" type="datetime-local" class="form-control" placeholder="@DateTime.Now">
+                                        <span class="alert-danger" asp-validation-for="Date"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3"></div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <button type="submit" class="btn btn-outline-primary px-4">Save</button>
+                                        <a type="button" class="btn btn-outline-danger px-4" asp-controller="Teachers" asp-action="Groups">Close</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

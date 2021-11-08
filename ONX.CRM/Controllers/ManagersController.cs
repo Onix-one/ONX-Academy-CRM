@@ -43,18 +43,15 @@ namespace ONX.CRM.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(ManagerViewModel model)
         {
-
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
-
             if (model.Id != 0)
             {
                 await _userService.Update(model.UserId, model.Email, model.FirstName, model.LastName);
                 _managerService.Update(_mapper.Map<Manager>(model));
             }
-
             else
             {
                 if (await _managerService.CheckIfManagerExists(model.Email))
@@ -62,7 +59,6 @@ namespace ONX.CRM.Controllers
                     ModelState.AddModelError("Email", "A user with this address is already registered.");
                     return View(model);
                 }
-
                 User user = new User
                 {
                     Email = model.Email,
@@ -74,7 +70,6 @@ namespace ONX.CRM.Controllers
                 model.UserId = user.Id;
                 _managerService.Create(_mapper.Map<Manager>(model));
             }
-
             return RedirectToAction("Index");
         }
         public async Task<IActionResult> Delete(int id)

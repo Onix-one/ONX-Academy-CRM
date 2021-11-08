@@ -40,15 +40,15 @@
                                     <form asp-controller="Teachers" asp-action="Edit" method="post">
                                         <h2 class="text-center m-0">Teacher</h2>
                                         <div class="card-body">
-                                            <div>
-                                                <input type="hidden" asp-for="Id" value="@Model.Id"/>
-                                            </div>
+                                            @Html.HiddenFor(x => x.Id)
+                                            @Html.HiddenFor(x => x.Image)
+                                            @Html.HiddenFor(x => x.UserId)
                                             <div class="row mb-3">
                                                 <div class="col-sm-3">
                                                     <h6 class="mb-0">First Name</h6>
                                                 </div>
                                                 <div class="col-sm-9 text-secondary">
-                                                    <input type="text" class="form-control" asp-for="FirstName"/>
+                                                    <input type="text" class="form-control" asp-for="FirstName" />
                                                     <span class="alert-danger" asp-validation-for="FirstName"></span>
                                                 </div>
                                             </div>
@@ -57,7 +57,7 @@
                                                     <h6 class="mb-0">Last Name</h6>
                                                 </div>
                                                 <div class="col-sm-9 text-secondary">
-                                                    <input type="text" class="form-control" asp-for="LastName"/>
+                                                    <input type="text" class="form-control" asp-for="LastName" />
                                                     <span class="alert-danger" asp-validation-for="LastName"></span>
                                                 </div>
                                             </div>
@@ -66,7 +66,7 @@
                                                     <h6 class="mb-0">Email</h6>
                                                 </div>
                                                 <div class="col-sm-9 text-secondary">
-                                                    <input type="text" class="form-control" asp-for="Email"/>
+                                                    <input type="text" class="form-control" asp-for="Email" />
                                                     <span class="alert-danger" asp-validation-for="Email"></span>
                                                 </div>
                                             </div>
@@ -75,7 +75,7 @@
                                                     <h6 class="mb-0">Phone</h6>
                                                 </div>
                                                 <div class="col-sm-9 text-secondary">
-                                                    <input type="text" placeholder="+375(XX)XXX-XX-XX" class="form-control" asp-for="Phone"/>
+                                                    <input type="text" placeholder="+375(XX)XXX-XX-XX" class="form-control" asp-for="Phone" />
                                                     <span class="alert-danger" asp-validation-for="Phone"></span>
                                                 </div>
                                             </div>
@@ -84,7 +84,7 @@
                                                     <h6 class="mb-0">Work experience</h6>
                                                 </div>
                                                 <div class="col-sm-9 text-secondary">
-                                                    <input type="text" class="form-control" asp-for="WorkExperience"/>
+                                                    <input type="text" class="form-control" asp-for="WorkExperience" />
                                                 </div>
                                             </div>
                                             <div class="row mb-3">

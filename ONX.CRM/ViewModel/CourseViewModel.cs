@@ -3,7 +3,6 @@
 namespace ONX.CRM.ViewModel
 {
     public class CourseViewModel
-
     {
         public int Id { get; set; }
         public string Title { get; set; }
@@ -15,5 +14,4 @@ namespace ONX.CRM.ViewModel
         public List<GroupViewModel> Groups { get; set; }
         public int RequestsCount { get; set; }
     }
-
 }

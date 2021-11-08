@@ -18,21 +18,23 @@ namespace ONX.CRM.Controllers
     public class ProfileController : BaseController
     {
         private readonly IStudentService _studentService;
+        private readonly ITeacherService _teacherService;
         private readonly IManagerService _managerService;
         private readonly UserManager<User> _userManager;
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
-        public ProfileController(IManagerService managerService, IStudentService studentService,
+        public ProfileController(IManagerService managerService, ITeacherService teacherService, IStudentService studentService,
             UserManager<User> userManager, IMapper mapper, IUserService userService)
         {
+            _teacherService = teacherService;
             _managerService = managerService;
             _userManager = userManager;
             _userService = userService;
             _studentService = studentService;
-           
+
             _mapper = mapper;
         }
-        public async Task<IActionResult> Index()
+        public virtual async Task<IActionResult> Index()
         {
             if (User.Identity != null)
             {
@@ -42,9 +44,15 @@ namespace ONX.CRM.Controllers
                     var manager = await _managerService.FindByUserIdAsync(userId);
                     return View(_mapper.Map<ProfileViewModel>(manager.FirstOrDefault()));
                 }
+                if (User.IsInRole("teacher"))
+                {
+                    var teacher = await _teacherService.FindByUserIdAsync(userId);
+                    return View(_mapper.Map<ProfileViewModel>(teacher.FirstOrDefault()));
+                }
                 if (User.IsInRole("student"))
                 {
-
+                    var student = await _studentService.FindByUserIdAsync(userId);
+                    return View(_mapper.Map<ProfileViewModel>(student.FirstOrDefault()));
                 }
             }
             return View();
@@ -59,11 +67,18 @@ namespace ONX.CRM.Controllers
             if (User.IsInRole("manager"))
             {
                 await _userService.Update(model.UserId, model.Email, model.FirstName, model.LastName);
+
                 _managerService.Update(_mapper.Map<Manager>(model));
             }
             if (User.IsInRole("student"))
             {
-
+                await _userService.Update(model.UserId, model.Email, model.FirstName, model.LastName);
+                _studentService.Update(_mapper.Map<Student>(model));
+            }
+            if (User.IsInRole("teacher"))
+            {
+                await _userService.Update(model.UserId, model.Email, model.FirstName, model.LastName);
+                _teacherService.Update(_mapper.Map<Teacher>(model));
             }
             return RedirectToAction("Index");
 
@@ -102,7 +117,7 @@ namespace ONX.CRM.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Пользователь не найден");
+                    ModelState.AddModelError(string.Empty, "User is not found.");
                 }
             }
             return View(model);
@@ -122,7 +137,18 @@ namespace ONX.CRM.Controllers
                         var manager = await _managerService.FindByUserIdAsync(userId);
                         return View("Index", _mapper.Map<ProfileViewModel>(manager.FirstOrDefault()));
                     }
-
+                    if (User.IsInRole("student"))
+                    {
+                        ModelState.AddModelError(string.Empty, "The image file is too large");
+                        var student = await _studentService.FindByUserIdAsync(userId);
+                        return View("Index", _mapper.Map<ProfileViewModel>(student.FirstOrDefault()));
+                    }
+                    if (User.IsInRole("teacher"))
+                    {
+                        ModelState.AddModelError(string.Empty, "The image file is too large");
+                        var teacher = await _teacherService.FindByUserIdAsync(userId);
+                        return View("Index", _mapper.Map<ProfileViewModel>(teacher.FirstOrDefault()));
+                    }
                 }
                 //save file to DB (Person)
                 await using var memoryStream = new MemoryStream();
@@ -130,15 +156,32 @@ namespace ONX.CRM.Controllers
                 await uploadedFile.CopyToAsync(memoryStream);
 
                 var content = memoryStream.ToArray();
-
-                _managerService.SaveImage(id, content);
+                if (User.IsInRole("manager"))
+                {
+                    _managerService.SaveImage(id, content);
+                }
+                if (User.IsInRole("teacher"))
+                {
+                    _teacherService.SaveImage(id, content);
+                }
+                if (User.IsInRole("student"))
+                {
+                    _studentService.SaveImage(id, content);
+                }
             }
-
             return RedirectToAction("Index");
         }
-        public async Task<IActionResult> DeleteImage(int id)
+        public IActionResult DeleteImage(int id)
         {
-            _managerService.DeleteImage(id);
+            if (User.IsInRole("manager"))
+                _managerService.DeleteImage(id);
+           
+            if (User.IsInRole("student"))
+                _studentService.DeleteImage(id);
+
+            if (User.IsInRole("teacher"))
+                _teacherService.DeleteImage(id);
+
             return RedirectToAction("Index");
         }
     }

@@ -19,6 +19,7 @@ namespace ONX.CRM.ViewModel
         public DateTime StartDate { get; set; }
         public GroupStatus? Status { get; set; }
         public List<StudentViewModel> Students { get; set; }
+        public List<LessonViewModel> Lessons { get; set; }
         public string TeacherName { get; set; }
         public SearchGroupViewModel Search { get; set; }
         public PageInfoViewModel PageInfo { get; set; }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ONX.CRM.BLL.Interfaces
@@ -12,6 +11,5 @@ namespace ONX.CRM.BLL.Interfaces
         void Create(T entity);
         void Update(T entity);
         void Delete(int id);
-       
     }
 }

@@ -1,5 +1,4 @@
-﻿
-namespace ONX.CRM.ViewModel.Search
+﻿namespace ONX.CRM.ViewModel.Search
 {
     public class SearchGroupViewModel : SearchViewModel
     {

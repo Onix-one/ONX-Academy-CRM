@@ -26,8 +26,5 @@ namespace ONX.CRM.ViewModel
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
         public string ConfirmPassword{ get; set; }
-
-
-
     }
 }

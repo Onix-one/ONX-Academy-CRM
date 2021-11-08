@@ -11,5 +11,8 @@ namespace ONX.CRM.DAL.Interfaces
         Task<IEnumerable<T>> GetStudentsWithSkipAndTakeAsync(int skip, int take);
         Task<int> GetNumberOfStudents();
         Task<IEnumerable<Course>> GetActiveCourses();
+        Task<bool> CheckIfStudentExists(string email);
+        Task<IEnumerable<T>> FindByUserIdAsync(string userId);
+        Task<IEnumerable<T>> GetStudentsByGroupId(int id);
     }
 }
