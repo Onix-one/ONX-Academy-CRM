@@ -90,5 +90,19 @@ namespace ONX.CRM.Controllers
             _lessonService.DeleteMaterial(id);
             return RedirectToAction("GroupInfo", "Teachers", new { id = groupId });
         }
+
+        
+        public async Task<IActionResult> DownloadMaterial(int id)
+        {
+            var lesson = await _lessonService.GetEntityByIdAsync(id);
+            byte[] material = lesson.Materials;
+            if (material != null)
+            {
+                string file_type = "application/pdf";
+                string file_name = $"material {lesson.Number}.pdf";
+                return File(material, file_type, file_name);
+            }
+            return null;
+        }
     }
 }
