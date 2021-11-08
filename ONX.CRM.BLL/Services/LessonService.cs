@@ -48,6 +48,19 @@ namespace ONX.CRM.BLL.Services
         {
             return _repository.GetLessonsByGroupId(id);
         }
+
+        public void SaveMaterial(int id, byte[] content)
+        {
+            var lesson = _repository.GetEntityByIdAsync(id).Result;
+            lesson.Materials = content;
+            _repository.Update(lesson);
+        }
+        public void DeleteMaterial(int id)
+        {
+            var lesson = _repository.GetEntityByIdAsync(id).Result;
+            lesson.Materials = null;
+            _repository.Update(lesson);
+        }
     }
 }
 

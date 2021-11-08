@@ -173,6 +173,12 @@
                                                                                         <a asp-controller="Lessons" asp-action="Edit"
                                                                                            asp-route-id="@lessonsList[i].Id"><i class='bx bxs-edit'></i></a>
                                                                                     </div>
+                                                                                    <div class="ps-2">
+                                                                                        <a asp-controller="Lessons" asp-action="Delete"
+                                                                                           asp-route-id="@lessonsList[i].Id">
+                                                                                            <i class='bx bxs-trash'></i>
+                                                                                        </a>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -186,7 +192,7 @@
                                                                 <div>@lessonsList[i].Homework</div>
                                                             </div>
                                                         </div>
-                                                    
+
                                                     </div>
                                                 </div>
                                             </div>
@@ -257,6 +263,12 @@
                                                                                         <a asp-controller="Lessons" asp-action="Edit"
                                                                                            asp-route-id="@lessonsList[i].Id"><i class='bx bxs-edit'></i></a>
                                                                                     </div>
+                                                                                    <div class="ps-2">
+                                                                                        <a asp-controller="Lessons" asp-action="Delete"
+                                                                                           asp-route-id="@lessonsList[i].Id">
+                                                                                            <i class='bx bxs-trash'></i>
+                                                                                        </a>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -320,7 +332,7 @@
                                                             @lessonsList[i].Description
                                                         </p>
                                                         <div class="row align-items-center">
-                                                            <div class="col-lg-9 col-xl-9">
+                                                            <div class="col-lg-2 col-xl-2">
                                                                 <div class="float-lg-start">
                                                                     <div class="row row-cols-lg-auto g-2">
                                                                         <div class="col-12">
@@ -333,23 +345,56 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-lg-3 col-xl-3">
-                                                                <div class="float-lg-end">
-                                                                    <div class="row row-cols-lg-auto g-2">
-                                                                        <div class="col-12">
+
+                                                            <div class="col-lg-9 col-xl-9">
+                                                                <div class="row align-items-center">
+                                                                    <div class="col-4">
+                                                                       
+                                                                    </div>
+                                                                    <form class="col-8" asp-action="UploadMaterial" asp-controller="Lessons"
+                                                                          asp-route-id="@lessonsList[i].Id" method="post" enctype="multipart/form-data">
+                                                                        <div class="col-auto">
                                                                             <div class="d-flex order-actions">
-                                                                                <div class="d-flex order-actions">
-                                                                                    <div>
-                                                                                        <a asp-controller="Lessons" asp-action="Edit"
-                                                                                           asp-route-id="@lessonsList[i].Id"><i class='bx bxs-edit'></i></a>
-                                                                                    </div>
+                                                                                <div>
+                                                                                    <input name="uploadedFile" class="form-control form-control-sm" id="formFileSm" type="file">
                                                                                 </div>
+                                                                                <div class="ms-2">
+                                                                                    <button class="btn btn-sm btn-outline-secondary" type="submit">Upload PDF</button>
+                                                                                </div>
+                                                                                <div class="ms-2">
+                                                                                    <button asp-action="DeleteMaterial" asp-controller="Lessons"
+                                                                                            asp-route-id="@lessonsList[i].Id"
+                                                                                            class="btn btn-sm btn-outline-secondary">Delete PDF </button>
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-lg-1 col-xl-1">
+                                                                <div class="float-lg-end">
+                                                                    <div class="col-2">
+                                                                        <div class="d-flex order-actions">
+                                                                            <div>
+                                                                                <a asp-controller="Lessons" asp-action="Edit"
+                                                                                   asp-route-id="@lessonsList[i].Id"><i class='bx bxs-edit'></i></a>
+                                                                            </div>
+                                                                            <div class="ps-2">
+                                                                                <a asp-controller="Lessons" asp-action="Delete"
+                                                                                   asp-route-id="@lessonsList[i].Id">
+                                                                                    <i class='bx bxs-trash'></i>
+                                                                                </a>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
+
                                                         </div>
+
+
                                                         <div class="collapse border" id="@id">
                                                             <div class="p-2 text-monospace">
                                                                 <div class="text-danger">Homework:</div>
