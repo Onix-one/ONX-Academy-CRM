@@ -19,7 +19,7 @@ namespace ONX.CRM.Controllers
             }
             if (User.IsInRole("student"))
             {
-                return RedirectToAction("Index", "Requests");
+                return RedirectToAction("Home", "Students");
             }
             if (User.IsInRole("admin"))
             {

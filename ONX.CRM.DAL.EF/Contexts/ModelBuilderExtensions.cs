@@ -283,7 +283,7 @@ namespace ONX.CRM.DAL.EF.Contexts
                 StartDate = dateTimeForGroup02,
                 Status = GroupStatus.Started
             };
-            DateTime dateTimeForGroup03 = new DateTime(2021, 12, 15, 19, 30, 00);
+            DateTime dateTimeForGroup03 = new DateTime(2021, 6, 15, 19, 30, 00);
             var group03 = new Group()
             {
                 Id = 3,
@@ -291,7 +291,7 @@ namespace ONX.CRM.DAL.EF.Contexts
                 TeacherId = 2,
                 CourseId = 10,
                 StartDate = dateTimeForGroup03,
-                Status = GroupStatus.Pending
+                Status = GroupStatus.Finished
             };
             DateTime dateTimeForGroup04 = new DateTime(2021, 12, 09, 18, 30, 00);
             var group04 = new Group()

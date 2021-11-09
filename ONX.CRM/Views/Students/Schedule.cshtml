@@ -1,0 +1,319 @@
+﻿@{
+
+    IEnumerable<LessonViewModel> lessonsCollection = ViewBag.Lessons;
+    var lessonsList = lessonsCollection.ToList();
+    var firstLesson = 0;
+    var lastLesson = lessonsList.Count() - 1;
+}
+@model LessonViewModel
+<div class="page-wrapper">
+    <div class="page-content">
+        <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
+            <div class="breadcrumb-title pe-3">ONX.CRM</div>
+            <div class="ps-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-0 p-0">
+                        <li class="breadcrumb-item">
+                            <a asp-controller="Home" asp-action="Index"><i class="bx bx-home-alt"></i></a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">Schedule</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+
+
+                <div class="container py-2">
+
+                    @if (@lessonsList.Count != 0)
+                    {
+                        @for (int i = 0; i < lessonsList.Count(); i++)
+                        {
+                            int counter = i;
+                            string dataTarget = $"#t2_details{counter}";
+                            string id = $"t2_details{counter}";
+
+                            string data = $"{@lessonsList[i].Date.Value.DayOfWeek}, " +
+                                          $"{@lessonsList[i].Date.Value.Day}/" +
+                                          $"{@lessonsList[i].Date.Value.Month}/ " +
+                                          $"{@lessonsList[i].Date.Value.Year} " +
+                                          $"{@lessonsList[i].Date.Value.Hour}:" +
+                                          $"{@lessonsList[i].Date.Value.Minute}";
+
+                            if (i == firstLesson)
+                            {
+                                <!-- timeline item 1 -->
+                                <div class="row">
+                                    <!-- timeline item 1 left dot -->
+                                    
+                                    @if (lessonsList.Count > 1)
+                                    {
+                                        <div class="col-auto text-center flex-column d-none d-sm-flex">
+                                            <div class="row h-50">
+                                                <div class="col">&nbsp;</div>
+                                                <div class="col">&nbsp;</div>
+                                            </div>
+                                            <h5 class="m-2">
+                                                @if (lessonsList[i].Date.Value < DateTime.Now)
+                                                {
+                                                    <span class="badge rounded-pill bg-light border">&nbsp;</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge rounded-pill bg-primary border">&nbsp;</span>
+                                                }
+                                            </h5>
+                                            <div class="row h-50">
+                                                <div class="col border-end">&nbsp;</div>
+                                                <div class="col">&nbsp;</div>
+                                            </div>
+                                        </div>
+                                    }
+                                    <!-- timeline item 1 event content -->
+                                    <div class="col py-2">
+                                        <div class="card radius-15">
+                                            <div class="card-body">
+                                                @if (lessonsList[i].Date.Value < DateTime.Now)
+                                                {
+                                                    <div class="float-end text-muted">@data</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="float-end text-primary">@data</div>
+                                                }
+                                                <h4 class="card-title text-muted">Lesson @lessonsList[i].Number Topic: @lessonsList[i].Topic</h4>
+                                                <p class="card-text">
+                                                    @lessonsList[i].Description
+                                                </p>
+                                                <div class="row align-items-center">
+                                                    <div class="col-lg-2 col-xl-2">
+                                                        <div class="float-lg-start">
+                                                            <div class="row row-cols-lg-auto g-2">
+                                                                <div class="col-12">
+                                                                    <button class="btn btn-sm btn-outline-secondary" type="button"
+                                                                            data-bs-target="@dataTarget"
+                                                                            data-bs-toggle="collapse">
+                                                                        Show Details ▼
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-10 col-xl-10">
+                                                        <div class="float-lg-end">
+                                                            <div class="d-flex order-actions">
+                                                                @if (lessonsList[i].Materials.Length != 0)
+                                                                {
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div>
+                                                                            <i class="bx bxs-file-pdf me-2 font-24 text-danger"></i>
+                                                                        </div>
+                                                                        <div class="font-weight-bold text-danger">Material @lessonsList[i].Number</div>
+                                                                    </div>
+
+                                                                    <div class="ms-2">
+                                                                        <a asp-action="DownloadMaterial" asp-controller="Lessons"
+                                                                           asp-route-id="@lessonsList[i].Id"><i class="bx bx-downvote me-0"></i></a>
+                                                                    </div>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="collapse border" id="@id">
+                                                    <div class="p-2 text-monospace">
+                                                        <div class="text-danger">Homework:</div>
+                                                        <div>@lessonsList[i].Homework</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            else if (i == lastLesson)
+                            {
+                                <!--/row-->
+                                <!-- timeline item 4 -->
+                                <div class="row">
+                                    <div class="col-auto text-center flex-column d-none d-sm-flex">
+                                        <div class="row h-50">
+                                            <div class="col border-end">&nbsp;</div>
+                                            <div class="col">&nbsp;</div>
+                                        </div>
+                                        <h5 class="m-2">
+                                            @if (lessonsList[i].Date.Value < DateTime.Now)
+                                            {
+                                                <span class="badge rounded-pill bg-light border">&nbsp;</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge rounded-pill bg-primary border">&nbsp;</span>
+                                            }
+                                        </h5>
+                                        <div class="row h-50">
+                                            <div class="col">&nbsp;</div>
+                                            <div class="col">&nbsp;</div>
+                                        </div>
+                                    </div>
+                                    <div class="col py-2">
+                                        <div class="card radius-15">
+                                            <div class="card-body">
+                                                @if (lessonsList[i].Date.Value < DateTime.Now)
+                                                {
+                                                    <div class="float-end text-muted">@data</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="float-end text-primary">@data</div>
+                                                }
+                                                <h4 class="card-title text-muted">Lesson @lessonsList[i].Number Topic: @lessonsList[i].Topic</h4>
+                                                <p>
+                                                    @lessonsList[i].Description
+                                                </p>
+                                                <div class="row align-items-center">
+                                                    <div class="col-lg-2 col-xl-2">
+                                                        <div class="float-lg-start">
+                                                            <div class="row row-cols-lg-auto g-2">
+                                                                <div class="col-12">
+                                                                    <button class="btn btn-sm btn-outline-secondary" type="button"
+                                                                            data-bs-target="@dataTarget"
+                                                                            data-bs-toggle="collapse">
+                                                                        Show Details ▼
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-10 col-xl-10">
+                                                        <div class="float-lg-end">
+                                                            <div class="d-flex order-actions">
+                                                                @if (lessonsList[i].Materials.Length != 0)
+                                                                {
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div>
+                                                                            <i class="bx bxs-file-pdf me-2 font-24 text-danger"></i>
+                                                                        </div>
+                                                                        <div class="font-weight-bold text-danger">Material @lessonsList[i].Number</div>
+                                                                    </div>
+
+                                                                    <div class="ms-2">
+                                                                        <a asp-action="DownloadMaterial" asp-controller="Lessons"
+                                                                           asp-route-id="@lessonsList[i].Id"><i class="bx bx-downvote me-0"></i></a>
+                                                                    </div>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="collapse border" id="@id">
+                                                    <div class="p-2 text-monospace">
+                                                        <div class="text-danger">Homework:</div>
+                                                        <div>@lessonsList[i].Homework</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                break;
+                            }
+                            else
+                            {
+                                <!--/row-->
+                                <!-- timeline item 2 -->
+                                <div class="row">
+                                    <div class="col-auto text-center flex-column d-none d-sm-flex">
+                                        <div class="row h-50">
+                                            <div class="col border-end">&nbsp;</div>
+                                            <div class="col">&nbsp;</div>
+                                        </div>
+                                        <h5 class="m-2">
+                                            @if (lessonsList[i].Date.Value < DateTime.Now)
+                                            {
+                                                <span class="badge rounded-pill bg-light border">&nbsp;</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge rounded-pill bg-primary border">&nbsp;</span>
+                                            }
+                                        </h5>
+                                        <div class="row h-50">
+                                            <div class="col border-end">&nbsp;</div>
+                                            <div class="col">&nbsp;</div>
+                                        </div>
+                                    </div>
+                                    <div class="col py-2">
+                                        <div class="card radius-15">
+                                            <div class="card-body">
+                                                @if (lessonsList[i].Date.Value < DateTime.Now)
+                                                {
+                                                    <div class="float-end text-muted">@data</div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="float-end text-primary">@data</div>
+                                                }
+                                                <h4 class="card-title text-muted">
+                                                    Lesson @lessonsList[i].Number
+                                                    Topic: @lessonsList[i].Topic
+                                                </h4>
+                                                <p class="card-text">
+                                                    @lessonsList[i].Description
+                                                </p>
+                                                <div class="row align-items-center">
+                                                    <div class="col-lg-2 col-xl-2">
+                                                        <div class="float-lg-start">
+                                                            <div class="row row-cols-lg-auto g-2">
+                                                                <div class="col-12">
+                                                                    <button class="btn btn-sm btn-outline-secondary" type="button"
+                                                                            data-bs-target="@dataTarget"
+                                                                            data-bs-toggle="collapse">
+                                                                        Show Details ▼
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-10 col-xl-10">
+                                                        <div class="float-lg-end">
+                                                            <div class="d-flex order-actions">
+                                                                @if (lessonsList[i].Materials.Length != 0)
+                                                                {
+                                                                    <div class="d-flex align-items-center">
+                                                                        <div>
+                                                                            <i class="bx bxs-file-pdf me-2 font-24 text-danger"></i>
+                                                                        </div>
+                                                                        <div class="font-weight-bold text-danger">Material @lessonsList[i].Number</div>
+                                                                    </div>
+
+                                                                    <div class="ms-2">
+                                                                        <a asp-action="DownloadMaterial" asp-controller="Lessons"
+                                                                           asp-route-id="@lessonsList[i].Id"><i class="bx bx-downvote me-0"></i></a>
+                                                                    </div>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="collapse border" id="@id">
+                                                    <div class="p-2 text-monospace">
+                                                        <div class="text-danger">Homework:</div>
+                                                        <div>@lessonsList[i].Homework</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

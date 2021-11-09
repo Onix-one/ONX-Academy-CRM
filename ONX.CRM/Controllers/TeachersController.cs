@@ -172,7 +172,7 @@ namespace ONX.CRM.Controllers
                 PageInfo = new PageInfoViewModel()
             });
         }
-        public async Task<IActionResult> GroupInfo(int id)
+        public async Task<IActionResult> GroupInfo(int id, string error)
         {
             ViewBag.Students = _mapper
                 .Map<IEnumerable<StudentViewModel>>(await _studentService.GetStudentsByGroupId(id));
@@ -182,14 +182,16 @@ namespace ONX.CRM.Controllers
             ViewBag.CurrentGroup = _mapper
                 .Map<GroupViewModel>(await _groupService.GetEntityByIdAsync(id));
 
-
+            if (error != null)
+            {
+                ModelState.AddModelError(string.Empty, "The pdf file is too large");
+                return View(new LessonViewModel { GroupId = id });
+            }
             return View(new LessonViewModel{GroupId = id});
         }
         public IActionResult Home()
         {
-
-            return View();
+            return RedirectToAction("Groups");
         }
-
     }
 }

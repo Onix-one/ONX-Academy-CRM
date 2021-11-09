@@ -75,7 +75,9 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="col-lg-3 col-xl-3 text-danger" asp-validation-summary="ModelOnly"></div>
                                 </div>
+
                                 <div class="col-lg-3 col-xl-3">
                                     <div class="float-lg-end">
                                         <div class="row row-cols-lg-auto g-2">
@@ -95,13 +97,14 @@
 
                             @if (@lessonsList.Count != 0)
                             {
-                                @for (int i = 0; i <= lessonsList.Count(); i++)
-                                {
-                                    int counter = i;
-                                    string dataTarget = $"#t2_details{counter}";
-                                    string id = $"t2_details{counter}";
 
-                                    string data = $"{@lessonsList[i].Date.Value.DayOfWeek}, " +
+                                @for (var i = 0; i < lessonsList.Count(); i++)
+                                {
+                                    var counter = i;
+                                    var dataTarget = $"#t2_details{counter}";
+                                    var id = $"t2_details{counter}";
+
+                                    var data = $"{@lessonsList[i].Date.Value.DayOfWeek}, " +
                                                   $"{@lessonsList[i].Date.Value.Day}/" +
                                                   $"{@lessonsList[i].Date.Value.Month}/ " +
                                                   $"{@lessonsList[i].Date.Value.Year} " +
@@ -113,26 +116,33 @@
                                         <!-- timeline item 1 -->
                                         <div class="row">
                                             <!-- timeline item 1 left dot -->
-                                            <div class="col-auto text-center flex-column d-none d-sm-flex">
-                                                <div class="row h-50">
-                                                    <div class="col">&nbsp;</div>
-                                                    <div class="col">&nbsp;</div>
+
+
+                                            @if (lessonsList.Count > 1)
+                                            {
+                                                <div class="col-auto text-center flex-column d-none d-sm-flex">
+                                                    <div class="row h-50">
+                                                        <div class="col">&nbsp;</div>
+                                                        <div class="col">&nbsp;</div>
+                                                    </div>
+                                                    <h5 class="m-2">
+                                                        @if (lessonsList[i].Date.Value < DateTime.Now)
+                                                        {
+                                                            <span class="badge rounded-pill bg-light border">&nbsp;</span>
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="badge rounded-pill bg-primary border">&nbsp;</span>
+                                                        }
+                                                    </h5>
+                                                    <div class="row h-50">
+                                                        <div class="col border-end">&nbsp;</div>
+                                                        <div class="col">&nbsp;</div>
+                                                    </div>
                                                 </div>
-                                                <h5 class="m-2">
-                                                    @if (lessonsList[i].Date.Value < DateTime.Now)
-                                                    {
-                                                        <span class="badge rounded-pill bg-light border">&nbsp;</span>
-                                                    }
-                                                    else
-                                                    {
-                                                        <span class="badge rounded-pill bg-primary border">&nbsp;</span>
-                                                    }
-                                                </h5>
-                                                <div class="row h-50">
-                                                    <div class="col border-end">&nbsp;</div>
-                                                    <div class="col">&nbsp;</div>
-                                                </div>
-                                            </div>
+                                            }
+
+
                                             <!-- timeline item 1 event content -->
                                             <div class="col py-2">
                                                 <div class="card radius-15">
@@ -150,7 +160,7 @@
                                                             @lessonsList[i].Description
                                                         </p>
                                                         <div class="row align-items-center">
-                                                            <div class="col-lg-9 col-xl-9">
+                                                            <div class="col-lg-2 col-xl-2">
                                                                 <div class="float-lg-start">
                                                                     <div class="row row-cols-lg-auto g-2">
                                                                         <div class="col-12">
@@ -163,23 +173,65 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-lg-3 col-xl-3">
-                                                                <div class="float-lg-end">
-                                                                    <div class="row row-cols-lg-auto g-2">
-                                                                        <div class="col-12">
-                                                                            <div class="d-flex order-actions">
-                                                                                <div class="d-flex order-actions">
+                                                            <div class="col-lg-9 col-xl-9">
+                                                                <div class="row align-items-center">
+                                                                    <div class="col-lg-4 col-xl-4">
+                                                                        <div class="d-flex order-actions">
+                                                                            @if (lessonsList[i].Materials.Length != 0)
+                                                                            {
+                                                                                <div class="d-flex align-items-center">
                                                                                     <div>
-                                                                                        <a asp-controller="Lessons" asp-action="Edit"
-                                                                                           asp-route-id="@lessonsList[i].Id"><i class='bx bxs-edit'></i></a>
+                                                                                        <i class="bx bxs-file-pdf me-2 font-24 text-danger"></i>
                                                                                     </div>
-                                                                                    <div class="ps-2">
-                                                                                        <a asp-controller="Lessons" asp-action="Delete"
-                                                                                           asp-route-id="@lessonsList[i].Id">
-                                                                                            <i class='bx bxs-trash'></i>
-                                                                                        </a>
-                                                                                    </div>
+                                                                                    <div class="font-weight-bold text-danger">Material @lessonsList[i].Number</div>
                                                                                 </div>
+
+                                                                                <div class="ms-2">
+                                                                                    <a asp-action="DownloadMaterial" asp-controller="Lessons"
+                                                                                       asp-route-id="@lessonsList[i].Id"><i class="bx bx-downvote me-0"></i></a>
+                                                                                </div>
+
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <form class="col-lg-8 col-xl-8" asp-action="UploadMaterial" asp-controller="Lessons"
+                                                                          asp-route-id="@lessonsList[i].Id" method="post" enctype="multipart/form-data">
+                                                                        <div class="col-auto">
+                                                                            <div class="d-flex order-actions">
+
+                                                                                <div>
+                                                                                    <input name="uploadedFile" class="form-control form-control-sm" id="formFileSm" type="file">
+                                                                                </div>
+                                                                                <div class="ms-2">
+                                                                                    <button class="btn btn-sm btn-outline-secondary" type="submit">Upload PDF</button>
+                                                                                </div>
+                                                                                <div class="ms-2">
+                                                                                    <button asp-action="DeleteMaterial" asp-controller="Lessons"
+                                                                                            asp-route-id="@lessonsList[i].Id"
+                                                                                            class="btn btn-sm btn-outline-secondary">
+                                                                                        Delete PDF
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-1 col-xl-1">
+                                                                <div class="float-lg-end">
+                                                                    <div class="col-2">
+                                                                        <div class="d-flex order-actions">
+                                                                            <div>
+                                                                                <a asp-controller="Lessons" asp-action="Edit"
+                                                                                   asp-route-id="@lessonsList[i].Id"><i class='bx bxs-edit'></i></a>
+                                                                            </div>
+                                                                            <div class="ps-2">
+                                                                                <a asp-controller="Lessons" asp-action="Delete"
+                                                                                   asp-route-id="@lessonsList[i].Id">
+                                                                                    <i class='bx bxs-trash'></i>
+                                                                                </a>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -238,9 +290,8 @@
                                                         <p>
                                                             @lessonsList[i].Description
                                                         </p>
-
                                                         <div class="row align-items-center">
-                                                            <div class="col-lg-9 col-xl-9">
+                                                            <div class="col-lg-2 col-xl-2">
                                                                 <div class="float-lg-start">
                                                                     <div class="row row-cols-lg-auto g-2">
                                                                         <div class="col-12">
@@ -253,23 +304,65 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-lg-3 col-xl-3">
-                                                                <div class="float-lg-end">
-                                                                    <div class="row row-cols-lg-auto g-2">
-                                                                        <div class="col-12">
-                                                                            <div class="d-flex order-actions">
-                                                                                <div class="d-flex order-actions">
+                                                            <div class="col-lg-9 col-xl-9">
+                                                                <div class="row align-items-center">
+                                                                    <div class="col-lg-4 col-xl-4">
+                                                                        <div class="d-flex order-actions">
+                                                                            @if (lessonsList[i].Materials.Length != 0)
+                                                                            {
+                                                                                <div class="d-flex align-items-center">
                                                                                     <div>
-                                                                                        <a asp-controller="Lessons" asp-action="Edit"
-                                                                                           asp-route-id="@lessonsList[i].Id"><i class='bx bxs-edit'></i></a>
+                                                                                        <i class="bx bxs-file-pdf me-2 font-24 text-danger"></i>
                                                                                     </div>
-                                                                                    <div class="ps-2">
-                                                                                        <a asp-controller="Lessons" asp-action="Delete"
-                                                                                           asp-route-id="@lessonsList[i].Id">
-                                                                                            <i class='bx bxs-trash'></i>
-                                                                                        </a>
-                                                                                    </div>
+                                                                                    <div class="font-weight-bold text-danger">Material @lessonsList[i].Number</div>
                                                                                 </div>
+
+                                                                                <div class="ms-2">
+                                                                                    <a asp-action="DownloadMaterial" asp-controller="Lessons"
+                                                                                       asp-route-id="@lessonsList[i].Id"><i class="bx bx-downvote me-0"></i></a>
+                                                                                </div>
+
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <form class="col-lg-8 col-xl-8" asp-action="UploadMaterial" asp-controller="Lessons"
+                                                                          asp-route-id="@lessonsList[i].Id" method="post" enctype="multipart/form-data">
+                                                                        <div class="col-auto">
+                                                                            <div class="d-flex order-actions">
+
+                                                                                <div>
+                                                                                    <input name="uploadedFile" class="form-control form-control-sm" id="formFileSm" type="file">
+                                                                                </div>
+                                                                                <div class="ms-2">
+                                                                                    <button class="btn btn-sm btn-outline-secondary" type="submit">Upload PDF</button>
+                                                                                </div>
+                                                                                <div class="ms-2">
+                                                                                    <button asp-action="DeleteMaterial" asp-controller="Lessons"
+                                                                                            asp-route-id="@lessonsList[i].Id"
+                                                                                            class="btn btn-sm btn-outline-secondary">
+                                                                                        Delete PDF
+                                                                                    </button>
+                                                                                </div>
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </form>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-1 col-xl-1">
+                                                                <div class="float-lg-end">
+                                                                    <div class="col-2">
+                                                                        <div class="d-flex order-actions">
+                                                                            <div>
+                                                                                <a asp-controller="Lessons" asp-action="Edit"
+                                                                                   asp-route-id="@lessonsList[i].Id"><i class='bx bxs-edit'></i></a>
+                                                                            </div>
+                                                                            <div class="ps-2">
+                                                                                <a asp-controller="Lessons" asp-action="Delete"
+                                                                                   asp-route-id="@lessonsList[i].Id">
+                                                                                    <i class='bx bxs-trash'></i>
+                                                                                </a>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -345,31 +438,33 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-
                                                             <div class="col-lg-9 col-xl-9">
                                                                 <div class="row align-items-center">
-                                                                    <div class="col-4">
+                                                                    <div class="col-lg-4 col-xl-4">
                                                                         <div class="d-flex order-actions">
                                                                             @if (lessonsList[i].Materials.Length != 0)
                                                                             {
                                                                                 <div class="d-flex align-items-center">
-                                                                                    <div><i class="bx bxs-file-pdf me-2 font-24 text-danger"></i>
+                                                                                    <div>
+                                                                                        <i class="bx bxs-file-pdf me-2 font-24 text-danger"></i>
                                                                                     </div>
                                                                                     <div class="font-weight-bold text-danger">Material @lessonsList[i].Number</div>
                                                                                 </div>
 
                                                                                 <div class="ms-2">
                                                                                     <a asp-action="DownloadMaterial" asp-controller="Lessons"
-                                                                                            asp-route-id="@lessonsList[i].Id"><i class="bx bx-downvote me-0"></i></a>
+                                                                                       asp-route-id="@lessonsList[i].Id"><i class="bx bx-downvote me-0"></i></a>
                                                                                 </div>
 
                                                                             }
                                                                         </div>
                                                                     </div>
-                                                                    <form class="col-8" asp-action="UploadMaterial" asp-controller="Lessons"
+
+                                                                    <form class="col-lg-8 col-xl-8" asp-action="UploadMaterial" asp-controller="Lessons"
                                                                           asp-route-id="@lessonsList[i].Id" method="post" enctype="multipart/form-data">
                                                                         <div class="col-auto">
                                                                             <div class="d-flex order-actions">
+
                                                                                 <div>
                                                                                     <input name="uploadedFile" class="form-control form-control-sm" id="formFileSm" type="file">
                                                                                 </div>
@@ -379,7 +474,9 @@
                                                                                 <div class="ms-2">
                                                                                     <button asp-action="DeleteMaterial" asp-controller="Lessons"
                                                                                             asp-route-id="@lessonsList[i].Id"
-                                                                                            class="btn btn-sm btn-outline-secondary">Delete PDF </button>
+                                                                                            class="btn btn-sm btn-outline-secondary">
+                                                                                        Delete PDF
+                                                                                    </button>
                                                                                 </div>
                                                                             </div>
 
@@ -387,7 +484,6 @@
                                                                     </form>
                                                                 </div>
                                                             </div>
-
                                                             <div class="col-lg-1 col-xl-1">
                                                                 <div class="float-lg-end">
                                                                     <div class="col-2">
@@ -406,10 +502,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-
                                                         </div>
-
-
                                                         <div class="collapse border" id="@id">
                                                             <div class="p-2 text-monospace">
                                                                 <div class="text-danger">Homework:</div>

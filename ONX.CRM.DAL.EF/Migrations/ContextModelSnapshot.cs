@@ -328,8 +328,8 @@ namespace ONX.CRM.DAL.EF.Migrations
                             Id = 3,
                             CourseId = 10,
                             Number = "MR00-2671-FG10",
-                            StartDate = new DateTime(2021, 12, 15, 19, 30, 0, 0, DateTimeKind.Unspecified),
-                            Status = 1,
+                            StartDate = new DateTime(2021, 6, 15, 19, 30, 0, 0, DateTimeKind.Unspecified),
+                            Status = 3,
                             TeacherId = 2
                         },
                         new

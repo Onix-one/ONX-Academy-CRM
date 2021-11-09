@@ -14,7 +14,7 @@ namespace ONX.CRM.ViewModel
         public string? Homework { get; set; }
         [Required(ErrorMessage = "This field cannot be empty")]
         public DateTime? Date { get; set; }
-        public int GroupId { get; set; }
+        public int? GroupId { get; set; }
         public byte[]? Materials { get; set; }
     }
 }

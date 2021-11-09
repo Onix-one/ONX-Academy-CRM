@@ -67,10 +67,8 @@ namespace ONX.CRM.Controllers
             {
                 if (uploadedFile.Length > 600000)
                 {
-                    ModelState.AddModelError(string.Empty, "The pdf file is too large");
-                    return RedirectToAction("GroupInfo", "Teachers", new { id = groupId });
+                    return RedirectToAction("GroupInfo", "Teachers", new { id = groupId, error = "error" });
                 }
-
                 //save file to DB (Person)
                 await using var memoryStream = new MemoryStream();
 

@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ONX.CRM.BLL.Interfaces;
@@ -24,9 +25,12 @@ namespace ONX.CRM.Controllers
         private readonly ILogger<StudentsController> _logger;
         private readonly PageInfoViewModel _pageInfo;
         private readonly IUserService _userService;
+        private readonly UserManager<User> _userManager;
+        private readonly ILessonService _lessonService;
         public StudentsController(IStudentService studentService, IGroupService groupService,
             IMapper mapper, IUserService userService,
-            ILogger<StudentsController> logger, PageInfoViewModel pageInfo)
+            ILogger<StudentsController> logger, PageInfoViewModel pageInfo,
+            UserManager<User> userManager, ILessonService lessonService)
         {
             _pageInfo = pageInfo;
             _mapper = mapper;
@@ -34,6 +38,8 @@ namespace ONX.CRM.Controllers
             _studentService = studentService;
             _groupService = groupService;
             _userService = userService;
+            _userManager = userManager;
+            _lessonService = lessonService;
         }
         public async Task<IActionResult> Index(string query, int courseId, int type, int pageSize, int pageNumber)
         {
@@ -156,6 +162,29 @@ namespace ONX.CRM.Controllers
                 return true;
             }
             return false;
+        }
+
+
+        public async Task<IActionResult> Schedule()
+        {
+            if (User.Identity != null)
+            {
+                var userId = _userManager.GetUserId(User);
+                var student = _studentService.FindByUserIdAsync(userId).Result.FirstOrDefault();
+                if (student != null)
+                {
+                    ViewBag.Lessons = _mapper
+                        .Map<IEnumerable<LessonViewModel>>(await _lessonService.GetLessonsByGroupId(student.GroupId.Value));
+
+                    return View(new LessonViewModel ());
+                }
+            }
+            
+            return View();
+        }
+        public IActionResult Home()
+        {
+            return RedirectToAction("Schedule");
         }
     }
 }

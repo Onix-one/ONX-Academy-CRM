@@ -389,7 +389,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                 columns: new[] { "Id", "CourseId", "Number", "StartDate", "Status", "TeacherId" },
                 values: new object[,]
                 {
-                    { 3, 10, "MR00-2671-FG10", new DateTime(2021, 12, 15, 19, 30, 0, 0, DateTimeKind.Unspecified), 1, 2 },
+                    { 3, 10, "MR00-2671-FG10", new DateTime(2021, 6, 15, 19, 30, 0, 0, DateTimeKind.Unspecified), 3, 2 },
                     { 2, 11, "MR00-5512-DT12", new DateTime(2021, 11, 9, 18, 30, 0, 0, DateTimeKind.Unspecified), 2, 1 },
                     { 4, 12, "MR00-2671-FG10", new DateTime(2021, 12, 9, 18, 30, 0, 0, DateTimeKind.Unspecified), 1, 2 },
                     { 1, 15, "MR00-0012-FT04", new DateTime(2021, 11, 9, 19, 30, 0, 0, DateTimeKind.Unspecified), 2, 1 }
