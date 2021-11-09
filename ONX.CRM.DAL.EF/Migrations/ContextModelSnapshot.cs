@@ -371,6 +371,9 @@ namespace ONX.CRM.DAL.EF.Migrations
                     b.Property<string>("Topic")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("VideoLink")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("GroupId");
@@ -386,7 +389,8 @@ namespace ONX.CRM.DAL.EF.Migrations
                             GroupId = 1,
                             Homework = "Install Unity. Build the project for mobile devices and PC",
                             Number = "01",
-                            Topic = "Unity Editor"
+                            Topic = "Unity Editor",
+                            VideoLink = "https://www.youtube.com/watch?v=spX1eo5HtVc"
                         },
                         new
                         {
@@ -396,7 +400,8 @@ namespace ONX.CRM.DAL.EF.Migrations
                             GroupId = 1,
                             Homework = "Add mesh, material, texture to the project",
                             Number = "02",
-                            Topic = "Basics of 3D"
+                            Topic = "Basics of 3D",
+                            VideoLink = "https://www.youtube.com/watch?v=1AN0VFt48eU"
                         },
                         new
                         {
@@ -406,7 +411,8 @@ namespace ONX.CRM.DAL.EF.Migrations
                             GroupId = 1,
                             Homework = "Create any animation and add it to the project",
                             Number = "03",
-                            Topic = "Animations"
+                            Topic = "Animations",
+                            VideoLink = "https://www.youtube.com/watch?v=bdQsQkAXEZE"
                         },
                         new
                         {
@@ -416,7 +422,8 @@ namespace ONX.CRM.DAL.EF.Migrations
                             GroupId = 2,
                             Homework = "Install the Visual Studio 2019. Create a console project and run it.",
                             Number = "01",
-                            Topic = "Basics of programming"
+                            Topic = "Basics of programming",
+                            VideoLink = "https://www.youtube.com/watch?v=3F4bFcdmOVo"
                         },
                         new
                         {
@@ -426,7 +433,8 @@ namespace ONX.CRM.DAL.EF.Migrations
                             GroupId = 2,
                             Homework = "To install the Git. Create repository and do the first PR. Create a console project and output \"hello world\" to the console.",
                             Number = "02",
-                            Topic = "C# Operators"
+                            Topic = "C# Operators",
+                            VideoLink = "https://www.youtube.com/watch?v=7499kC_uM00"
                         },
                         new
                         {
@@ -436,7 +444,8 @@ namespace ONX.CRM.DAL.EF.Migrations
                             GroupId = 2,
                             Homework = "Create three string local variables. Make string concatenation. Output the result to the console.",
                             Number = "03",
-                            Topic = "Arrays & Strings"
+                            Topic = "Arrays & Strings",
+                            VideoLink = "https://www.youtube.com/watch?v=0Fg9f2ZEApE"
                         });
                 });
 

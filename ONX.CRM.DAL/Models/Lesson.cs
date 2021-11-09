@@ -9,6 +9,7 @@ namespace ONX.CRM.DAL.Models
         public string Topic { get; set; }
         public string? Description { get; set; }
         public string? Homework { get; set; }
+        public string? VideoLink { get; set; }
         public DateTime? Date { get; set; }
         public int GroupId { get; set; }
         public byte[]? Materials { get; set; }

@@ -35,10 +35,13 @@ namespace ONX.CRM.WebAPI
             services.AddTransient<IDbConnection, SqlConnection>
                 (_ => new SqlConnection(Configuration.GetConnectionString("msSql")));
 
-            services.AddScoped<IRepository<Student>, SqlStudentsRepository>();
+
             services.AddScoped<IStudentService, StudentService>();
+            services.AddScoped<ISqlStudentsRepository<Student>, SqlStudentsRepository>();
+
             services.AddScoped<IRepository<Course>, DapperCoursesRepository>();
             services.AddScoped<IDapperCourseService, DapperCourseService>();
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

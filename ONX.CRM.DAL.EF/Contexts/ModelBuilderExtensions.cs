@@ -824,6 +824,7 @@ namespace ONX.CRM.DAL.EF.Contexts
                 Description = "Basic entities of the engine. Basic object " +
                               "manipulation. Features of using assets. Build the project.",
                 Homework = "Install Unity. Build the project for mobile devices and PC",
+                VideoLink = "https://www.youtube.com/watch?v=spX1eo5HtVc",
                 Date = dateTimeForLesson01Group01,
                 GroupId = 1
 
@@ -836,6 +837,7 @@ namespace ONX.CRM.DAL.EF.Contexts
                 Topic = "Basics of 3D",
                 Description = "Camera. Mesh, Material, Texture.",
                 Homework = "Add mesh, material, texture to the project",
+                VideoLink = "https://www.youtube.com/watch?v=1AN0VFt48eU",
                 Date = dateTimeForLesson02Group01,
                 GroupId = 1
 
@@ -849,6 +851,7 @@ namespace ONX.CRM.DAL.EF.Contexts
                 Topic = "Animations",
                 Description = "Interface animations. Animations with Animator.",
                 Homework = "Create any animation and add it to the project",
+                VideoLink = "https://www.youtube.com/watch?v=bdQsQkAXEZE",
                 Date = dateTimeForLesson03Group01,
                 GroupId = 1
             };
@@ -865,6 +868,7 @@ namespace ONX.CRM.DAL.EF.Contexts
                 Topic = "Basics of programming",
                 Description = "Algorithms. Evolution of languages. C # language, general syntax concepts.",
                 Homework = "Install the Visual Studio 2019. Create a console project and run it.",
+                VideoLink = "https://www.youtube.com/watch?v=3F4bFcdmOVo",
                 Date = dateTimeForLesson01Group02,
                 GroupId = 2
             };
@@ -877,6 +881,7 @@ namespace ONX.CRM.DAL.EF.Contexts
                 Description = "Arithmetic. Relations. Logical. Appropriation. Bitwise. Using brackets. Division",
                 Homework = "To install the Git. Create repository and do the first " +
                            "PR. Create a console project and output \"hello world\" to the console.",
+                VideoLink = "https://www.youtube.com/watch?v=7499kC_uM00",
                 Date = dateTimeForLesson02Group02,
                 GroupId = 2
 
@@ -891,6 +896,7 @@ namespace ONX.CRM.DAL.EF.Contexts
                               "Strings and the StringBuilder class. String comparison",
                 Homework = "Create three string local variables. Make string " +
                            "concatenation. Output the result to the console.",
+                VideoLink = "https://youtu.be/IyFdNCNCzs0",
                 Date = dateTimeForLesson03Group02,
                 GroupId = 2
             };

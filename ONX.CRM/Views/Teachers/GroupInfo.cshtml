@@ -19,9 +19,18 @@
                         <li class="breadcrumb-item">
                             <a asp-controller="Home" asp-action="Index"><i class="bx bx-home-alt"></i></a>
                         </li>
-                        <li class="breadcrumb-item" aria-current="page">
-                            <a asp-controller="Teachers" asp-action="Groups">Groups</a>
-                        </li>
+                        @if (User.IsInRole("teacher"))
+                        {
+                            <li class="breadcrumb-item" aria-current="page">
+                                <a asp-controller="Teachers" asp-action="Groups">Groups</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="breadcrumb-item" aria-current="page">
+                                <a asp-controller="Groups" asp-action="Index">Groups</a>
+                            </li>
+                        }
                         <li class="breadcrumb-item active" aria-current="page">Info</li>
                     </ol>
                 </nav>
@@ -29,12 +38,13 @@
         </div>
         <div class="card">
             <div class="card-body">
+
                 <ul class="nav nav-tabs nav-primary" role="tablist">
                     <li class="nav-item" role="presentation">
                         <a class="nav-link active" data-bs-toggle="tab" href="#primaryhome" role="tab" aria-selected="true">
                             <div class="d-flex align-items-center">
                                 <div class="tab-icon">
-                                    <i class="bx bx-home font-18 me-1"></i>
+                                    <i class="bx bx-comment-detail font-18 me-1"></i>
                                 </div>
                                 <div class="tab-title">Lessons</div>
                             </div>
@@ -54,9 +64,9 @@
                         <a class="nav-link" data-bs-toggle="tab" href="#primarycontact" role="tab" aria-selected="false">
                             <div class="d-flex align-items-center">
                                 <div class="tab-icon">
-                                    <i class="bx bx-microphone font-18 me-1"></i>
+                                    <i class="bx bx-play-circle font-18 me-1"></i>
                                 </div>
-                                <div class="tab-title">Assessments</div>
+                                <div class="tab-title">Video</div>
                             </div>
                         </a>
                     </li>
@@ -105,11 +115,11 @@
                                     var id = $"t2_details{counter}";
 
                                     var data = $"{@lessonsList[i].Date.Value.DayOfWeek}, " +
-                                                  $"{@lessonsList[i].Date.Value.Day}/" +
-                                                  $"{@lessonsList[i].Date.Value.Month}/ " +
-                                                  $"{@lessonsList[i].Date.Value.Year} " +
-                                                  $"{@lessonsList[i].Date.Value.Hour}:" +
-                                                  $"{@lessonsList[i].Date.Value.Minute}";
+                                               $"{@lessonsList[i].Date.Value.Day}/" +
+                                               $"{@lessonsList[i].Date.Value.Month}/ " +
+                                               $"{@lessonsList[i].Date.Value.Year} " +
+                                               $"{@lessonsList[i].Date.Value.Hour}:" +
+                                               $"{@lessonsList[i].Date.Value.Minute}";
 
                                     if (i == firstLesson)
                                     {
@@ -602,7 +612,39 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="primarycontact" role="tabpanel">
-                        <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork. Williamsburg banh mi whatever gluten-free, carles pitchfork biodiesel fixie etsy retro mlkshk vice blog. Scenester cred you probably haven't heard of them, vinyl craft beer blog stumptown. Pitchfork sustainable tofu synth chambray yr.</p>
+
+                        <div class="card-body">
+                            <div class="collapse show">
+
+                                @foreach (var lesson in lessonsList)
+                                {
+                                    var data = $"{lesson.Date.Value.DayOfWeek}, " +
+                                               $"{lesson.Date.Value.Day}/" +
+                                               $"{lesson.Date.Value.Month}/ " +
+                                               $"{lesson.Date.Value.Year} " +
+                                               $"{lesson.Date.Value.Hour}:" +
+                                               $"{lesson.Date.Value.Minute}";
+                                    if (string.IsNullOrEmpty(lesson.VideoLink))
+                                    {
+                                        continue;
+                                    }
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="card-img-top">
+                                                <a class="active" href="@lesson.VideoLink" target="_blank">@lesson.VideoLink</a>
+                                            </div>
+                                            <div class="card-body px-0">
+                                                <h4 class="card-title">Lesson @lesson.Number</h4>
+                                                <p class="card-text mb-1">Topic: @lesson.Topic</p>
+                                                <p class="card-text">Date: @data</p>
+                                                <p class="card-text"><small class="text-muted">Description: @lesson.Description</small></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

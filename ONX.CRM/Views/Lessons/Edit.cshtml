@@ -43,64 +43,71 @@
                             {
                                 <h2 class="text-center m-0">Edite lesson</h2>
                             }
-                            <div class="card-body">
-                                @Html.HiddenFor(x => x.Id)
-                                @Html.HiddenFor(x => x.GroupId)
-                                <div class="row mb-3">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Number</h6>
-                                    </div>
-                                    <div class="col-sm-9 text-secondary">
-                                        <input type="text" class="form-control" asp-for="Number"/>
-                                        <span class="alert-danger" asp-validation-for="Number"></span>
-                                    </div>
+                        <div class="card-body">
+                            @Html.HiddenFor(x => x.Id)
+                            @Html.HiddenFor(x => x.GroupId)
+                            <div class="row mb-3">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Number</h6>
                                 </div>
-                                <div class="row mb-3">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Topic</h6>
-                                    </div>
-                                    <div class="col-sm-9 text-secondary">
-                                        <input type="text" class="form-control" asp-for="Topic"/>
-                                        <span class="alert-danger" asp-validation-for="Topic"></span>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Description</h6>
-                                    </div>
-                                    <div class="col-sm-9 text-secondary">
-                                        <textarea class="form-control" rows="3" asp-for="Description"></textarea>
-                                        <span class="alert-danger" asp-validation-for="Description"></span>
-                                    </div>
-                                </div>
-
-
-                                <div class="row mb-3">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Homework</h6>
-                                    </div>
-                                    <div class="col-sm-9 text-secondary">
-                                        <textarea class="form-control" rows="3" asp-for="Homework"></textarea>
-                                        <span class="alert-danger" asp-validation-for="Homework"></span>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <div class="col-sm-3">
-                                        <h6 class="mb-0">Homework</h6>
-                                    </div>
-                                    <div class="col-sm-9 text-secondary">
-                                        <input asp-for="Date" type="datetime-local" class="form-control" placeholder="@DateTime.Now">
-                                        <span class="alert-danger" asp-validation-for="Date"></span>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-sm-3"></div>
-                                    <div class="col-sm-9 text-secondary">
-                                        <button type="submit" class="btn btn-outline-primary px-4">Save</button>
-                                        <a type="button" class="btn btn-outline-danger px-4" asp-controller="Teachers" asp-action="Groups">Close</a>
-                                    </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <input type="text" class="form-control" asp-for="Number" />
+                                    <span class="alert-danger" asp-validation-for="Number"></span>
                                 </div>
                             </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Topic</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <input type="text" class="form-control" asp-for="Topic" />
+                                    <span class="alert-danger" asp-validation-for="Topic"></span>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Description</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <textarea class="form-control" rows="2" asp-for="Description"></textarea>
+                                    <span class="alert-danger" asp-validation-for="Description"></span>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Homework</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <textarea class="form-control" rows="2" asp-for="Homework"></textarea>
+                                    <span class="alert-danger" asp-validation-for="Homework"></span>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Video link</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <input type="text" class="form-control" asp-for="VideoLink" />
+                                    <span class="alert-danger" asp-validation-for="VideoLink"></span>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-sm-3">
+                                    <h6 class="mb-0">Date</h6>
+                                </div>
+                                <div class="col-sm-9 text-secondary">
+                                    <input asp-for="Date" type="datetime-local" class="form-control" placeholder="@DateTime.Now">
+                                    <span class="alert-danger" asp-validation-for="Date"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3"></div>
+                                <div class="col-sm-9 text-secondary">
+                                    <button type="submit" class="btn btn-outline-primary px-4">Save</button>
+                                    <a type="button" class="btn btn-outline-danger px-4" asp-controller="Teachers" asp-action="Groups">Close</a>
+                                </div>
+                            </div>
+                        </div>
                         </form>
                     </div>
                 </div>

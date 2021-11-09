@@ -297,6 +297,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                     Topic = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Homework = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    VideoLink = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Date = table.Column<DateTime>(type: "datetime2", nullable: true),
                     GroupId = table.Column<int>(type: "int", nullable: false),
                     Materials = table.Column<byte[]>(type: "varbinary(max)", nullable: true)
@@ -415,15 +416,15 @@ namespace ONX.CRM.DAL.EF.Migrations
 
             migrationBuilder.InsertData(
                 table: "Lessons",
-                columns: new[] { "Id", "Date", "Description", "GroupId", "Homework", "Materials", "Number", "Topic" },
+                columns: new[] { "Id", "Date", "Description", "GroupId", "Homework", "Materials", "Number", "Topic", "VideoLink" },
                 values: new object[,]
                 {
-                    { 5, new DateTime(2021, 11, 9, 19, 30, 0, 0, DateTimeKind.Unspecified), "Arithmetic. Relations. Logical. Appropriation. Bitwise. Using brackets. Division", 2, "To install the Git. Create repository and do the first PR. Create a console project and output \"hello world\" to the console.", null, "02", "C# Operators" },
-                    { 6, new DateTime(2021, 11, 11, 19, 30, 0, 0, DateTimeKind.Unspecified), "One-dimensional arrays. Multidimensional arrays. Strings and the StringBuilder class. String comparison", 2, "Create three string local variables. Make string concatenation. Output the result to the console.", null, "03", "Arrays & Strings" },
-                    { 3, new DateTime(2021, 11, 16, 19, 30, 0, 0, DateTimeKind.Unspecified), "Interface animations. Animations with Animator.", 1, "Create any animation and add it to the project", null, "03", "Animations" },
-                    { 2, new DateTime(2021, 11, 11, 19, 30, 0, 0, DateTimeKind.Unspecified), "Camera. Mesh, Material, Texture.", 1, "Add mesh, material, texture to the project", null, "02", "Basics of 3D" },
-                    { 1, new DateTime(2021, 11, 9, 19, 30, 0, 0, DateTimeKind.Unspecified), "Basic entities of the engine. Basic object manipulation. Features of using assets. Build the project.", 1, "Install Unity. Build the project for mobile devices and PC", null, "01", "Unity Editor" },
-                    { 4, new DateTime(2021, 11, 4, 19, 30, 0, 0, DateTimeKind.Unspecified), "Algorithms. Evolution of languages. C # language, general syntax concepts.", 2, "Install the Visual Studio 2019. Create a console project and run it.", null, "01", "Basics of programming" }
+                    { 5, new DateTime(2021, 11, 9, 19, 30, 0, 0, DateTimeKind.Unspecified), "Arithmetic. Relations. Logical. Appropriation. Bitwise. Using brackets. Division", 2, "To install the Git. Create repository and do the first PR. Create a console project and output \"hello world\" to the console.", null, "02", "C# Operators", "https://www.youtube.com/watch?v=7499kC_uM00" },
+                    { 6, new DateTime(2021, 11, 11, 19, 30, 0, 0, DateTimeKind.Unspecified), "One-dimensional arrays. Multidimensional arrays. Strings and the StringBuilder class. String comparison", 2, "Create three string local variables. Make string concatenation. Output the result to the console.", null, "03", "Arrays & Strings", "https://www.youtube.com/watch?v=0Fg9f2ZEApE" },
+                    { 3, new DateTime(2021, 11, 16, 19, 30, 0, 0, DateTimeKind.Unspecified), "Interface animations. Animations with Animator.", 1, "Create any animation and add it to the project", null, "03", "Animations", "https://www.youtube.com/watch?v=bdQsQkAXEZE" },
+                    { 2, new DateTime(2021, 11, 11, 19, 30, 0, 0, DateTimeKind.Unspecified), "Camera. Mesh, Material, Texture.", 1, "Add mesh, material, texture to the project", null, "02", "Basics of 3D", "https://www.youtube.com/watch?v=1AN0VFt48eU" },
+                    { 1, new DateTime(2021, 11, 9, 19, 30, 0, 0, DateTimeKind.Unspecified), "Basic entities of the engine. Basic object manipulation. Features of using assets. Build the project.", 1, "Install Unity. Build the project for mobile devices and PC", null, "01", "Unity Editor", "https://www.youtube.com/watch?v=spX1eo5HtVc" },
+                    { 4, new DateTime(2021, 11, 4, 19, 30, 0, 0, DateTimeKind.Unspecified), "Algorithms. Evolution of languages. C # language, general syntax concepts.", 2, "Install the Visual Studio 2019. Create a console project and run it.", null, "01", "Basics of programming", "https://www.youtube.com/watch?v=3F4bFcdmOVo" }
                 });
 
             migrationBuilder.InsertData(

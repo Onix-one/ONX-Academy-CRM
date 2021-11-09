@@ -182,6 +182,24 @@ namespace ONX.CRM.Controllers
             
             return View();
         }
+
+        public async Task<IActionResult> VideoMaterials()
+        {
+            if (User.Identity != null)
+            {
+                var userId = _userManager.GetUserId(User);
+                var student = _studentService.FindByUserIdAsync(userId).Result.FirstOrDefault();
+                if (student != null)
+                {
+                    ViewBag.Lessons = _mapper
+                        .Map<IEnumerable<LessonViewModel>>(await _lessonService.GetLessonsByGroupId(student.GroupId.Value));
+
+                    return View(new LessonViewModel());
+                }
+            }
+
+            return View();
+        }
         public IActionResult Home()
         {
             return RedirectToAction("Schedule");

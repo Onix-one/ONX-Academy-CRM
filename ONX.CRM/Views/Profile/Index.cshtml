@@ -46,11 +46,11 @@
                                         <form asp-action="UploadImage" asp-controller="Profile" 
                                               asp-route-id="@Model.Id" method="post" enctype="multipart/form-data">
                                             <div class="mb-3">
-                                                <label for="formFileSm" class="form-label">Small file input example</label>
+                                                <label for="formFileSm" class="form-label">Upload Avatar</label>
                                                 <input name="uploadedFile" class="form-control form-control-sm" id="formFileSm" type="file">
                                             </div>
-                                            <button type="submit" class="btn btn-outline-primary">Upload</button>
-                                            <a asp-action="DeleteImage" asp-controller="Profile" asp-route-id="@Model.Id" class="btn btn-outline-danger">Delete</a>
+                                            <button type="submit" class="btn btn-outline-primary">Change</button>
+                                            <a asp-action="DeleteImage" asp-controller="Profile" asp-route-id="@Model.Id" class="btn btn-outline-danger">Reset</a>
                                         </form>
                                     </div>
                                 </div>

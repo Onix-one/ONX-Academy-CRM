@@ -12,6 +12,7 @@ namespace ONX.CRM.ViewModel
         public string Topic { get; set; }
         public string? Description { get; set; }
         public string? Homework { get; set; }
+        public string? VideoLink { get; set; }
         [Required(ErrorMessage = "This field cannot be empty")]
         public DateTime? Date { get; set; }
         public int? GroupId { get; set; }
