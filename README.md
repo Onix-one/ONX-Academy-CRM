@@ -21,3 +21,9 @@ Manager view
 ![The San Juan Mountains are beautiful!](https://github.com/Onix-one/ONX-Academy-CRM/blob/master/ONX.CRM/wwwroot/assets/Screenshot%20(25).png "San Juan Mountains")
 
 ![The San Juan Mountains are beautiful!](https://github.com/Onix-one/ONX-Academy-CRM/blob/master/ONX.CRM/wwwroot/assets/Screenshot%20(26).png "San Juan Mountains")
+
+Student view
+
+![The San Juan Mountains are beautiful!](https://github.com/Onix-one/ONX-Academy-CRM/blob/master/ONX.CRM/wwwroot/assets/Screenshot%20(27).png "San Juan Mountains")
+
+
