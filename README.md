@@ -9,3 +9,4 @@ How to start:
 - Manager ---> Login: manager@mail.ru  Pass: qaz123
 - Teacher ---> Login: teacher@mail.ru  Pass: qaz123
 - Student ---> Login: admin@mail.ru    Pass: qaz123
+![The San Juan Mountains are beautiful!](/assets/images/02.png "San Juan Mountains")
