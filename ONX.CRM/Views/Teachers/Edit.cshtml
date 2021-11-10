@@ -34,84 +34,78 @@
             <div class="container">
                 <div class="row">
                     <div class="col-lg-8 mx-auto">
-                        @*<div class="card ">
+                        <form asp-controller="Teachers" asp-action="Edit" method="post">
+                            <h2 class="text-center m-0">Teacher</h2>
                             <div class="card-body">
-                                <div class="border p-4 rounded">*@
-                                    <form asp-controller="Teachers" asp-action="Edit" method="post">
-                                        <h2 class="text-center m-0">Teacher</h2>
-                                        <div class="card-body">
-                                            @Html.HiddenFor(x => x.Id)
-                                            @Html.HiddenFor(x => x.Image)
-                                            @Html.HiddenFor(x => x.UserId)
-                                            <div class="row mb-3">
-                                                <div class="col-sm-3">
-                                                    <h6 class="mb-0">First Name</h6>
-                                                </div>
-                                                <div class="col-sm-9 text-secondary">
-                                                    <input type="text" class="form-control" asp-for="FirstName" />
-                                                    <span class="alert-danger" asp-validation-for="FirstName"></span>
-                                                </div>
-                                            </div>
-                                            <div class="row mb-3">
-                                                <div class="col-sm-3">
-                                                    <h6 class="mb-0">Last Name</h6>
-                                                </div>
-                                                <div class="col-sm-9 text-secondary">
-                                                    <input type="text" class="form-control" asp-for="LastName" />
-                                                    <span class="alert-danger" asp-validation-for="LastName"></span>
-                                                </div>
-                                            </div>
-                                            <div class="row mb-3">
-                                                <div class="col-sm-3">
-                                                    <h6 class="mb-0">Email</h6>
-                                                </div>
-                                                <div class="col-sm-9 text-secondary">
-                                                    <input type="text" class="form-control" asp-for="Email" />
-                                                    <span class="alert-danger" asp-validation-for="Email"></span>
-                                                </div>
-                                            </div>
-                                            <div class="row mb-3">
-                                                <div class="col-sm-3">
-                                                    <h6 class="mb-0">Phone</h6>
-                                                </div>
-                                                <div class="col-sm-9 text-secondary">
-                                                    <input type="text" placeholder="+375(XX)XXX-XX-XX" class="form-control" asp-for="Phone" />
-                                                    <span class="alert-danger" asp-validation-for="Phone"></span>
-                                                </div>
-                                            </div>
-                                            <div class="row mb-3">
-                                                <div class="col-sm-3">
-                                                    <h6 class="mb-0">Work experience</h6>
-                                                </div>
-                                                <div class="col-sm-9 text-secondary">
-                                                    <input type="text" class="form-control" asp-for="WorkExperience" />
-                                                </div>
-                                            </div>
-                                            <div class="row mb-3">
-                                                <div class="col-sm-3">
-                                                    <h6 class="mb-0">Bio</h6>
-                                                </div>
-                                                <div class="col-sm-9 text-secondary">
-                                                    <textarea class="form-control" rows="7" asp-for="Bio"></textarea>
-                                                    <span class="alert-danger" asp-validation-for="Bio"></span>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-sm-3"></div>
-                                                <div class="col-sm-9 text-secondary">
-                                                    <button type="submit" class="btn btn-outline-primary px-4">Save</button>
-                                                    <a type="button" class="btn btn-outline-danger px-4" asp-action="Index">Close</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
+                                @Html.HiddenFor(x => x.Id)
+                                @Html.HiddenFor(x => x.Image)
+                                @Html.HiddenFor(x => x.UserId)
+                                <div class="row mb-3">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">First Name</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <input type="text" class="form-control" asp-for="FirstName" />
+                                        <span class="alert-danger" asp-validation-for="FirstName"></span>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Last Name</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <input type="text" class="form-control" asp-for="LastName" />
+                                        <span class="alert-danger" asp-validation-for="LastName"></span>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Email</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <input type="text" class="form-control" asp-for="Email" />
+                                        <span class="alert-danger" asp-validation-for="Email"></span>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Phone</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <input type="text" placeholder="+375(XX)XXX-XX-XX" class="form-control" asp-for="Phone" />
+                                        <span class="alert-danger" asp-validation-for="Phone"></span>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Work experience</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <input type="text" class="form-control" asp-for="WorkExperience" />
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-3">
+                                        <h6 class="mb-0">Bio</h6>
+                                    </div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <textarea class="form-control" rows="7" asp-for="Bio"></textarea>
+                                        <span class="alert-danger" asp-validation-for="Bio"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-3"></div>
+                                    <div class="col-sm-9 text-secondary">
+                                        <button type="submit" class="btn btn-outline-primary px-4">Save</button>
+                                        <a type="button" class="btn btn-outline-danger px-4" asp-action="Index">Close</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
-        @*</div>
+        </div>
     </div>
-</div>*@
+</div>
 

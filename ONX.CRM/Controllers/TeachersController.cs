@@ -147,7 +147,6 @@ namespace ONX.CRM.Controllers
             }
             return RedirectToAction("Index");
         }
-
         public async Task<IActionResult> Groups()
         {
             if (User.Identity != null)

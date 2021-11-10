@@ -7,7 +7,6 @@ namespace ONX.CRM.Controllers
         public static string Theme { get; set; }
         public static byte[] Photo { get; set; }
         public BaseController() { }
-       
         public IActionResult ChangeTheme(int themeId)
         {
             const int darkThemeId = 0;

@@ -13,7 +13,6 @@ namespace ONX.CRM.ViewModel
         [EmailAddress(ErrorMessage = "Invalid Email")]
         [Required(ErrorMessage = "This field cannot be empty")]
         public string? Email { get; set; }
-      
         [Required(ErrorMessage = "This field cannot be empty")]
         [Phone(ErrorMessage = "Invalid Phone number")]
         public string? Phone { get; set; }

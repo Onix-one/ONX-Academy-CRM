@@ -53,7 +53,6 @@ namespace ONX.CRM.BLL.Services
         {
             return _repository.GetNumberOfGroups();
         }
-
         public Task<IEnumerable<Group>> GetGroupsByTeacherId(int id)
         {
             return _repository.GetGroupsByTeacherId(id);

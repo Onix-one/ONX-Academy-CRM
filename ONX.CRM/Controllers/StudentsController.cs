@@ -163,8 +163,6 @@ namespace ONX.CRM.Controllers
             }
             return false;
         }
-
-
         public async Task<IActionResult> Schedule()
         {
             if (User.Identity != null)
@@ -182,7 +180,6 @@ namespace ONX.CRM.Controllers
             
             return View();
         }
-
         public async Task<IActionResult> VideoMaterials()
         {
             if (User.Identity != null)

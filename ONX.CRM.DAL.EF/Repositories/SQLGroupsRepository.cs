@@ -52,9 +52,6 @@ namespace ONX.CRM.DAL.EF.Repositories
                 .Include(g=>g.Lessons).AsNoTracking()
                 .ToListAsync();
             return group.FirstOrDefault();
-
-
-            
         }
         public void Create(Group group)
         {

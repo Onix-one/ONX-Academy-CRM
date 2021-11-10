@@ -6,6 +6,7 @@
     var lastLesson = lessonsList.Count() - 1;
 }
 @model LessonViewModel
+
 <div class="page-wrapper">
     <div class="page-content">
         <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
@@ -23,8 +24,6 @@
         </div>
         <div class="card">
             <div class="card-body">
-
-
                 <div class="container py-2">
 
                     @if (@lessonsList.Count != 0)
@@ -47,7 +46,6 @@
                                 <!-- timeline item 1 -->
                                 <div class="row">
                                     <!-- timeline item 1 left dot -->
-                                    
                                     @if (lessonsList.Count > 1)
                                     {
                                         <div class="col-auto text-center flex-column d-none d-sm-flex">
@@ -313,7 +311,6 @@
                     }
                 </div>
             </div>
-
         </div>
     </div>
 </div>

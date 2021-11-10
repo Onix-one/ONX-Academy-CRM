@@ -1,53 +1,49 @@
-﻿
-@{
+﻿@{
 }
 @model AuthorizeViewModel
 <div class="page-wrapper">
     <div class="page-content">
         <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
             <div class="col mx-auto">
-                @*<div class="card">
-                    <div class="card-body">
-                        <div class="border p-4 rounded">*@
-                            <div class="text-center">
-                                <h3 class="">Sign in</h3>
-                                <p>
-                                    Don't have an account yet? <a asp-controller="Account" asp-action="Registration">Sign up here</a>
-                                </p>
+                <div class="text-center">
+                    <h3 class="">Sign in</h3>
+                    <p>
+                        Don't have an account yet? <a asp-controller="Account" asp-action="Registration">Sign up here</a>
+                    </p>
+                </div>
+                <div class="form-body">
+                    <form asp-controller="Account" asp-action="Authorization" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="row g-3">
+                        <div asp-validation-summary="ModelOnly"></div>
+                        <div class="col-12">
+                            <label asp-for="Email" class="form-label">Email Address</label>
+                            <input type="email" class="form-control" asp-for="Email" placeholder="Email Address">
+                            <span asp-validation-for="Email"></span>
+                        </div>
+                        <div class="col-12">
+                            <label asp-for="Password" class="form-label">Enter Password</label>
+                            <div class="input-group" id="show_hide_password">
+                                <input type="password" class="form-control border-end-0" asp-for="Password" value="12345678" placeholder="Enter Password">
+                                <a href="javascript:;" class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
                             </div>
-                            <div class="form-body">
-                                <form asp-controller="Account" asp-action="Authorization" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="row g-3">
-                                    <div asp-validation-summary="ModelOnly"></div>
-                                    <div class="col-12">
-                                        <label asp-for="Email" class="form-label">Email Address</label>
-                                        <input type="email" class="form-control" asp-for="Email" placeholder="Email Address">
-                                        <span asp-validation-for="Email"></span>
-                                    </div>
-                                    <div class="col-12">
-                                        <label asp-for="Password" class="form-label">Enter Password</label>
-                                        <div class="input-group" id="show_hide_password">
-                                            <input type="password" class="form-control border-end-0" asp-for="Password" value="12345678" placeholder="Enter Password">
-                                            <a href="javascript:;" class="input-group-text bg-transparent"><i class='bx bx-hide'></i></a>
-                                        </div>
-                                        <span asp-validation-for="Password"></span>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" asp-for="RememberMe" checked>
-                                            <label class="form-check-label" asp-for="RememberMe">Remember Me</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-12">
-                                        <div class="d-grid">
-                                            <button type="submit" class="btn btn-primary"><i class="bx bxs-lock-open"></i>Sign in</button>
-                                        </div>
-                                    </div>
-                                </form>
+                            <span asp-validation-for="Password"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" asp-for="RememberMe" checked>
+                                <label class="form-check-label" asp-for="RememberMe">Remember Me</label>
                             </div>
                         </div>
-                    </div>
+                        <div class="col-12">
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary"><i class="bx bxs-lock-open"></i>Sign in</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
-        @*</div>
+        </div>
     </div>
-</div>*@
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

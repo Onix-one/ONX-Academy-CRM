@@ -90,8 +90,6 @@
                     </li>
 
                 }
-
-
                 @if (User.IsInRole("admin") || User.IsInRole("manager"))
                 {
                     <li class="menu-label">Administration</li>
@@ -104,7 +102,6 @@
                             <div class="menu-title">Requests</div>
                         </a>
                     </li>
-
                     <li>
                         <a asp-controller="Groups" asp-action="Index">
                             <div class="parent-icon">
@@ -113,7 +110,6 @@
                             <div class="menu-title">Groups</div>
                         </a>
                     </li>
-
                     <li>
                         <a asp-controller="Students" asp-action="Index">
                             <div class="parent-icon">
@@ -141,10 +137,6 @@
                             </a>
                         </li>
                     }
-
-
-
-
                     <li>
                         <a href="javascript:;" class="has-arrow">
                             <div class="parent-icon">
@@ -174,8 +166,6 @@
                         </ul>
                     </li>
                 }
-
-
                 @if (User.IsInRole("teacher"))
                 {
                     <li class="menu-label">Administration</li>
@@ -220,7 +210,6 @@
                 @if (User.IsInRole("student"))
                 {
                     <li class="menu-label">Administration</li>
-
                     <li>
                         <a asp-controller="Students" asp-action="Schedule">
                             <div class="parent-icon">
@@ -237,7 +226,6 @@
                             <div class="menu-title">Video Materials</div>
                         </a>
                     </li>
-
                     <li>
                         <a href="javascript:;" class="has-arrow">
                             <div class="parent-icon">
