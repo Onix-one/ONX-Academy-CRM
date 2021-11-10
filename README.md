@@ -9,4 +9,4 @@ How to start:
 - Manager ---> Login: manager@mail.ru  Pass: qaz123
 - Teacher ---> Login: teacher@mail.ru  Pass: qaz123
 - Student ---> Login: admin@mail.ru    Pass: qaz123
-![The San Juan Mountains are beautiful!](/assets/images/02.png "San Juan Mountains")
+![The San Juan Mountains are beautiful!](/ONX.CRM/wwwroot/assets/images/02.png "San Juan Mountains")
