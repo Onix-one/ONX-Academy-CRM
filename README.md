@@ -10,19 +10,19 @@ How to start:
 - Teacher ---> Login: teacher@mail.ru  Pass: qaz123
 - Student ---> Login: admin@mail.ru    Pass: qaz123
 
-Guest view
+## Guest view
 
 ![The San Juan Mountains are beautiful!](https://github.com/Onix-one/ONX-Academy-CRM/blob/master/ONX.CRM/wwwroot/assets/Screenshot%20(21).png "San Juan Mountains")
 
 ![The San Juan Mountains are beautiful!](https://github.com/Onix-one/ONX-Academy-CRM/blob/master/ONX.CRM/wwwroot/assets/Screenshot%20(20).png "San Juan Mountains")
 
-Manager view
+## Manager view
 
 ![The San Juan Mountains are beautiful!](https://github.com/Onix-one/ONX-Academy-CRM/blob/master/ONX.CRM/wwwroot/assets/Screenshot%20(25).png "San Juan Mountains")
 
 ![The San Juan Mountains are beautiful!](https://github.com/Onix-one/ONX-Academy-CRM/blob/master/ONX.CRM/wwwroot/assets/Screenshot%20(26).png "San Juan Mountains")
 
-Student view
+ ## Student view
 
 ![The San Juan Mountains are beautiful!](https://github.com/Onix-one/ONX-Academy-CRM/blob/master/ONX.CRM/wwwroot/assets/Screenshot%20(27).png "San Juan Mountains")
 
