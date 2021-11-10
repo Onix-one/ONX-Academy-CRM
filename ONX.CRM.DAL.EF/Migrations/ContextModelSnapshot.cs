@@ -445,7 +445,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                             Homework = "Create three string local variables. Make string concatenation. Output the result to the console.",
                             Number = "03",
                             Topic = "Arrays & Strings",
-                            VideoLink = "https://www.youtube.com/watch?v=0Fg9f2ZEApE"
+                            VideoLink = "https://youtu.be/IyFdNCNCzs0"
                         });
                 });
 

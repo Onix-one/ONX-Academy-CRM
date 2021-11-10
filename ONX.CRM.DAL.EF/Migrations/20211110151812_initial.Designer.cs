@@ -10,7 +10,7 @@ using ONX.CRM.DAL.EF.Contexts;
 namespace ONX.CRM.DAL.EF.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20211109043913_initial")]
+    [Migration("20211110151812_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -447,7 +447,7 @@ namespace ONX.CRM.DAL.EF.Migrations
                             Homework = "Create three string local variables. Make string concatenation. Output the result to the console.",
                             Number = "03",
                             Topic = "Arrays & Strings",
-                            VideoLink = "https://www.youtube.com/watch?v=0Fg9f2ZEApE"
+                            VideoLink = "https://youtu.be/IyFdNCNCzs0"
                         });
                 });
 
