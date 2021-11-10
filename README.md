@@ -11,8 +11,13 @@ How to start:
 - Student ---> Login: admin@mail.ru    Pass: qaz123
 
 Guest view
+
 ![The San Juan Mountains are beautiful!](https://github.com/Onix-one/ONX-Academy-CRM/blob/master/ONX.CRM/wwwroot/assets/Screenshot%20(21).png "San Juan Mountains")
 
 ![The San Juan Mountains are beautiful!](https://github.com/Onix-one/ONX-Academy-CRM/blob/master/ONX.CRM/wwwroot/assets/Screenshot%20(20).png "San Juan Mountains")
 
 Manager view
+
+![The San Juan Mountains are beautiful!](https://github.com/Onix-one/ONX-Academy-CRM/blob/master/ONX.CRM/wwwroot/assets/Screenshot%20(25).png "San Juan Mountains")
+
+![The San Juan Mountains are beautiful!](https://github.com/Onix-one/ONX-Academy-CRM/blob/master/ONX.CRM/wwwroot/assets/Screenshot%20(26).png "San Juan Mountains")
